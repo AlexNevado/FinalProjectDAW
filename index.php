@@ -26,17 +26,21 @@ include 'functions.php';
         <h2> Monstruos's Bizarre Adventure</h2><br/>
         <fieldset class="form-group col-xs-4 col-sm-offset-4 col-xs-offset-1">
           <legend>
-            <a href="index.php" <?php if (!isset($_GET["register"])) {print 'class="activeSection"';} ?>>Login</a>
+            <a href="index.php" <?php if (!isset($_GET["register"])) {
+              print 'class="activeSection"';
+            } ?>>Login</a>
             /
-            <a href="index.php?register" <?php if (isset($_GET["register"])) {print 'class="activeSection"';} ?>>Registro</a>
+            <a href="index.php?register" <?php if (isset($_GET["register"])) {
+              print 'class="activeSection"';
+            } ?>>Registro</a>
           </legend>
-        <?php
-        if (isset($_GET["register"])) {
-          register();
-        } else {
-          login();
-        }
-        ?>
+          <?php
+          if (isset($_GET["register"])) {
+            register();
+          } else {
+            login();
+          }
+          ?>
         </fieldset>
       </div>
     </div>

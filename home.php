@@ -1,37 +1,8 @@
 <?php
 session_start();
-$_SESSION["url"] = $_SERVER['PHP_SELF'];
 include 'functions.php';
-
 require_once __DIR__ . '/vendor/autoload.php';
 
-
-if (isset($_SESSION['facebook_access_token'])) {
-  $_SESSION["Authenticated"] = 1;
-}
-/*
- * $fb = new Facebook\Facebook([
-    'app_id' => '259915584478602',
-    'app_secret' => 'be739ec8db993b668937fe4c7c58c649',
-    'default_graph_version' => 'v2.3',
-]);
-
-  try {
-    // Returns a `Facebook\FacebookResponse` object
-    $response = $fb->get('/me?fields=id,name', $_SESSION['accessToken']);
-    $_SESSION["Authenticated"] == 1;
-  } catch (Facebook\Exceptions\FacebookResponseException $e) {
-    echo 'Graph returned an error: ' . $e->getMessage();
-    exit;
-  } catch (Facebook\Exceptions\FacebookSDKException $e) {
-    echo 'Facebook SDK returned an error: ' . $e->getMessage();
-    exit;
-  }
-
-  $user = $response->getGraphUser();
-  echo 'Name: ' . $user['name'];
-  var_dump($user);
-*/
 if (!isset($_SESSION["Authenticated"]) || $_SESSION["Authenticated"] == 0) {
   header("Location: index.php");
 }
@@ -49,10 +20,31 @@ if (!isset($_SESSION["Authenticated"]) || $_SESSION["Authenticated"] == 0) {
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
+<script>
+  $(document).ready(function () {
+    $("#freqrange").on('change', function () {
+      $("#frequency").text(this.value + "Ghz");
+    });
+  });
+</script>
 <div class="container">
   <div class="row">
     <div class="col-xs-12" role="main">
-
+      <h3>Creador De Monstruo</h3>
+      <table>
+        <tr>
+          <td>Str</td>
+          <td><input type="number" value="1" name="quantity" min="1" max="5" class="col-xs-3"></td>
+        </tr>
+        <tr>
+          <td>Def</td>
+          <td><input type="number" value="1" name="quantity" min="1" max="5" class="col-xs-3"></td>
+        </tr>
+        <tr>
+          <td>Luk</td>
+          <td><input type="number" value="1" name="quantity" min="1" max="5" class="col-xs-3"></td>
+        </tr>
+      </table>
     </div>
   </div>
   <div class="row">

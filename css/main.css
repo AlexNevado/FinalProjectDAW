@@ -17,6 +17,9 @@
 	legend a:hover {
 		cursor: pointer;
 	}
+	input[type="number"] {
+		color: black;
+	}
 	.login input {
 		display: inline;
 		width: auto;
@@ -86,7 +89,7 @@
 		opacity: 0.7;
 	}
 	.activeSection {
-		font-size: 1.3em;
+		font-size: 1.4em;
 	}
 	.loginImage {
 		max-height: 280px;

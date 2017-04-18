@@ -19,7 +19,7 @@ function register()
       <div class="col-xs-12 login">
         <?php
         if (isset($_GET["error"])) {
-          errorMessage("Este usuario ya existe");
+          errorMessage("Este nombre de usuario ya está siendo usado");
         }
         ?>
         <div class="form-group">
@@ -27,8 +27,8 @@ function register()
           <input type="text" class="form-control" name="username">
         </div>
         <div class="form-group">
-          <label for="pwd">Password:</label><input type="password" class="form-control"
-                                                   name="password">
+          <label for="pwd">Password:</label>
+          <input type="password" class="form-control" name="password" required>
         </div>
         <button type="submit" class="btn btn-login btn-sm">Enviar</button>
         <?php
@@ -55,8 +55,8 @@ function login()
         <input type="text" class="form-control" name="username">
       </div>
       <div class="form-group">
-        <label for="pwd">Password:</label><input type="password" class="form-control"
-                                                 name="password">
+        <label for="pwd">Password:</label>
+        <input type="password" class="form-control" name="password" required>
       </div>
       <button type="submit" class="btn btn-login btn-sm">Enviar</button>
       <?php
@@ -70,7 +70,7 @@ function errorMessage($message)
 {
   ?>
   <div class="row">
-    <div class="alert alert-warning col-xs-6 col-xs-offset-3">
+    <div class="alert alert-warning col-xs-12">
       <p><?php print $message; ?></p>
     </div>
   </div>

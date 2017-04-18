@@ -15,7 +15,7 @@ if (isset ($_POST["username"]) && isset($_POST['password'])) {
     header("Location: index.php?register&&error");
   } else {
     $usersCollection->insert(array("username" => $user, 'password' => $pass));
-    header("Location: home.php");
+    header("Location: index.php");
   }
 }
 session_write_close();

@@ -7,11 +7,6 @@ if (isset($_GET["logout"])) {
   $_SESSION[] = array();
   setcookie("user", $_SESSION["user"]["login"], time() - 3600);
   unset($_COOKIE['PHPSESSID']);
-  if (isset($_SESSION['accessToken'])){
-    $url = 'https://www.facebook.com/logout.php?next=mba2.com' .
-        '&access_token=' . $_SESSION['accessToken'];
-    header('Location: '.$url);
-  }
   header("Location: index.php");
 } else if (isset ($_POST["username"]) && isset($_POST['password'])) {
   $connection = new MongoClient(); // conectar a localhost:27017
@@ -31,5 +26,7 @@ if (isset($_GET["logout"])) {
     $_SESSION["Authenticated"] = 0;
     header("Location: index.php?error");
   }
+} else {
+  header("Location: index.php?error");
 }
 session_write_close();
