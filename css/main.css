@@ -1,6 +1,6 @@
 	body {
 		text-align: center;
-		font-size: 20px;
+		font-size: 18px;
 		background: url(../image/background1.jpg);
 		color: #dedede;
 	}
@@ -11,50 +11,55 @@
 		text-align: center;
 		mix-blend-mode: exclusion;
 	}
+	legend, legend a, legend a:hover {
+		color: #dedede;
+	}
+	legend a:hover {
+		cursor: pointer;
+	}
 	.login input {
 		display: inline;
 		width: auto;
-		padding: 
 	}
 	.container {
 		margin-top: 1%;
 	}
 	#fb {
 		margin:0% 0%;
-		background: url('../image/ss3.gif') no-repeat 0 0;
-		width: 44px;
-		height: 44px;
+		background: url('../image/rrss1.gif') no-repeat 0 0;
+		width: 38px;
+		height: 37px;
 		border-radius: 10px 10px 10px 10px;
 	}
 	#fb:hover {
-		background: url('../image/ss3.gif') no-repeat 0 98.889%;
+		background: url('../image/rrss1.gif') no-repeat 0 -76px;
 	}
 	#tw {
-		background: url('../image/ss3.gif') no-repeat 16.993% 0;
-		width: 44px;
-		height: 44px;
+		background: url('../image/rrss1.gif') no-repeat -45px 0;
+		width: 37px;
+		height: 38px;
 		border-radius: 10px 10px 10px 10px;
 	}
 	#tw:hover {
-		background: url('../image/ss3.gif') no-repeat 16.993% 98.889%;
+		background: url('../image/rrss1.gif') no-repeat -45px -76px;
 	}
 	#in {
-		background: url('../image/ss3.gif') no-repeat 51.316% 0;
-		width: 46px;
-		height: 43px;
+		background: url('../image/rrss1.gif') no-repeat -134px 0;
+		width: 39px;
+		height: 37px;
 		border-radius: 10px 10px 10px 10px;
 	}
 	#in:hover {
-		background: url('../image/ss3.gif') no-repeat 51.316% 98.889%;
+		background: url('../image/rrss1.gif') no-repeat -134px -76px;
 	}
 	#tu {
-		background: url('../image/ss3.gif') no-repeat 84.262% 0;
-		width: 45px;
-		height: 44px;
+		background: url('../image/rrss1.gif') no-repeat -220px 0;
+		width: 39px;
+		height: 38px;
 		border-radius: 10px 10px 10px 10px;
 	}
 	#tu:hover {
-		background: url('../image/ss3.gif') no-repeat 84.262% 98.889%;
+		background: url('../image/rrss1.gif') no-repeat -220px -76px;
 	}
 	.row {
 		margin-bottom: 1%;
@@ -68,6 +73,23 @@
 	}
 	.btn-login:hover {
 		box-shadow: 1px 1px 10px 1px white;
+		opacity: 0.7;
+	}
+	.fb-button {
+		margin-top: 1%;
+		background: url('../image/fb-button.png') no-repeat 1% ;
+		width: 153px;
+		height: 34px;
+		border-radius: 5px 5px 5px 5px;
+	}
+	.fb-button:hover {
+		opacity: 0.7;
+	}
+	.activeSection {
+		font-size: 1.3em;
+	}
+	.loginImage {
+		max-height: 280px;
 	}
 	@media  (max-width: 600px) {
 		body{
