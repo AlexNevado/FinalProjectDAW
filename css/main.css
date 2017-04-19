@@ -97,6 +97,10 @@
 	.loginImage {
 		max-height: 280px;
 	}
+	.avatarImg {
+		width: 200px;
+		height: 200px;
+	}
 	@media  (max-width: 600px) {
 		body{
 			font-size: 1.4em;
