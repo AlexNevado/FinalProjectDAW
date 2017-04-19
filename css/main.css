@@ -11,6 +11,9 @@
 		text-align: center;
 		mix-blend-mode: exclusion;
 	}
+	div[role="main"] {
+		border: 1px solid black;
+	}
 	legend, legend a, legend a:hover {
 		color: #dedede;
 	}
@@ -97,10 +100,5 @@
 	@media  (max-width: 600px) {
 		body{
 			font-size: 1.4em;
-		}
-		.rrss img {
-
-			width: 20px;
-			height: 20px;
 		}
 	}
