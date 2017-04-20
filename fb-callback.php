@@ -54,18 +54,17 @@ if (isset($accessToken)) {
   //Find the user, if doesn't exist create new user with facebook's id
   if (empty($result)) {
     //First create a new user with the and save de facebookID
-    $usersCollection->insert(array("facebookID" => $user['id']));
-    //Get the user data
-    $result = $usersCollection->findOne(array("facebookID" => $user['id']));
+    $newUser = array("facebookID" => $user['id']);
+    $usersCollection->insert($newUser);
     //Update the same user with username == mongoID
     //This way we create a new user with a serialID by username
-    $newData = array('$set' => array("username" => (string) $result['_id']));
+    $newData = array('$set' => array("username" => (string) $newUser['_id']));
     $usersCollection->update(array("facebookID" => $user['id']), $newData);
-    $_SESSION["user"]["name"] = (string) $result['_id'];
+    $_SESSION["user"]["name"] = (string) $newUser['_id'];
+    $_SESSION["user"]["id"] = (string) $newUser['_id'];
   }else {
-    $_SESSION["user"]["name"] =$result['username'];
+    $_SESSION["user"]["name"] = $result['username'];
+    $_SESSION["user"]["id"] = (string) $result['_id'];
   }
-  $_SESSION["user"]["id"] = (string) $result['_id'];
-  $result = $usersCollection->findOne(array("_id" => new MongoId($_SESSION["user"]["id"])));
   header("Location: home.php");
 }

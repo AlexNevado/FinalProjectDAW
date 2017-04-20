@@ -96,10 +96,8 @@ function footer()
 function hasMonstruos($userID) {
   $dbname = "mba";
   $connection = new MongoClient(); // connect to localhost:27017
-  $usersCollection = $connection->$dbname->users;
-  $result = $usersCollection->findOne(
-      array('_id' => new MongoId($_SESSION["user"]["id"]),
-            'monstruos' => array('$exists' => TRUE)));
+  $usersCollection = $connection->$dbname->monstruos;
+  $result = $usersCollection->findOne(array('userID' => new MongoId($_SESSION["user"]["id"])));
   if (empty($result))
     return false;
   return true;
