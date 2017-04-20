@@ -51,6 +51,9 @@ if (!isset($_SESSION["Authenticated"]) || $_SESSION["Authenticated"] == 0) {
       }
       return true;
     });
+    $('#userButton').click(function(){
+      window.location.href="otro.php";
+    });
   });
 </script>
 <div class="container">
@@ -59,8 +62,10 @@ if (!isset($_SESSION["Authenticated"]) || $_SESSION["Authenticated"] == 0) {
       <?php
       if (hasMonstruos($_SESSION['user']['id'])) {
         ?>
-          <img src="image/anonymous.png" width="100" height="100">
+        <div class="userLogin" id="userButton">
+          <img src="image/anonymous.png" width="100" height="100" class="userImg"></br>
           <label for="username"><?php print $_SESSION['user']['name']; ?></label>
+        </div>
         <?php
       } else {
         ?>
@@ -123,7 +128,7 @@ if (!isset($_SESSION["Authenticated"]) || $_SESSION["Authenticated"] == 0) {
         <?php
       }
       ?>
-      <div class="col-xs-2 col-xs-offset-10">
+      <div class="col-xs-1 col-xs-offset-9">
         <a href="validate.php?logout" class="btn btn-login btn-sm">Logout</a>
       </div>
     </div>

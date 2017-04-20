@@ -67,6 +67,5 @@ if (isset($accessToken)) {
   }
   $_SESSION["user"]["id"] = (string) $result['_id'];
   $result = $usersCollection->findOne(array("_id" => new MongoId($_SESSION["user"]["id"])));
-  $a=0;
   header("Location: home.php");
 }
