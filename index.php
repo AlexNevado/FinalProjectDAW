@@ -1,12 +1,18 @@
 <?php
 session_start();
 include 'functions.php';
-
+if (isset($_COOKIE["user"])){
+  $_SESSION["user"]["name"] = $_COOKIE["user"];
+  $_SESSION["Authenticated"] = 1;
+}
+if (isset($_SESSION["Authenticated"]) && $_SESSION["Authenticated"] == 1) {
+  header("Location: home.php");
+}
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Monstruos's Bizarre Adventure</title>
+  <title>Monstruos's Bizarre Adventure 2</title>
   <script src="js/jquery-3.2.1.min.js"></script>
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <script src="js/bootstrap.min.js"></script>
@@ -20,7 +26,7 @@ include 'functions.php';
         <img src="image/login_image1.png" class="col-xs-8 col-xs-offset-2 img-responsive loginImage"/>
       </div>
       <div class="row">
-        <h2> Monstruos's Bizarre Adventure</h2><br/>
+        <h2> Monstruos's Bizarre Adventure <img src="image/number2.png" width="50" height="50" alt="image number 2"></h2><br/>
         <fieldset class="form-group col-xs-4 col-sm-offset-4 col-xs-offset-1">
           <legend>
             <a href="index.php" <?php if (!isset($_GET["register"])) {

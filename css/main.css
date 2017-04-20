@@ -27,6 +27,9 @@
 		display: inline;
 		width: auto;
 	}
+	.stats input{
+		float: right;
+	}
 	.container {
 		margin-top: 1%;
 	}

@@ -92,3 +92,15 @@ function footer()
   </div>
   <?php
 }
+
+function hasMonstruos($userID) {
+  $dbname = "mba";
+  $connection = new MongoClient(); // connect to localhost:27017
+  $usersCollection = $connection->$dbname->users;
+  $result = $usersCollection->findOne(
+      array('_id' => new MongoId($_SESSION["user"]["id"]),
+            'monstruos' => array('$exists' => TRUE)));
+  if (empty($result))
+    return false;
+  return true;
+}

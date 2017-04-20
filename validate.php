@@ -19,7 +19,8 @@ if (isset($_GET["logout"])) {
 
   if (!empty($result)) {
     $_SESSION["Authenticated"] = 1;
-    $_SESSION["user"] = $result['username'];
+    $_SESSION["user"]["name"] = $result['username'];
+    $_SESSION["user"]["id"] = (string) $result['_id'];
     setcookie("user", $_SESSION["user"]["name"], time() + 31556926);
     header("Location: home.php");
   } else {

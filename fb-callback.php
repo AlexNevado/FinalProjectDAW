@@ -50,10 +50,23 @@ if (isset($accessToken)) {
   // connect to localhost:27017
   $connection = new MongoClient();
   $usersCollection = $connection->$dbname->users;
-  $result = $usersCollection->findOne(array("username" => $user['id']), array('password' => 0));
+  $result = $usersCollection->findOne(array("facebookID" => $user['id']));
   //Find the user, if doesn't exist create new user with facebook's id
   if (empty($result)) {
-    $usersCollection->insert(array("username" => $user['id']));
+    //First create a new user with the and save de facebookID
+    $usersCollection->insert(array("facebookID" => $user['id']));
+    //Get the user data
+    $result = $usersCollection->findOne(array("facebookID" => $user['id']));
+    //Update the same user with username == mongoID
+    //This way we create a new user with a serialID by username
+    $newData = array('$set' => array("username" => (string) $result['_id']));
+    $usersCollection->update(array("facebookID" => $user['id']), $newData);
+    $_SESSION["user"]["name"] = (string) $result['_id'];
+  }else {
+    $_SESSION["user"]["name"] =$result['username'];
   }
+  $_SESSION["user"]["id"] = (string) $result['_id'];
+  $result = $usersCollection->findOne(array("_id" => new MongoId($_SESSION["user"]["id"])));
+  $a=0;
   header("Location: home.php");
 }
