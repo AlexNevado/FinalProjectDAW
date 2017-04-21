@@ -1,7 +1,6 @@
 <?php
 session_start();
 include 'functions.php';
-require_once __DIR__ . '/vendor/autoload.php';
 
 if (!isset($_SESSION["Authenticated"]) || $_SESSION["Authenticated"] == 0) {
   header("Location: index.php");
