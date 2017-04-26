@@ -1,3 +1,7 @@
+	@font-face {
+  	font-family: "Herculanum";
+  	src: url("fonts/Herculanum-Regular.ttf");
+  }
 	body {
 		text-align: center;
 		font-size: 18px;
@@ -112,6 +116,38 @@
 		box-shadow: 1px 1px 10px 1px white;
 		opacity: 0.7;
 		cursor: pointer;
+	}
+	.screen {
+		display: inline-block;
+    vertical-align: baseline;
+		width: 640px;
+		height: 480px;
+		position: absolute;
+  	font-family: "Herculanum";
+	}
+	.menu-options {
+		margin-left: 420px;
+		margin-top: 320px;
+		width: 150px;
+		height: 150px;
+  	z-index: 99;
+	}
+	.menu-options h3:hover {
+ 		text-shadow: 
+ 			0 0 10px #fff,
+ 			0 0 20px #fff, 
+ 			0 0 30px #fff, 
+ 			0 0 40px #004d99, 
+ 			0 0 70px #004d99, 
+ 			0 0 80px #004d99, 
+ 			0 0 100px #004d99, 
+ 			0 0 150px #004d99;
+		color: lightgray;
+		cursor: pointer;
+	}
+	canvas {
+		background: url('../image/forest2.jpg');
+		z-index: 0;
 	}
 	@media  (max-width: 600px) {
 		body{

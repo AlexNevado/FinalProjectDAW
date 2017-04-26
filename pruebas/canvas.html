@@ -12,16 +12,28 @@
       }
     </script>
       <script type="application/javascript">
+      /*
+ctx.drawImage(img, 0, 0, img.width,    img.height,     // source rectangle
+                   0, 0, canvas.width, canvas.height);
+
+      */
     function draw() {
       var canvas = document.getElementById('canvas');
       if (canvas.getContext) {
-        var ctx = canvas.getContext('2d');
+     var context = canvas.getContext('2d');
+      var imageObj = new Image();
+      var imageObj2 = new Image();
 
-        ctx.fillStyle = 'rgb(200, 0, 0)';
-        ctx.fillRect(10, 10, 50, 50);
+      imageObj.onload = function() {
+        context.drawImage(imageObj, 0, 0, 1000, 1000, 0, 200,1000,500);
+        imageObj2.onload = function() {
+          context.drawImage(imageObj2, 0, 0, 1000, 1000, 0, 200,1000,500);
 
-        ctx.fillStyle = 'rgba(0, 0, 200, 0.5)';
-        ctx.fillRect(30, 30, 50, 50);
+        }
+      };
+      imageObj.src = 'http://www.html5canvastutorials.com/demos/assets/darth-vader.jpg';
+      imageObj2.src = 'http://www.html5canvastutorials.com/demos/assets/darth-vader.jpg';
+
       }
     }
   </script>
@@ -33,8 +45,7 @@
     <div class="container">
       <div class="row">
         <div class="col-xs-12">
-          <canvas id="tutorial" width="150" height="150">
-            <img src="../image/anonymous.png" width="150" height="150" alt="" />
+         <canvas id="canvas" width="400" height="400"></canvas>
           </canvas>
         </div>
       </div> 

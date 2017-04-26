@@ -51,7 +51,7 @@ if (!isset($_SESSION["Authenticated"]) || $_SESSION["Authenticated"] == 0) {
       return true;
     });
     $('#userButton').click(function(){
-      window.location.href="otro.php";
+      window.location.href="mainMenu.php";
     });
   });
 </script>
