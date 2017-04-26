@@ -23,25 +23,33 @@ header("Location: index.php");
         <div class="col-xs-12">
             <!-- title -->
             <img src="image/login_image1.png" class="col-xs-8 col-xs-offset-2 img-responsive loginImage"/>
-            <div class="row">
-                <h2> Monstruos's Bizarre Adventure <img src="image/number2.png" width="50" height="50" alt="image number 2"></h2><br/>
-            </div>
         </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+                <h2> Monstruos's Bizarre Adventure <img src="image/number2.png" width="50" height="50" alt="image number 2"></h2>
+        </div>
+    </div>
     </div>
     <!-- begins menu -->
-    <div class="row">
+     <div class="row">
         <div class="col-xs-12">
-            <button type="" class="btn btn-sm" id="searchBattle">Buscar batalla</button>
+            <button type="" class="btn btn-sm btn-menu-principal" id="searchBattle">Buscar batalla</button>
+        </div>
+    </div>
+     <div class="row">
+        <div class="col-xs-12">
+            <button type="" class="btn btn-sm btn-menu-principal" id="perfil">Perfil</button>
         </div>
     </div>
     <div class="row">
         <div class="col-xs-12">
-            <button type="" class="btn btn-sm" id="options">Opciones</button>
+            <button type="" class="btn btn-sm btn-menu-principal" id="options">Opciones</button>
         </div>
     </div>
     <div class="row">
         <div class="col-xs-12">
-            <button type="" class="btn btn-sm" id="exit">Salir</button>
+            <button type="" class="btn btn-sm btn-menu-principal" id="exit">Salir</button>
         </div>
     </div>
     <!-- ends menu -->
@@ -54,3 +62,4 @@ header("Location: index.php");
 </div>
 
 </body>
+</html>

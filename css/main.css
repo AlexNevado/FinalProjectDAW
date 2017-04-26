@@ -149,6 +149,18 @@
 		background: url('../image/forest2.jpg');
 		z-index: 0;
 	}
+
+	.btn-menu-principal{
+		color: black;
+		width: 12%;
+		background: lightgrey;
+	}
+
+	.btn-menu-principal:hover{
+		box-shadow: 1px 1px 10px 1px black;
+		opacity: 0.7;
+	}
+
 	@media  (max-width: 600px) {
 		body{
 			font-size: 1.4em;
