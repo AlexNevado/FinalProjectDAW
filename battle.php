@@ -31,10 +31,7 @@ ctx.drawImage(img, 0, 0, img.width,    img.height,     // source rectangle
         var imageObj2 = new Image();
         var tWidth = 800;
         var tHeight = 600;
-        if (window.innerWidth < 400) {
-          var tWidth = 320;
-          var tHeight = 480;
-        }
+       
 
         imageObj2.onload = function() {
           ctx.drawImage(imageObj2, 0, 20, tWidth, tHeight, 300, 0 ,tWidth,tHeight);
@@ -53,7 +50,7 @@ ctx.drawImage(img, 0, 0, img.width,    img.height,     // source rectangle
     }
   </script>
     <style type="text/css">
-      canvas { border: 1px solid black; }
+      #battleCanvas { border: 1px solid black; }
     </style>
 </head>
 <body onload="draw()">
@@ -62,14 +59,14 @@ ctx.drawImage(img, 0, 0, img.width,    img.height,     // source rectangle
     <div class="col-xs-12" role="main">
       <div class="row">
         <div class="col-xs-12">
-          <div class="col-xs-12 screen">
-            <div class="menu-options">
+          <div class="screen">
+            <div class="col-sm-4 col-sm-offset-8 col-xs-offset-6 menu-options">
               <h3>Habilidades</h3>
               <h3>Objetos</h3>
               <h3>Cambio</h3>
             </div>
           </div>
-          <div class="col-xs-12 screen messsage-screen"> </div>
+          <div class="screen messsage-screen"> </div>
           <canvas id="battleCanvas" width="640" height="480"></canvas>
         </div>
       </div>

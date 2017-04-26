@@ -126,10 +126,8 @@
 		font-family: "Herculanum";
 	}
 	.menu-options {
-		margin-left: 420px;
+		/*margin-left: 420px;*/
 		margin-top: 320px;
-		width: 150px;
-		height: 150px;
 	}
 	.menu-options h3:hover {
  		text-shadow: 
@@ -148,20 +146,36 @@
 		background: black;
 		z-index: 10;
 		left:1;
+		width: 641px;
+		height: 481px;
 		border:5px solid gray;
-		/*display: none;*/
+		display: none;
 	}
 	canvas {
 		background: url('../image/forest2.jpg');
 		z-index: 0;
 	}
 	@media  (max-width: 640px) {
-		body{
-			font-size: 1.4em;
+		.screen {
+			width: 280px;
+			height: 470px;
+		}
+		.message-screen {
+			width: 281px;
+			height: 470px;
+		}
+		#battleCanvas {
+			width: 280px;
+			height: 470px;
 		}
 	}
 	@media  (max-width: 600px) {
 		body{
 			font-size: 1.4em;
+		}
+	}
+	@media  (max-width: 360px) {
+		.menu-options h3{
+			font-size: 1.3em;
 		}
 	}
