@@ -9,7 +9,8 @@ if (isset ($_POST["monsterName"])) {
   $monstruo = array(
       "userID" => new MongoId($_SESSION["user"]["id"]),
       "name" => $_POST["monsterName"],
-      "characteristics" => array('str' => $_POST['str'], 'def' => $_POST['def'], 'luk' => $_POST['luk'], 'hp'=> $hp),
+      "img" => $_POST["avatarName"],
+      "characteristics" => array('str' => (int) $_POST['str'], 'def' => (int) $_POST['def'], 'luk' => (int) $_POST['luk'], 'hp'=> $hp),
       "abilities" => array('abi1' => $_POST['abi']));
   $monstruosCollection->insert($monstruo);
 
