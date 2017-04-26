@@ -29,15 +29,21 @@ ctx.drawImage(img, 0, 0, img.width,    img.height,     // source rectangle
         var ctx = canvas.getContext('2d');
         var imageObj1 = new Image();
         var imageObj2 = new Image();
+        var tWidth = 800;
+        var tHeight = 600;
+        if (window.innerWidth < 400) {
+          var tWidth = 320;
+          var tHeight = 480;
+        }
 
-
-        imageObj1.onload = function() {
-          ctx.drawImage(imageObj1, 0, 0, 1000, 1000, 0, 300,1000,600);
-        };
         imageObj2.onload = function() {
-          ctx.drawImage(imageObj2, 50, 50, 3000, 3000, 0,0 ,3000,3000);
+          ctx.drawImage(imageObj2, 0, 20, tWidth, tHeight, 300, 0 ,tWidth,tHeight);
 
         }
+        imageObj1.onload = function() {
+          ctx.drawImage(imageObj1, 0, 0, tWidth, tHeight, 0, 300,tWidth, tHeight - tHeight * 0.25);
+        };
+
         imageObj1.src = 'image/panel1.png';
         imageObj2.src = 'image/monstersAvatars/Dragon.png';
 
@@ -54,18 +60,23 @@ ctx.drawImage(img, 0, 0, img.width,    img.height,     // source rectangle
 <div class="container">
   <div class="row">
     <div class="col-xs-12" role="main">
-      <div class="col-xs-12">
-        <div class="screen">
-          <div class="menu-options">
-            <h3>Habilidades</h3>
-            <h3>Objetos</h3>
-            <h3>Cambio</h3>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="col-xs-12 screen">
+            <div class="menu-options">
+              <h3>Habilidades</h3>
+              <h3>Objetos</h3>
+              <h3>Cambio</h3>
+            </div>
           </div>
+          <div class="col-xs-12 screen messsage-screen"> </div>
+          <canvas id="battleCanvas" width="640" height="480"></canvas>
         </div>
-        <canvas id="battleCanvas" width="640" height="480"></canvas>
       </div>
-      <div class="col-xs-1 col-xs-offset-9">
-        <a href="validate.php?logout" class="btn btn-login btn-sm">Logout</a>
+      <div class="row">
+        <div class="col-xs-1 col-xs-offset-9">
+          <a href="validate.php?logout" class="btn btn-login btn-sm">Logout</a>
+        </div>
       </div>
     </div>
   </div>
