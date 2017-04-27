@@ -1,6 +1,7 @@
 <?php
 session_start();
 $dbname = "mba";
+include 'functions.php';
 require_once __DIR__ . '/vendor/autoload.php';
 
 $fb = new Facebook\Facebook([

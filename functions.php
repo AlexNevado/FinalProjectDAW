@@ -1,5 +1,12 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
+
+foreach (glob("classes/*.php") as $filename)
+{
+  include $filename;
+}
+
+
 $fb = new Facebook\Facebook([
     'app_id' => '259915584478602',
     'app_secret' => 'be739ec8db993b668937fe4c7c58c649',
