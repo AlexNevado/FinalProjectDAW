@@ -2,6 +2,7 @@
 session_start();
 include 'functions.php';
 
+echo '<a href="validate.php?logout">EXIT</a>';
 if (!isset($_SESSION["Authenticated"]) || $_SESSION["Authenticated"] == 0) {
   header("Location: index.php");
 }
@@ -59,11 +60,11 @@ if (!isset($_SESSION["Authenticated"]) || $_SESSION["Authenticated"] == 0) {
   <div class="row">
     <div class="col-xs-12" role="main">
       <?php
-      if (hasMonstruos($_SESSION['user']['id'])) {
+      if (hasMonstruos($_SESSION['user']['_id'])) {
         ?>
         <div class="userLogin" id="userButton">
           <img src="image/anonymous.png" width="100" height="100" class="userImg"></br>
-          <label for="username"><?php print $_SESSION['user']['name']; ?></label>
+          <label for="username"><?php print $_SESSION['user']['username']; ?></label>
         </div>
         <?php
       } else {

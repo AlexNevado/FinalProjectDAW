@@ -101,10 +101,7 @@ function footer()
 }
 
 function hasMonstruos($userID) {
-  $dbname = "mba";
-  $connection = new MongoClient(); // connect to localhost:27017
-  $usersCollection = $connection->$dbname->monstruos;
-  $result = $usersCollection->findOne(array('userID' => new MongoId($_SESSION["user"]["id"])));
+  $result = Entity::findOneBy("monstruos", "userID", new MongoId($_SESSION['user']['_id']));
   if (empty($result))
     return false;
   return true;

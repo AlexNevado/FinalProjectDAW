@@ -12,7 +12,7 @@ class User extends Entity {
 
   const DDBB_NAME = "mba";
 
-  const USERS_COLLECTION = 'users';
+  const USERS_COLLECTION = "users";
 
   function __construct() {
   }
@@ -38,22 +38,16 @@ class User extends Entity {
   public function findById() {
     return parent::findById(self::USERS_COLLECTION, $this->_id);
   }
-
-  public function findThisByUsername() {
-    $db = DDBB_NAME;
-    $collectionName = USERS_COLLECTION;
-
-    $connection = new MongoClient();
-    $collection = $connection->$db->$collectionName;
-    return $collection->findOne(array("username" => $this->username), array('password' => 0));
+  public function addMonstruo($monstruoID) {
+    return parent::Save();
   }
 
-  public function findThisByFacebookID() {
-    $db = DDBB_NAME;
-    $collectionName = USERS_COLLECTION;
+  public function findByField($field) {
+    $db = self::DDBB_NAME;
+    $collectionName = self::USERS_COLLECTION;
 
     $connection = new MongoClient();
     $collection = $connection->$db->$collectionName;
-    return $collection->findOne(array("facebookID" => $this->facebookID), array('password' => 0));
+    return $collection->findOne(array($field => $this->$field), array('password' => 0));
   }
 }

@@ -13,23 +13,37 @@ class Entity {
    *
    * @return array
    */
-  public function save($collectionName, $array) {
-    $db = DDBB_NAME;
-    $id = $array['_id'] == NULL ? new MongoId() : $array['_id'];
-    
+  public function save($collectionName, $properties) {
+    $db = self::DDBB_NAME;
+    $properties['_id'] = $properties['_id'] == NULL ? new MongoId() : $properties['_id'];
+    foreach ($properties as $key => $value) {
+      if ($key == NULL) {
+        unset($properties[$key]);
+      }
+    }
+    array_filter($properties, function($var){return !is_null($var);} );
+    $newData =array('$set' => $properties);
     $connection = new MongoClient();
     $collection = $connection->$db->$collectionName;
-    $collection->update(array("_id" => $id), array('$set' => $array), array('upsert' => TRUE));
+    $error = $collection->update(array("_id" => $properties['_id']), $newData, array('upsert' => TRUE));
 
-    return $array;
+    return $properties;
   }
 
   public function findById($collectionName, $id) {
-    $db = DDBB_NAME;
+    $db = self::DDBB_NAME;
 
     $connection = new MongoClient();
     $collection = $connection->$db->$collectionName;
     return $collection->findOne(array("_id" => $id), array('password' => 0));
+  }
+
+  static function findOneBy($collectionName, $arraySearch) {
+    $db = self::DDBB_NAME;
+
+    $connection = new MongoClient();
+    $collection = $connection->$db->$collectionName;
+    return $collection->findOne($arraySearch, array('password' => 0));
   }
 
 

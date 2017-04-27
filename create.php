@@ -18,5 +18,18 @@ if (isset ($_POST["monsterName"])) {
   $newData = array('$push' => array('monstruos' => array('monstruoID' => $monstruo['_id'])));
   $usersCollection->update(array('_id' => new MongoId($_SESSION['user']['id'])), $newData);
 
+  $monstruo = new Monstruo();
+  $monstruo->set('_id', new MongoId());
+  $monstruo->set('userID', new MongoId($_SESSION["user"]["_id"]));
+  $monstruo->set('name', $_POST["monsterName"]);
+  $monstruo->set('characteristics', array('str' => $_POST['str'], 'def' => $_POST['def'], 'luk' => $_POST['luk'], 'hp'=> $hp));
+  $monstruo->set('abilities', array('abi1' => $_POST['abi']));
+
+  $user = new User();
+  $user->set('_id', new MongoId($_SESSION["user"]["_id"]));
+  $user->save();
+
+
+
   header("Location: home.php");
 }
