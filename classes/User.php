@@ -8,7 +8,7 @@ class User extends Entity {
   // User's facebookID
   private $facebookID;
   //User's monstruos
-  private $monstruos = array();
+  private $monstruos;
 
   const DDBB_NAME = "mba";
 
@@ -29,10 +29,11 @@ class User extends Entity {
 
   function toArray($value) {
     $user = array(
-        "_id" => $this->_id,
-        "username" => $this->username,
-        "facebookID" => $this->facebookID,
-        "monstruos" => $this->monstruos);
+        "_id" => $this->get('_id'),
+        "username" => $this->get('username'),
+        "facebookID" => $this->get('facebookID'),
+        "monstruos" => $this->get('monstruos')
+    );
     $user['password'] = $value;
     return $user;
   }
@@ -48,11 +49,11 @@ class User extends Entity {
 
 
   public function findById() {
-    return parent::findById(self::USERS_COLLECTION, $this->_id);
+    return parent::findById(self::USERS_COLLECTION, $this->get('_id'));
   }
   public function addMonstruo($monstruoID) {
     $newData = array('monstruos' => array('monstruoID' => $monstruoID));
-    return parent::push(self::USERS_COLLECTION,$newData);
+    return parent::push(self::USERS_COLLECTION, $newData);
   }
 
   public function findByField($field) {
@@ -61,7 +62,7 @@ class User extends Entity {
 
     $connection = new MongoClient();
     $collection = $connection->$db->$collectionName;
-    return $collection->findOne(array($field => $this->$field), array('password' => 0));
+    return $collection->findOne(array($field => $this->get($field)), array('password' => 0));
   }
   /**** Getters & Setters ****/
 

@@ -15,28 +15,28 @@ abstract class Entity {
    */
   public function save($collectionName, $properties) {
     $db = self::DDBB_NAME;
+    // This is only for avoid problems with ids, because the id always have to be passed as property
     $properties['_id'] = $properties['_id'] == NULL ? new MongoId() : $properties['_id'];
-    foreach ($properties as $key => $value) {
-      if ($value == NULL) {
-        unset($properties[$key]);
-      }
-    }
-    //array_filter($properties, function($var){return !is_null($var);} );
+    // Remove properties with NULL values
+    $properties = array_filter($properties, function($var){return !is_null($var);});
     $newData = array('$set' => $properties);
     $connection = new MongoClient();
     $collection = $connection->$db->$collectionName;
-    $error = $collection->update(array("_id" => $properties['_id']), $newData, array('upsert' => TRUE));
+    // We can save the result in a variable, maybe in the future can be useful
+    $collection->update(array("_id" => $properties['_id']), $newData, array('upsert' => TRUE));
 
-    return $properties;
+    return $newData;
   }
 
   public function push($collectionName, $properties) {
     $db = self::DDBB_NAME;
 
+    $properties = array_filter($properties, function($var){return !is_null($var);});
     $newData = array('$push' => $properties);
     $connection = new MongoClient();
     $collection = $connection->$db->$collectionName;
-    $error = $collection->update(array("_id" => $properties['_id']), $newData, array('upsert' => TRUE));
+    $collection->update(array("_id" => $this->get('_id')), $newData, array('upsert' => TRUE));
+    return $newData;
   }
 
   public function findById($collectionName, $id) {
@@ -54,7 +54,6 @@ abstract class Entity {
     $collection = $connection->$db->$collectionName;
     return $collection->findOne($arraySearch, array('password' => 0));
   }
-
 
   /**
    * @param $field

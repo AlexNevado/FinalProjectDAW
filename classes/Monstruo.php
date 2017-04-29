@@ -11,9 +11,9 @@ class Monstruo extends Entity {
   // Monstruo's image source
   private $img;
   // Monstruo's characteristics
-  private $characteristics = array();
+  private $characteristics;
   // Monstruos's abilities
-  private $abilites = array();
+  private $abilites;
 
   const DDBB_NAME = "mba";
 
@@ -36,12 +36,13 @@ class Monstruo extends Entity {
 
   function toArray()  {
     $monstruo = array(
-        "_id" => $this->_id,
-        "userID" => $this->userID,
-        "name" => $this->name,
-        "img" => $this->img,
-        "characteristics" => $this->characteristics,
-        "abilities" => $this->abilites);
+        "_id" => $this->get('_id'),
+        "userID" => $this->get('userID'),
+        "name" => $this->get('name'),
+        "img" => $this->get('img'),
+        "characteristics" => $this->get('characteristics'),
+        "abilities" => $this->get('abilites')
+    );
     return $monstruo;
   }
 
@@ -50,7 +51,7 @@ class Monstruo extends Entity {
   }
 
   public function findById() {
-    return parent::findById(self::USERS_COLLECTION, $this->_id);
+    return parent::findById(self::USERS_COLLECTION, $this->get('_id'));
   }
 
   /**** Getters & Setters ****/
