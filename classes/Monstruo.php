@@ -15,13 +15,23 @@ class Monstruo extends Entity {
   // Monstruos's abilities
   private $abilites;
 
+  //Ddbb name
   const DDBB_NAME = "mba";
-
+  //Ddbb collection
   const MONSTRUOS_COLLECTION = 'monstruos';
 
+  /**
+   * Monstruo constructor.
+   */
   function __construct()  {
   }
 
+  /**
+   * Create Monstruos from Array
+   *
+   * @param $array
+   * @return Monstruo
+   */
   public static function fromArray($array) {
     $monstruo = new Monstruo();
     $monstruo->set('_id', $array['_id']);
@@ -34,6 +44,11 @@ class Monstruo extends Entity {
     return $monstruo;
   }
 
+  /**
+   * Convert Monstruo to Array
+   *
+   * @return array
+   */
   function toArray()  {
     $monstruo = array(
         "_id" => $this->get('_id'),
@@ -46,10 +61,20 @@ class Monstruo extends Entity {
     return $monstruo;
   }
 
+  /**
+   * Inherit method
+   *
+   * @return array
+   */
   function save() {
     return parent::save(self::MONSTRUOS_COLLECTION, $this->toArray());
   }
 
+  /**
+   * Inherit method
+   *
+   * @return array|null
+   */
   public function findById() {
     return parent::findById(self::USERS_COLLECTION, $this->get('_id'));
   }

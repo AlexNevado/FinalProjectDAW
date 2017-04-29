@@ -10,13 +10,20 @@ class User extends Entity {
   //User's monstruos
   private $monstruos;
 
+  //Ddbb name
   const DDBB_NAME = "mba";
-
+  //Ddbb collection
   const USERS_COLLECTION = "users";
 
   function __construct() {
   }
 
+  /**
+   * Create an User from an array
+   *
+   * @param $array
+   * @return User
+   */
   public static function fromArray($array) {
     $user = new User();
     $user->set('_id', $array['_id']);
@@ -27,6 +34,12 @@ class User extends Entity {
     return $user;
   }
 
+  /**
+   * Convert an User into an array
+   *
+   * @param $value
+   * @return array
+   */
   function toArray($value) {
     $user = array(
         "_id" => $this->get('_id'),
@@ -38,24 +51,51 @@ class User extends Entity {
     return $user;
   }
 
+  /**
+   * Inherit method
+   *
+   * @return array
+   */
   function save() {
     return parent::save(self::USERS_COLLECTION, $this->toArray());
   }
 
+  /**
+   * Create an User with password
+   *
+   * @param $password
+   * @return array
+   */
   function create($password) {
     return parent::save(self::USERS_COLLECTION, $this->toArray($password));
   }
 
-
-
+  /**
+   * Inherit method
+   *
+   * @return array|null
+   */
   public function findById() {
     return parent::findById(self::USERS_COLLECTION, $this->get('_id'));
   }
+
+  /**
+   * Add monstruo tu user
+   *
+   * @param $monstruoID
+   * @return array
+   */
   public function addMonstruo($monstruoID) {
     $newData = array('monstruos' => array('monstruoID' => $monstruoID));
     return parent::push(self::USERS_COLLECTION, $newData);
   }
 
+  /**
+   * Find this User by their properties
+   *
+   * @param $field
+   * @return array|null
+   */
   public function findByField($field) {
     $db = self::DDBB_NAME;
     $collectionName = self::USERS_COLLECTION;

@@ -4,10 +4,15 @@ abstract class Entity {
   // DDBB's name
   const DDBB_NAME = "mba";
 
+  /**
+   * Entity constructor.
+   */
   function __construct() {
   }
 
   /**
+   * Save an array into DDBB
+   *
    * @param $collectionName
    * @param $array
    *
@@ -28,6 +33,13 @@ abstract class Entity {
     return $newData;
   }
 
+  /**
+   * Update an array by push
+   *
+   * @param $collectionName
+   * @param $properties
+   * @return array
+   */
   public function push($collectionName, $properties) {
     $db = self::DDBB_NAME;
 
@@ -39,6 +51,13 @@ abstract class Entity {
     return $newData;
   }
 
+  /**
+   * Find by ID
+   *
+   * @param $collectionName
+   * @param $id
+   * @return array|null
+   */
   public function findById($collectionName, $id) {
     $db = self::DDBB_NAME;
 
@@ -47,6 +66,13 @@ abstract class Entity {
     return $collection->findOne(array("_id" => $id), array('password' => 0));
   }
 
+  /**
+   * Find method by field and value
+   *
+   * @param $collectionName
+   * @param $arraySearch
+   * @return array|null
+   */
   static function findOneBy($collectionName, $arraySearch) {
     $db = self::DDBB_NAME;
 
@@ -56,6 +82,8 @@ abstract class Entity {
   }
 
   /**
+   * Set properties
+   *
    * @param $field
    * @param $value
    * @return mixed
@@ -63,6 +91,8 @@ abstract class Entity {
   abstract function set($field, $value);
 
   /**
+   * Get properties
+   *
    * @param $field
    * @return mixed
    */
