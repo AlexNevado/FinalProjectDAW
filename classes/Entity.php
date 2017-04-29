@@ -82,6 +82,13 @@ abstract class Entity {
   }
 
   /**
+   * Get properties
+   *
+   * @param $field
+   * @return mixed
+   */
+  abstract function get($field);
+  /**
    * Set properties
    *
    * @param $field
@@ -89,22 +96,14 @@ abstract class Entity {
    * @return mixed
    */
   abstract function set($field, $value);
-
-  /**
-   * Get properties
-   *
-   * @param $field
-   * @return mixed
-   */
-  abstract function get($field);
+  abstract function toArray($value);
+  abstract static function fromArray($array);
 
   /**
    * Convert this object to JSON
    *
    * @return string
    */
-  function toJSON() {
-    return json_encode($this);
-  }
+  abstract function toJSON();
 
 }

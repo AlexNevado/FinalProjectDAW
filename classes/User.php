@@ -40,7 +40,7 @@ class User extends Entity {
    * @param $value
    * @return array
    */
-  function toArray($value) {
+  function toArray($value = NULL) {
     $user = array(
         "_id" => $this->get('_id'),
         "username" => $this->get('username'),
@@ -86,7 +86,7 @@ class User extends Entity {
    * @return array
    */
   public function addMonstruo($monstruoID) {
-    $newData = array('monstruos' => array('monstruoID' => $monstruoID));
+    $newData = array('monstruos' => $monstruoID);
     return parent::push(self::USERS_COLLECTION, $newData);
   }
 
@@ -104,7 +104,25 @@ class User extends Entity {
     $collection = $connection->$db->$collectionName;
     return $collection->findOne(array($field => $this->get($field)), array('password' => 0));
   }
+
+  public function toJSON() {
+    $array = $this->toArray();
+    $array['_id'] = (string)$array['_id'];
+    foreach ($array['monstruos'] as $key => &$monstruoID) {
+      $monstruoID = (string)$monstruoID;
+    }
+    $array = array_filter($array, function($var){return !is_null($var);});
+    return json_encode($array);
+  }
   /**** Getters & Setters ****/
+
+  /**
+   * @param $field
+   * @return mixed
+   */
+  public function get($field) {
+    return $this->$field;
+  }
 
   /**
    * @param $field
@@ -115,11 +133,4 @@ class User extends Entity {
     return $this->$field = $value;
   }
 
-  /**
-   * @param $field
-   * @return mixed
-   */
-  public function get($field) {
-    return $this->$field;
-  }
 }

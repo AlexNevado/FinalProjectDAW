@@ -26,27 +26,39 @@ ctx.drawImage(img, 0, 0, img.width,    img.height,     // source rectangle
     function startBattle() {
       var canvas = document.getElementById('battleCanvas');
       var enemy = {
-        "_id" : ObjectId("5900cb0c47864ae7038b4567"),
-        "userID" : ObjectId("58fa1e7647864a930c8b4567"),
-        "name" : "dragoncito",
-        "img" : "image/monstersAvatars/Dragon.png",
-        "characteristics" : {
-          "str" : "1",
-          "def" : "6",
-          "luk" : "1",
-          "hp" : NumberLong(10)
-        },
-        "abilities" : {
-          "abi1" : "Hab1"
-        }
-      };
+        this._id
+    :
+      "5900cb0c47864ae7038b4567",
+          this.userID
+    :
+      "58fa1e7647864a930c8b4567",
+          this.name
+    :
+      "dragoncito",
+          this.img
+    :
+      "image/monstersAvatars/Dragon.png",
+          this.characteristics
+    :
+      [{
+        str: NumberLong(10),
+        def: NumberLong(10),
+        luk: NumberLong(10),
+        hp: NumberLong(10)
+      }],
+          this.abilities
+    :
+      [{
+        abi1: "Hab1"
+      }]
+    };
       if (canvas.getContext) {
         var ctx = canvas.getContext('2d');
         var imagePanel = new Image();
         var imageMonstruo = new Image();
         var tWidth = 800;
         var tHeight = 600;
-       
+
         imagePanel.src = 'image/panel1.png';
         imageMonstruo.src = 'image/monstersAvatars/Dragon.png';
 

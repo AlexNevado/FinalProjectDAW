@@ -49,7 +49,7 @@ class Monstruo extends Entity {
    *
    * @return array
    */
-  function toArray()  {
+  function toArray($value = NULL)  {
     $monstruo = array(
         "_id" => $this->get('_id'),
         "userID" => $this->get('userID'),
@@ -83,18 +83,25 @@ class Monstruo extends Entity {
 
   /**
    * @param $field
+   * @return mixed
+   */
+  public function get($field) {
+    return $this->$field;
+  }
+
+  /**
+   * @param $field
    * @param $value
    * @return mixed
    */
   public function set($field, $value) {
     return $this->$field = $value;
   }
+  public function toJSON() {
+    $array = $this->toArray();
+    $array['_id'] = (string)$array['_id'];
+    $array['userID'] = (string)$array['userID'];
+    $array = array_filter($array, function($var){return !is_null($var);});
+    return json_encode($array);  }
 
-  /**
-   * @param $field
-   * @return mixed
-   */
-  public function get($field) {
-    return $this->$field;
-  }
 }
