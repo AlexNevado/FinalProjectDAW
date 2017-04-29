@@ -46,21 +46,25 @@ if (isset($accessToken)) {
   }
   //Get users' data
   $facebookUser = $response->getGraphUser();
-
   //Create new user with facebookID
   $user = new User();
   $user->set("facebookID", $facebookUser['id']);
   //Find the user, if doesn't exist create new user with facebook's id
   $result = $user->findByField("facebookID");
   if (empty($result)) {
-    // Set users propertys and save
+    // Set users properties and save
     $user->set("_id", new MongoId());
-    $user->set("username", (string)$user->_id);
+    $user->set("username", (string)$user->get('_id'));
     $user->save();
-
-    $_SESSION['user']['_id'] = (string)$user->_id;
+    $_SESSION['user'] = array(
+        '_id' => (string)$user->get('_id'),
+        'username' => $user->get('username'),
+    );
   } else {
-    $_SESSION['user']['_id'] = (string)$result['_id'];
+    $_SESSION['user'] = array(
+        '_id' => (string)$result['_id'],
+        'username' => $result['username'],
+    );
   }
   header("Location: home.php");
 }

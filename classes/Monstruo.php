@@ -3,23 +3,35 @@
 class Monstruo extends Entity {
 
   // Monstruo's ID
-  public $_id;
+  private $_id;
   // User's ID
-  public $userID;
+  private $userID;
   // Monstruo's name
-  public $name;
+  private $name;
   // Monstruo's image source
-  public $img;
+  private $img;
   // Monstruo's characteristics
-  public $characteristics = array();
+  private $characteristics = array();
   // Monstruos's abilities
-  public $abilites = array();
+  private $abilites = array();
 
   const DDBB_NAME = "mba";
 
   const MONSTRUOS_COLLECTION = 'monstruos';
 
   function __construct()  {
+  }
+
+  public static function fromArray($array) {
+    $monstruo = new Monstruo();
+    $monstruo->set('_id', $array['_id']);
+    $monstruo->set('userID', $array['userID']);
+    $monstruo->set('name', $array['name']);
+    $monstruo->set('img', $array['img']);
+    $monstruo->set('$characteristics', $array['$characteristics']);
+    $monstruo->set('$abilites', $array['$abilites']);
+
+    return $monstruo;
   }
 
   function toArray()  {
@@ -41,4 +53,22 @@ class Monstruo extends Entity {
     return parent::findById(self::USERS_COLLECTION, $this->_id);
   }
 
+  /**** Getters & Setters ****/
+
+  /**
+   * @param $field
+   * @param $value
+   * @return mixed
+   */
+  public function set($field, $value) {
+    return $this->$field = $value;
+  }
+
+  /**
+   * @param $field
+   * @return mixed
+   */
+  public function get($field) {
+    return $this->$field;
+  }
 }

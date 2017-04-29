@@ -2,19 +2,29 @@
 
 class User extends Entity {
   // User's ID
-  public $_id;
+  private $_id;
   // Username
-  public $username;
+  private $username;
   // User's facebookID
-  public $facebookID;
+  private $facebookID;
   //User's monstruos
-  public $monstruos = array();
+  private $monstruos = array();
 
   const DDBB_NAME = "mba";
 
   const USERS_COLLECTION = "users";
 
   function __construct() {
+  }
+
+  public static function fromArray($array) {
+    $user = new User();
+    $user->set('_id', $array['_id']);
+    $user->set('username', $array['username']);
+    $user->set('facebookID', $array['facebookID']);
+    $user->set('monstruos', $array['monstruos']);
+
+    return $user;
   }
 
   function toArray($value) {
@@ -35,11 +45,14 @@ class User extends Entity {
     return parent::save(self::USERS_COLLECTION, $this->toArray($password));
   }
 
+
+
   public function findById() {
     return parent::findById(self::USERS_COLLECTION, $this->_id);
   }
   public function addMonstruo($monstruoID) {
-    return parent::Save();
+    $newData = array('monstruos' => array('monstruoID' => $monstruoID));
+    return parent::push(self::USERS_COLLECTION,$newData);
   }
 
   public function findByField($field) {
@@ -49,5 +62,23 @@ class User extends Entity {
     $connection = new MongoClient();
     $collection = $connection->$db->$collectionName;
     return $collection->findOne(array($field => $this->$field), array('password' => 0));
+  }
+  /**** Getters & Setters ****/
+
+  /**
+   * @param $field
+   * @param $value
+   * @return mixed
+   */
+  public function set($field, $value) {
+    return $this->$field = $value;
+  }
+
+  /**
+   * @param $field
+   * @return mixed
+   */
+  public function get($field) {
+    return $this->$field;
   }
 }

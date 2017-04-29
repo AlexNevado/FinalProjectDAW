@@ -60,7 +60,7 @@ if (!isset($_SESSION["Authenticated"]) || $_SESSION["Authenticated"] == 0) {
   <div class="row">
     <div class="col-xs-12" role="main">
       <?php
-      if (hasMonstruos($_SESSION['user']['_id'])) {
+      if (hasMonstruos()) {
         ?>
         <div class="userLogin" id="userButton">
           <img src="image/anonymous.png" width="100" height="100" class="userImg"></br>
