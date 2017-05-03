@@ -7,6 +7,7 @@ if (isset ($_POST["monsterName"])) {
   $monstruo->set('_id', new MongoId());
   $monstruo->set('userID', new MongoId($_SESSION["user"]["_id"]));
   $monstruo->set('name', $_POST["monsterName"]);
+  $monstruo->set('img', $_POST["avatarName"]);
   $monstruo->set('characteristics', array('str' => (int)$_POST['str'],
                                           'def' => (int)$_POST['def'],
                                           'luk' => (int)$_POST['luk'],

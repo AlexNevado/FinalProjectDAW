@@ -5,24 +5,25 @@ include 'functions.php';
 if (!isset($_SESSION["Authenticated"]) || $_SESSION["Authenticated"] == 0) {
   header("Location: index.php");
 }
+$monster = Monstruo::fromArray(Entity::findOneBy(monstruos, array("name" => "dragoncito")));
+$a=0;
+$monsterJson = $monster->toJSON();
+$b=0;
 ?>
 <!DOCTYPE html>
 <html>
 <head>
   <title>Monstruos's Bizarre Adventure</title>
-  <!-- <script src="js/jquery-3.2.1.min.js"></script>
-  <script src="https://code.jquery.com/jquery-migrate-3.0.0.js"></script>-->
+  <script src="js/jquery-3.2.1.min.js"></script>
+  <!-- <script src="https://code.jquery.com/jquery-migrate-3.0.0.js"></script>-->
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script> -->
   <script src="js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/main.css">
-  <script src="js/jcanvas/jcanvas.js"></script>
+  <script src="js/jcanvas.min.js"></script>
+  <script src="js/monstruo.js"></script>
   <script type="application/javascript">
-    /*
-     ctx.drawImage(img, 0, 0, img.width,    img.height,     // source rectangle
-     0, 0, canvas.width, canvas.height);
 
-     */
     var enemy = {
       _id: "5900cb0c47864ae7038b4567",
       userID: "58fa1e7647864a930c8b4567",
@@ -37,62 +38,42 @@ if (!isset($_SESSION["Authenticated"]) || $_SESSION["Authenticated"] == 0) {
       abilities: [{
         abi1: "Hab1"
       }],
-      draw: function() {
-        var canvas = document.getElementById('battleCanvas');
-        var ctx = canvas.getContext('2d');
-        var monstruo = new Image();
-        imageMonstruo.src = 'image/monstersAvatars/Dragon.png';
-
+      draw: function (canvas = '#battleCanvas', x = 300, y = 0) {
+        var img = this.img;
+        $(document).ready(function () {
+          $(canvas).drawImage({
+            draggable: true,
+            source: img,
+            x: x, y: y,
+            width: 300,
+            height: 300,
+            fromCenter: false
+          });
+        });
       }
     };
-
-    $(document).ready(function () {
-
-      // Draw a pentagon
-      $("#battleCanvas").drawPolygon({
-        draggable: true,
-        fillStyle: "#6c3",
-        x: 100, y: 100,
-        radius: 50, sides: 5
+    var strMonstruo = <?php print $monsterJson ?>;
+    var enemy1= new Monstruo();
+    enemy1.buildWithJson(strMonstruo);
+    enemy1.move();
+    function drawPanel(canvas = '#battleCanvas', x = 0, y = 300) {
+      $(document).ready(function () {
+        $(canvas).drawImage({
+          draggable: true,
+          source: 'image/panel1.png',
+          x: x, y: y,
+          width: 800,
+          height: 180,
+          fromCenter: false
+        });
       });
-      $('#battleCanvas').drawImage({
-        draggable: true,
-        source: 'image/panel1.png',
-        x: 0, y: 300,
-        width: 800,
-        height: 180,
-        fromCenter: false
-      });
-    });
+    }
+    function game() {
+      drawPanel();
+      enemy1.draw();
+    }
+    function randomEnemy() {
 
-
-
-
-
-    function startBattle() {
-      var canvas = document.getElementById('battleCanvas');
-
-      if (canvas.getContext) {
-        var ctx = canvas.getContext('2d');
-        var imagePanel = new Image();
-        var imageMonstruo = new Image();
-        var tWidth = 800;
-        var tHeight = 600;
-
-        imagePanel.src = 'image/panel1.png';
-        imageMonstruo.src = 'image/monstersAvatars/Dragon.png';
-
-        imageMonstruo.onload = function () {
-          ctx.drawImage(imageMonstruo, 0, 20, tWidth, tHeight, 300, 0, tWidth, tHeight);
-
-        }
-        imagePanel.onload = function () {
-          ctx.drawImage(imagePanel, 0, 0, tWidth, tHeight, 0, 300, tWidth, tHeight - tHeight * 0.25);
-        };
-
-
-        //ctx.fillText("Habilidades",500,300);
-      }
     }
 
   </script>
@@ -104,7 +85,7 @@ if (!isset($_SESSION["Authenticated"]) || $_SESSION["Authenticated"] == 0) {
   </style>
 </head>
 <!-- <body>  -->
-<body onload="">
+<body onload="game()">
 <div class="container">
   <div class="row">
     <div class="col-xs-12" role="main">
