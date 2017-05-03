@@ -2,6 +2,7 @@
 session_start();
 include 'functions.php';
 
+echo '<a href="validate.php?logout">EXIT</a>';
 if (!isset($_SESSION["Authenticated"]) || $_SESSION["Authenticated"] == 0) {
   header("Location: index.php");
 }
@@ -53,17 +54,24 @@ if (!isset($_SESSION["Authenticated"]) || $_SESSION["Authenticated"] == 0) {
     $('#userButton').click(function(){
       window.location.href="mainMenu.php";
     });
+    $('.userDelete').mouseenter(function() {
+      $('#userButton').removeClass('userLogin');
+    });
+    $('.userDelete').mouseleave(function() {
+      $('#userButton').addClass('userLogin');
+    });
   });
 </script>
 <div class="container">
   <div class="row">
     <div class="col-xs-12" role="main">
       <?php
-      if (hasMonstruos($_SESSION['user']['id'])) {
+      if (hasMonstruos()) {
         ?>
-        <div class="userLogin" id="userButton">
+        <div class="userLogin col-sm-4 col-sm-offset-4" id="userButton">
+          <img src="image/xClose.png" class="userDelete col-xs-2">
           <img src="image/anonymous.png" width="100" height="100" class="userImg"></br>
-          <label for="username"><?php print $_SESSION['user']['name']; ?></label>
+          <label for="username"><?php print $_SESSION['user']['username']; ?></label>
         </div>
         <?php
       } else {

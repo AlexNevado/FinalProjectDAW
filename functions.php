@@ -1,5 +1,11 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
+
+foreach (glob("classes/*.php") as $filename) {
+  include $filename;
+}
+
+
 $fb = new Facebook\Facebook([
     'app_id' => '259915584478602',
     'app_secret' => 'be739ec8db993b668937fe4c7c58c649',
@@ -11,36 +17,34 @@ $permissions = ['email']; // optional
 $loginUrl = $helper->getLoginUrl('http://mba2.com/fb-callback.php', $permissions);
 $GLOBALS['loginUrl'] = $loginUrl;
 
-function register()
-{
+function register() {
   ?>
-    <form action="register.php" method="post">
-      <div class="col-xs-12 login">
-        <?php
-        if (isset($_GET["error"])) {
-          errorMessage("Este nombre de usuario ya está siendo usado");
-        }
-        ?>
-        <div class="form-group">
-          <label for="usr">Username:</label>
-          <input type="text" class="form-control" name="username">
-        </div>
-        <div class="form-group">
-          <label for="pwd">Password:</label>
-          <input type="password" class="form-control" name="password" required>
-        </div>
-        <button type="submit" class="btn btn-login btn-sm">Enviar</button>
-        <?php
-        echo '<a href="' . $GLOBALS['loginUrl'] . '" class="btn btn-login fb-button"></a>';
-        ?>
+  <form action="register.php" method="post">
+    <div class="col-xs-12 login">
+      <?php
+      if (isset($_GET["error"])) {
+        errorMessage("Este nombre de usuario ya está siendo usado");
+      }
+      ?>
+      <div class="form-group">
+        <label for="usr">Username:</label>
+        <input type="text" class="form-control" name="username">
       </div>
-    </form>
+      <div class="form-group">
+        <label for="pwd">Password:</label>
+        <input type="password" class="form-control" name="password" required>
+      </div>
+      <button type="submit" class="btn btn-login btn-sm">Enviar</button>
+      <?php
+      echo '<a href="' . $GLOBALS['loginUrl'] . '" class="btn btn-login fb-button"></a>';
+      ?>
+    </div>
+  </form>
 
   <?php
 }
 
-function login()
-{
+function login() {
   ?>
   <form action="validate.php" method="post">
     <div class="col-xs-12 login">
@@ -65,8 +69,7 @@ function login()
   <?php
 }
 
-function errorMessage($message)
-{
+function errorMessage($message) {
   ?>
   <div class="row">
     <div class="alert alert-warning col-xs-12">
@@ -76,8 +79,7 @@ function errorMessage($message)
   <?php
 }
 
-function footer()
-{
+function footer() {
   ?>
   <div class="row">
     <div class="col-xs-12 rrss">
@@ -93,11 +95,8 @@ function footer()
   <?php
 }
 
-function hasMonstruos($userID) {
-  $dbname = "mba";
-  $connection = new MongoClient(); // connect to localhost:27017
-  $usersCollection = $connection->$dbname->monstruos;
-  $result = $usersCollection->findOne(array('userID' => new MongoId($_SESSION["user"]["id"])));
+function hasMonstruos() {
+  $result = Entity::findOneBy("monstruos", array("userID" => new MongoId($_SESSION['user']['_id'])));
   if (empty($result))
     return false;
   return true;

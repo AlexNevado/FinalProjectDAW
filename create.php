@@ -1,22 +1,23 @@
 <?php
 session_start();
-$dbname = "mba";
+include 'functions.php';
+
 if (isset ($_POST["monsterName"])) {
-  $hp = rand(10,50);
-  // connect to localhost:27017
-  $connection = new MongoClient();
-  $monstruosCollection = $connection->$dbname->monstruos;
-  $monstruo = array(
-      "userID" => new MongoId($_SESSION["user"]["id"]),
-      "name" => $_POST["monsterName"],
-      "characteristics" => array('str' => $_POST['str'], 'def' => $_POST['def'], 'luk' => $_POST['luk'], 'hp'=> $hp),
-      "abilities" => array('abi1' => $_POST['abi']));
-  $monstruosCollection->insert($monstruo);
+  $monstruo = new Monstruo();
+  $monstruo->set('_id', new MongoId());
+  $monstruo->set('userID', new MongoId($_SESSION["user"]["_id"]));
+  $monstruo->set('name', $_POST["monsterName"]);
+  $monstruo->set('characteristics', array('str' => (int)$_POST['str'],
+                                          'def' => (int)$_POST['def'],
+                                          'luk' => (int)$_POST['luk'],
+                                          'hp' => rand(10,50)));
+  $monstruo->set('abilities', array('abi1' => $_POST['abi']));
+  $monstruo->save();
 
-  $connection = new MongoClient();
-  $usersCollection = $connection->$dbname->users;
-  $newData = array('$push' => array('monstruos' => array('monstruoID' => $monstruo['_id'])));
-  $usersCollection->update(array('_id' => new MongoId($_SESSION['user']['id'])), $newData);
-
+  $user = Entity::findOneBy("users", array("_id" => new MongoId($_SESSION['user']['_id'])));
+  if (!empty($user)) {
+    $user = User::fromArray($user);
+    $user->addMonstruo($monstruo->get('_id'));
+  }
   header("Location: home.php");
 }

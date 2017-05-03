@@ -1,6 +1,6 @@
 <?php
 session_start();
-$dbname = "mba";
+include 'functions.php';
 require_once __DIR__ . '/vendor/autoload.php';
 
 $fb = new Facebook\Facebook([
@@ -37,7 +37,6 @@ if (isset($accessToken)) {
   try {
     // Returns a `Facebook\FacebookResponse` object
     $response = $fb->get('/me?fields=id,name', $_SESSION['facebook_access_token']);
-    $_SESSION["Authenticated"] == 1;
   } catch (Facebook\Exceptions\FacebookResponseException $e) {
     echo 'Graph returned an error: ' . $e->getMessage();
     exit;
@@ -46,25 +45,26 @@ if (isset($accessToken)) {
     exit;
   }
   //Get users' data
-  $user = $response->getGraphUser();
-  // connect to localhost:27017
-  $connection = new MongoClient();
-  $usersCollection = $connection->$dbname->users;
-  $result = $usersCollection->findOne(array("facebookID" => $user['id']));
+  $facebookUser = $response->getGraphUser();
+  //Create new user with facebookID
+  $user = new User();
+  $user->set("facebookID", $facebookUser['id']);
   //Find the user, if doesn't exist create new user with facebook's id
+  $result = $user->findByField("facebookID");
   if (empty($result)) {
-    //First create a new user with the and save de facebookID
-    $newUser = array("facebookID" => $user['id']);
-    $usersCollection->insert($newUser);
-    //Update the same user with username == mongoID
-    //This way we create a new user with a serialID by username
-    $newData = array('$set' => array("username" => (string) $newUser['_id']));
-    $usersCollection->update(array("facebookID" => $user['id']), $newData);
-    $_SESSION["user"]["name"] = (string) $newUser['_id'];
-    $_SESSION["user"]["id"] = (string) $newUser['_id'];
-  }else {
-    $_SESSION["user"]["name"] = $result['username'];
-    $_SESSION["user"]["id"] = (string) $result['_id'];
+    // Set users properties and save
+    $user->set("_id", new MongoId());
+    $user->set("username", (string)$user->get('_id'));
+    $user->save();
+    $_SESSION['user'] = array(
+        '_id' => (string)$user->get('_id'),
+        'username' => $user->get('username'),
+    );
+  } else {
+    $_SESSION['user'] = array(
+        '_id' => (string)$result['_id'],
+        'username' => $result['username'],
+    );
   }
   header("Location: home.php");
 }
