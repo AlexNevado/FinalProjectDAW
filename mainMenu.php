@@ -23,6 +23,12 @@ header("Location: index.php");
         <div class="col-xs-12">
             <!-- title -->
             <img src="image/login_image1.png" class="col-xs-8 col-xs-offset-2 img-responsive loginImage"/>
+<<<<<<< HEAD
+=======
+            <div class="col-xs-12">
+                <h2> Monstruos's Bizarre Adventure <img src="image/number2.png" width="50" height="50" alt="image number 2"></h2><br/>
+            </div>
+>>>>>>> e7337a212b390f3de57394d6c570a5f6b86d4b97
         </div>
     </div>
     <div class="row">

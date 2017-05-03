@@ -1,7 +1,7 @@
 	@font-face {
-  	font-family: "Herculanum";
-  	src: url("fonts/Herculanum-Regular.ttf");
-  }
+		font-family: "Herculanum";
+		src: url("../fonts/Herculanum-Regular.ttf");
+	}
 	body {
 		text-align: center;
 		font-size: 18px;
@@ -119,18 +119,15 @@
 	}
 	.screen {
 		display: inline-block;
-    vertical-align: baseline;
+		vertical-align: baseline;
 		width: 640px;
 		height: 480px;
 		position: absolute;
-  	font-family: "Herculanum";
+		font-family: "Herculanum";
 	}
 	.menu-options {
-		margin-left: 420px;
+		/*margin-left: 420px;*/
 		margin-top: 320px;
-		width: 150px;
-		height: 150px;
-  	z-index: 99;
 	}
 	.menu-options h3:hover {
  		text-shadow: 
@@ -145,10 +142,20 @@
 		color: lightgray;
 		cursor: pointer;
 	}
+	.messsage-screen {
+		background: black;
+		z-index: 10;
+		left:1;
+		width: 641px;
+		height: 481px;
+		border:5px solid gray;
+		display: none;
+	}
 	canvas {
 		background: url('../image/forest2.jpg');
 		z-index: 0;
 	}
+<<<<<<< HEAD
 
 	.btn-menu-principal{
 		color: black;
@@ -161,8 +168,29 @@
 		opacity: 0.7;
 	}
 
+=======
+	@media  (max-width: 640px) {
+		.screen {
+			width: 280px;
+			height: 470px;
+		}
+		.message-screen {
+			width: 281px;
+			height: 470px;
+		}
+		#battleCanvas {
+			width: 280px;
+			height: 470px;
+		}
+	}
+>>>>>>> e7337a212b390f3de57394d6c570a5f6b86d4b97
 	@media  (max-width: 600px) {
 		body{
 			font-size: 1.4em;
+		}
+	}
+	@media  (max-width: 360px) {
+		.menu-options h3{
+			font-size: 1.3em;
 		}
 	}
