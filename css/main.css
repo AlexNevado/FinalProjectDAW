@@ -109,12 +109,19 @@
 		height: 200px;
 	}
 	.userLogin {
-		margin: 10% 30%;
-		height: 120px;
+		border-radius: 20px;
 	}
 	.userLogin:hover {
 		box-shadow: 1px 1px 10px 1px white;
 		opacity: 0.7;
+		cursor: pointer;
+	}
+	.userDelete {
+
+	}
+	.userDelete:hover {
+		-webkit-filter: drop-shadow(10px 10px 10px black);
+		filter: drop-shadow(5px 5px 5px white);
 		cursor: pointer;
 	}
 	.screen {
