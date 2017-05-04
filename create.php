@@ -14,7 +14,7 @@ if (isset ($_POST["monsterName"])) {
                                           'luk' => (int)$_POST['luk'],
                                           'maxHp' => $maxHp,
                                           'hp' => $maxHp));
-  $monstruo->set('abilities', array('abi1' => $_POST['abi']));
+  $monstruo->push("monstruos",array('abilities' => $_POST['abi']));
   $monstruo->save();
 
   $user = Entity::findOneBy("users", array("_id" => new MongoId($_SESSION['user']['_id'])));

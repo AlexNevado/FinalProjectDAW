@@ -11,32 +11,39 @@ function Monstruo() {
       hp   : 0
   };
   this.abilities = [];
-  this.x = 0;
-  this.y = 0;
 
-  this.draw = function ( x = this.x, y = this.y, canvas = '#battleCanvas', img = this.img) {
+  this.draw = function (opacity = 1, x = 0, y = 0, width = 300, height = 300,index = 9,name ='monstruo', canvas = '#battleCanvas', img = this.img) {
       $(document).ready(function () {
         $(canvas).drawImage({
           layer: true,
-          name : 'monstruo',
+          name : name,
           draggable: true,
           source: img,
+          index: index,
           x: x, y: y,
-          width: 300,
-          height: 300,
+          width: width,
+          height: height,
           fromCenter: false,
-          opacity:0.2,
+          opacity: opacity,
           shadowX: 10, shadowY: 10,
           shadowBlur: 0,
           shadowColor: 'rgba(0, 0, 0, 0.5)'
         });
       });
     };
-  this.move = function ( x = this.x, y = this.y, canvas = '#battleCanvas') {
+  this.move = function ( x = 0, y = 0, opacity = 1, canvas = '#battleCanvas') {
+    /*
+      Example with callback function
+     $(document).ready(function () {
+     $(canvas).animateLayer('monstruo', {
+     x:'+=' + x, opacity: 1
+     }, 1500, function(layer) {//calback function});
+     });
+     */
     $(document).ready(function () {
       $(canvas).animateLayer('monstruo', {
-        x:'+=' + x, opacity: 1
-      }, 1500, function(layer) {});
+        x:'+=' + x, opacity: opacity
+      }, 1500);
     });
   };
   this.buildWithJson = function (jsonObject) {
@@ -85,7 +92,7 @@ function Monstruo() {
     this.characteristics.maxHp = value;
   };
   this.addAbility = function (value) {
-    this.abilities.push({abi1 : value});
+    this.abilities.push({abi : value});
   }
 
 }
