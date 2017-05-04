@@ -3,12 +3,18 @@ function Monstruo() {
   this.userID;
   this.name;
   this.img;
-  this.characteristics;
-  this.abilities;
+  this.characteristics = {
+      str  : 0,
+      def  : 0,
+      luk  : 0,
+      maxHp: 0,
+      hp   : 0
+  };
+  this.abilities = [];
   this.x = 0;
   this.y = 0;
 
-  this.draw = function (canvas = '#battleCanvas',img = this.img, x = this.x, y = this.y) {
+  this.draw = function ( x = this.x, y = this.y, canvas = '#battleCanvas', img = this.img) {
       $(document).ready(function () {
         $(canvas).drawImage({
           layer: true,
@@ -19,25 +25,18 @@ function Monstruo() {
           width: 300,
           height: 300,
           fromCenter: false,
-          shadowX: 20, shadowY: 5,
-          shadowBlur: 5,
+          opacity:0.2,
+          shadowX: 10, shadowY: 10,
+          shadowBlur: 0,
           shadowColor: 'rgba(0, 0, 0, 0.5)'
         });
       });
     };
-  this.move = function (canvas = '#battleCanvas',img = this.img, x = this.x, y = this.y) {
+  this.move = function ( x = this.x, y = this.y, canvas = '#battleCanvas') {
     $(document).ready(function () {
-      var $canvas= $(canvas);
-      var layer0 = $canvas.getLayer("monstruo");
-      layer0.animateLayer()
-      $canvas.animateLayer('monstruo', {
-        x:'+=200',y: 300,
-      }, 1000, function(layer) { // Callback function
-        $(this).animateLayer(layer, {
-          x: 500,
-          opacity: 0.6
-        }, 'slow', 'ease-in-out');
-      });
+      $(canvas).animateLayer('monstruo', {
+        x:'+=' + x, opacity: 1
+      }, 1500, function(layer) {});
     });
   };
   this.buildWithJson = function (jsonObject) {
@@ -70,5 +69,23 @@ function Monstruo() {
         break;
     }
   };
+  this.setSTR = function(value) {
+    this.characteristics.str = value;
+  };
+  this.setDEF = function(value) {
+    this.characteristics.def = value;
+  };
+  this.setLUK = function(value) {
+    this.characteristics.luk = value;
+  };
+  this.setHP = function(value) {
+    this.characteristics.hp = value;
+  };
+  this.setMAXHP = function(value) {
+    this.characteristics.maxHp = value;
+  };
+  this.addAbility = function (value) {
+    this.abilities.push({abi1 : value});
+  }
 
 }

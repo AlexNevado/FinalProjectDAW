@@ -3,6 +3,7 @@ session_start();
 include 'functions.php';
 
 if (isset ($_POST["monsterName"])) {
+  $maxHp = rand(10, 50);
   $monstruo = new Monstruo();
   $monstruo->set('_id', new MongoId());
   $monstruo->set('userID', new MongoId($_SESSION["user"]["_id"]));
@@ -11,7 +12,8 @@ if (isset ($_POST["monsterName"])) {
   $monstruo->set('characteristics', array('str' => (int)$_POST['str'],
                                           'def' => (int)$_POST['def'],
                                           'luk' => (int)$_POST['luk'],
-                                          'hp' => rand(10,50)));
+                                          'maxHp' => $maxHp,
+                                          'hp' => $maxHp));
   $monstruo->set('abilities', array('abi1' => $_POST['abi']));
   $monstruo->save();
 
