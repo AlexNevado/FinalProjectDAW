@@ -5,17 +5,20 @@ include 'functions.php';
 if (!isset($_SESSION["Authenticated"]) || $_SESSION["Authenticated"] == 0) {
   header("Location: index.php");
 }
-$monster = Monstruo::fromArray(Entity::findOneBy(monstruos, array("userID" => new MongoId($_SESSION['user']['_id']))));
+$monster = Monstruo::fromArray(Entity::findOneBy("monstruos", array("userID" => new MongoId($_SESSION['user']['_id']))));
 $monsterJson = $monster->toJSON();
 // Esto es de prueba hasta que añadamos el método via server
-$_SESSION['player'] = json_encode("aaa");
+$_SESSION['player'] = "single";
 $_POST['first'] = "1";
 
 if ($_SESSION['player'] == 'multi') {
-  $otherMonster = Monstruo::fromArray(Entity::findOneBy(monstruos, array("userID" => new MongoId($_POST['userID']))));
+  $otherMonster = Monstruo::fromArray(Entity::findOneBy("monstruos", array("userID" => new MongoId($_POST['userID']))));
 }else {
-  $otherMonster = '0';
+  $otherMonster = 'null';
 }
+// db.abilities.insert({abilities:[{Punch:3},{Drain:1}]});
+$result = Entity::findOneBy("abilities",array());
+$list = $result['abilities'];
 ?>
 <!DOCTYPE html>
 <html>
@@ -30,12 +33,13 @@ if ($_SESSION['player'] == 'multi') {
   <script src="js/jcanvas.min.js"></script>
   <script src="js/monstruo.js"></script>
   <script type="application/javascript">
-    var first = <?php print $_POST['first']; ?>;
-    var player = <?php print $_SESSION['player']; ?>;
+    var first = <?php print json_encode($_POST['first']); ?>;
+    var player = <?php print json_encode($_SESSION['player']); ?>;
     var strMonstruo = <?php print $monsterJson; ?>;
     var canvasID = '#battleCanvas';
     var yourMonster = new Monstruo();
     var enemy;
+    var listAbilities = <?php print json_encode($list) ?>;
     if (player == 'single') {
       enemy1 = randomEnemy();
     } else {
@@ -89,6 +93,7 @@ if ($_SESSION['player'] == 'multi') {
     function hideMenu() {
       $(document).ready(function () {
         $('#menuBattle').fadeOut(600);
+        $('#menuAbi').delay(1000).fadeIn(600);
       });
     }
     function drawPanels(canvasID) {
@@ -105,7 +110,7 @@ if ($_SESSION['player'] == 'multi') {
     function percentageHp(monstruo) {
       return monstruo.characteristics.hp / monstruo.characteristics.maxHp;
     }
-    function attack() {
+    function aaaattack() {
 
     }
     function randomEnemy() {
@@ -179,8 +184,9 @@ if ($_SESSION['player'] == 'multi') {
         $('#sign' + signNumber).fadeOut(200);
       });
       $('h3[id^=btn-abi-]').click(function () {
-        hideMenu();
-
+        $('#menuAbi').hide();
+        alert($(this).html());
+        attack($(this).html());
       });
       $('#backButton').click(function () {
         for (var i = 0; i < 10; i++) {
@@ -190,6 +196,9 @@ if ($_SESSION['player'] == 'multi') {
         $('#menuBattle').fadeIn(300);
       });
     });
+    function attack(){
+      
+    }
   </script>
   <style type="text/css">
     #battleCanvas {
