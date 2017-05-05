@@ -7,15 +7,11 @@ if (!isset($_SESSION["Authenticated"]) || $_SESSION["Authenticated"] == 0) {
 }
 $monster = Monstruo::fromArray(Entity::findOneBy(monstruos, array("userID" => new MongoId($_SESSION['user']['_id']))));
 $monsterJson = $monster->toJSON();
+$monsterEnemy = 1;
 // Esto es de prueba hasta que añadamos el método via server
-$_SESSION['player'] = json_encode("aaa");
-$_POST['first'] = "1";
+$_POST['first'] = 1;
 
-if ($_SESSION['player'] == 'multi') {
-  $otherMonster = Monstruo::fromArray(Entity::findOneBy(monstruos, array("userID" => new MongoId($_POST['userID']))));
-}else {
-  $otherMonster = '0';
-}
+$first = $_POST['first'] == 1 ? TRUE : FALSE;
 ?>
 <!DOCTYPE html>
 <html>
@@ -30,18 +26,11 @@ if ($_SESSION['player'] == 'multi') {
   <script src="js/jcanvas.min.js"></script>
   <script src="js/monstruo.js"></script>
   <script type="application/javascript">
-    var first = <?php print $_POST['first']; ?>;
-    var player = <?php print $_SESSION['player']; ?>;
-    var strMonstruo = <?php print $monsterJson; ?>;
     var canvasID = '#battleCanvas';
+    var strMonstruo = <?php print $monsterJson; ?>;
     var yourMonster = new Monstruo();
-    var enemy;
-    if (player == 'single') {
-      enemy1 = randomEnemy();
-    } else {
-      enemy1 = <?php print $otherMonster; ?>;
-    }
-
+    var enemy1 = randomEnemy();
+    var first =<?php print $first; ?>;
     yourMonster.buildWithJson(strMonstruo);
     function drawImage(imgSrc = 'image/panel1.png', canvas = '#battleCanvas', x = 0, y = 300, width = 800, height = 180, name = "panel", index = 0) {
       $(document).ready(function () {
@@ -161,35 +150,55 @@ if ($_SESSION['player'] == 'multi') {
         });
       });
     }
+    function changeColor() {
+
+    }
     $(document).ready(function () {
       $('#btn-abi').click(function () {
+
         $('#menuBattle').hide();
         $('#menuAbi').fadeIn(300);
-        for (var i = 0; i < yourMonster.abilities.length; i++) {
-          $('#btn-abi-' + i).html(yourMonster.abilities[i]);
-          $('#btn-abi-' + i).show();
-        }
       });
-      $('h3[id^=btn-abi-]').mouseenter(function () {
+      $(':regex(id, "btn-abi-")').mouseenter(function () {
         var signNumber = $(this).attr('id').slice(-1);
         $('#sign' + signNumber).fadeIn(200);
       });
-      $('h3[id^=btn-abi-]').mouseleave(function () {
+      $('#btn-abi-1, #btn-abi-2, #btn-abi-3').mouseleave(function () {
         var signNumber = $(this).attr('id').slice(-1);
         $('#sign' + signNumber).fadeOut(200);
       });
-      $('h3[id^=btn-abi-]').click(function () {
-        hideMenu();
-
-      });
       $('#backButton').click(function () {
-        for (var i = 0; i < 10; i++) {
-          $('#btn-abi-' + i).hide();
-        }
         $('#menuAbi').hide();
         $('#menuBattle').fadeIn(300);
       });
     });
+    /*
+    * function invert() {
+     $(this).setPixels({
+     x: 150, y: 100,
+     width: 220, height: 138,
+     // loop through each pixel
+     each: function(px) {
+     px.r = 255 - px.r;
+     px.g = 0 - px.g;
+     px.b = 0 - px.b;
+     }
+     });
+     }
+
+     $('canvas').drawImage({
+     layer: true,
+     name: "pez",
+     source: 'images/fish.jpg',
+     x: 150, y: 100,
+     // Invert image color when image loads
+     //load: invert
+     });
+     $('canvas').setLayer('pez',{
+     load: invert
+     });
+    *
+    * */
   </script>
   <style type="text/css">
     #battleCanvas {
@@ -211,19 +220,25 @@ if ($_SESSION['player'] == 'multi') {
               <h3 id="btn-chn">Cambio</h3>
             </div>
             <div class="col-sm-6 col-sm-offset-6 col-xs-offset-2 menu-options" id="menuAbi">
-              <div class="col-xs-10" id="abilitiesList">
-                <?php
-                for ($i = 0; $i < 10; $i++) {
-                  ?>
-                  <div class="col-xs-3">
-                    <img id="sign<?php print $i; ?>" class="img-sign" src="image/rightSign.png" width="20" height="20">
-                  </div>
-                  <div class="col-xs-9">
-                    <h3 id="btn-abi-<?php print $i; ?>">Habilidad<?php print $i; ?></h3>
-                  </div>
-                  <?php
-                }
-                ?>
+              <div class="col-xs-10">
+                <div class="col-xs-3">
+                  <img id="sign1" class="img-sign" src="image/rightSign.png" width="20" height="20">
+                </div>
+                <div class="col-xs-9">
+                  <h3 id="btn-abi-1">Habilidad1</h3>
+                </div>
+                <div class="col-xs-3">
+                  <img id="sign2" class="img-sign" src="image/rightSign.png" width="20" height="20">
+                </div>
+                <div class="col-xs-9">
+                  <h3 id="btn-abi-2">Habilidad2</h3>
+                </div>
+                <div class="col-xs-3">
+                  <img id="sign3" class="img-sign" src="image/rightSign.png" width="20" height="20">
+                </div>
+                <div class="col-xs-9">
+                  <h3 id="btn-abi-3">Habilidad3</h3>
+                </div>
               </div>
               <div class="col-xs-1" id="backButton">
               </div>

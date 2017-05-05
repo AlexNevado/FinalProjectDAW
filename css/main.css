@@ -1,210 +1,260 @@
-	@font-face {
-		font-family: "Herculanum";
-		src: url("../fonts/Herculanum-Regular.ttf");
-	}
-	body {
-		text-align: center;
-		font-size: 18px;
-		background: url(../image/background1.jpg);
-		color: #dedede;
-	}
-	div[role="footer"] {
-		color: white;
-		font-size: 0.9em;
-		padding: 0.5%;
-		text-align: center;
-		mix-blend-mode: exclusion;
-	}
-	div[role="main"] {
-		border: 1px solid black;
-	}
-	legend, legend a, legend a:hover {
-		color: #dedede;
-	}
-	legend a:hover {
-		cursor: pointer;
-	}
-	input[type="number"] {
-		color: black;
-	}
-	.login input {
-		display: inline;
-		width: auto;
-	}
-	.stats input{
-		float: right;
-	}
-	.container {
-		margin-top: 1%;
-	}
-	#fb {
-		margin:0% 0%;
-		background: url('../image/rrss1.gif') no-repeat 0 0;
-		width: 38px;
-		height: 37px;
-		border-radius: 10px 10px 10px 10px;
-	}
-	#fb:hover {
-		background: url('../image/rrss1.gif') no-repeat 0 -76px;
-	}
-	#tw {
-		background: url('../image/rrss1.gif') no-repeat -45px 0;
-		width: 37px;
-		height: 38px;
-		border-radius: 10px 10px 10px 10px;
-	}
-	#tw:hover {
-		background: url('../image/rrss1.gif') no-repeat -45px -76px;
-	}
-	#in {
-		background: url('../image/rrss1.gif') no-repeat -134px 0;
-		width: 39px;
-		height: 37px;
-		border-radius: 10px 10px 10px 10px;
-	}
-	#in:hover {
-		background: url('../image/rrss1.gif') no-repeat -134px -76px;
-	}
-	#tu {
-		background: url('../image/rrss1.gif') no-repeat -220px 0;
-		width: 39px;
-		height: 38px;
-		border-radius: 10px 10px 10px 10px;
-	}
-	#tu:hover {
-		background: url('../image/rrss1.gif') no-repeat -220px -76px;
-	}
-	.row {
-		margin-bottom: 1%;
-	}
-	.rrss {
-		padding:1%;
-	}
-	.btn-login {
-		color:black;
-		background: lightgray;
-	}
-	.btn-login:hover {
-		box-shadow: 1px 1px 10px 1px white;
-		opacity: 0.7;
-	}
-	.fb-button {
-		margin-top: 1%;
-		background: url('../image/fb-button.png') no-repeat 1% ;
-		width: 153px;
-		height: 34px;
-		border-radius: 5px 5px 5px 5px;
-	}
-	.fb-button:hover {
-		opacity: 0.7;
-	}
-	.activeSection {
-		font-size: 1.4em;
-	}
-	.loginImage {
-		max-height: 280px;
-	}
-	.avatarImg {
-		width: 200px;
-		height: 200px;
-	}
-	.userLogin {
-		border-radius: 20px;
-	}
-	.userLogin:hover {
-		box-shadow: 1px 1px 10px 1px white;
-		opacity: 0.7;
-		cursor: pointer;
-	}
-	.userDelete {
+@font-face {
+  font-family: "Herculanum";
+  src: url("../fonts/Herculanum-Regular.ttf");
+}
 
-	}
-	.userDelete:hover {
-		-webkit-filter: drop-shadow(10px 10px 10px black);
-		filter: drop-shadow(5px 5px 5px white);
-		cursor: pointer;
-	}
-	.screen {
-		display: inline-block;
-		vertical-align: baseline;
-		width: 640px;
-		height: 480px;
-		position: absolute;
-		font-family: "Herculanum";
-	}
-	.menu-options {
-		/*margin-left: 420px;*/
-		margin-top: 300px;
-	}
-	.img-sign {
-		margin-top: 22px;
-		display: none;
-	}
-	.menu-options h3:hover {
- 		text-shadow: 
- 			0 0 10px #fff,
- 			0 0 20px #fff, 
- 			0 0 30px #fff, 
- 			0 0 40px #004d99, 
- 			0 0 70px #004d99, 
- 			0 0 80px #004d99, 
- 			0 0 100px #004d99, 
- 			0 0 150px #004d99;
-		color: lightgray;
-		cursor: pointer;
-	}
-	.messsage-screen {
-		background: black;
-		z-index: 10;
-		left:1px;
-		width: 641px;
-		height: 481px;
-		border:5px solid gray;
-		display: none;
-	}
-	#menuBattle, #menuAbi {
-		display: none;
-		overflow-y : auto;
-		max-height: 200px;
-	}
-	#backButton {
-		background: url("../image/rightSign.png");
-		background-size: 100% 100%;
-		height: 160px;
-		margin: 2%;
-		opacity: 0.3;
-		-webkit-transition: all 1s; /* Safari */
-		transition: all 1s;
-	}
-	#backButton:hover {
-		opacity:0.7;
-		cursor: pointer;
-	}
-	canvas {
-		background: url('../image/forest2.jpg');
-		z-index: 0;
-	}
-	@media  (max-width: 640px) {
-		.screen {
-			width: 280px;
-			height: 470px;
-		}
-		.message-screen {
-			width: 281px;
-			height: 470px;
-		}
-		#battleCanvas {
-			width: 280px;
-			height: 470px;
-		}
-	}
-	@media  (max-width: 600px) {
-		body{
-			font-size: 1.4em;
-		}
-	}
-	@media  (max-width: 360px) {
-		.menu-options h3{
-			font-size: 1.3em;
-		}
-	}
+body {
+  text-align: center;
+  font-size: 18px;
+  background: url(../image/background1.jpg);
+  color: #dedede;
+}
+
+div[role="footer"] {
+  color: white;
+  font-size: 0.9em;
+  padding: 0.5%;
+  text-align: center;
+  mix-blend-mode: exclusion;
+}
+
+div[role="main"] {
+  border: 1px solid black;
+}
+
+legend, legend a, legend a:hover {
+  color: #dedede;
+}
+
+legend a:hover {
+  cursor: pointer;
+}
+
+input[type="number"] {
+  color: black;
+}
+
+.login input {
+  display: inline;
+  width: auto;
+}
+
+.stats input {
+  float: right;
+}
+
+.container {
+  margin-top: 1%;
+}
+
+#fb {
+  margin: 0% 0%;
+  background: url('../image/rrss1.gif') no-repeat 0 0;
+  width: 38px;
+  height: 37px;
+  border-radius: 10px 10px 10px 10px;
+}
+
+#fb:hover {
+  background: url('../image/rrss1.gif') no-repeat 0 -76px;
+}
+
+#tw {
+  background: url('../image/rrss1.gif') no-repeat -45px 0;
+  width: 37px;
+  height: 38px;
+  border-radius: 10px 10px 10px 10px;
+}
+
+#tw:hover {
+  background: url('../image/rrss1.gif') no-repeat -45px -76px;
+}
+
+#in {
+  background: url('../image/rrss1.gif') no-repeat -134px 0;
+  width: 39px;
+  height: 37px;
+  border-radius: 10px 10px 10px 10px;
+}
+
+#in:hover {
+  background: url('../image/rrss1.gif') no-repeat -134px -76px;
+}
+
+#tu {
+  background: url('../image/rrss1.gif') no-repeat -220px 0;
+  width: 39px;
+  height: 38px;
+  border-radius: 10px 10px 10px 10px;
+}
+
+#tu:hover {
+  background: url('../image/rrss1.gif') no-repeat -220px -76px;
+}
+
+.row {
+  margin-bottom: 1%;
+}
+
+.rrss {
+  padding: 1%;
+}
+
+.btn-login {
+  color: black;
+  background: lightgray;
+}
+
+.btn-login:hover {
+  box-shadow: 1px 1px 10px 1px white;
+  opacity: 0.7;
+}
+
+.fb-button {
+  margin-top: 1%;
+  background: url('../image/fb-button.png') no-repeat 1%;
+  width: 153px;
+  height: 34px;
+  border-radius: 5px 5px 5px 5px;
+}
+
+.fb-button:hover {
+  opacity: 0.7;
+}
+
+.activeSection {
+  font-size: 1.4em;
+}
+
+.loginImage {
+  max-height: 280px;
+}
+
+.avatarImg {
+  width: 200px;
+  height: 200px;
+}
+
+.userLogin {
+  border-radius: 20px;
+}
+
+.userLogin:hover {
+  box-shadow: 1px 1px 10px 1px white;
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.userDelete {
+
+}
+
+.userDelete:hover {
+  -webkit-filter: drop-shadow(10px 10px 10px black);
+  filter: drop-shadow(5px 5px 5px white);
+  cursor: pointer;
+}
+
+.screen {
+  display: inline-block;
+  vertical-align: baseline;
+  width: 640px;
+  height: 480px;
+  position: absolute;
+  font-family: "Herculanum";
+}
+
+.menu-options {
+  /*margin-left: 420px;*/
+  margin-top: 300px;
+}
+
+.img-sign {
+  margin-top: 22px;
+  display: none;
+}
+
+.menu-options h3:hover {
+  text-shadow: 0 0 10px #fff,
+  0 0 20px #fff,
+  0 0 30px #fff,
+  0 0 40px #004d99,
+  0 0 70px #004d99,
+  0 0 80px #004d99,
+  0 0 100px #004d99,
+  0 0 150px #004d99;
+  color: lightgray;
+  cursor: pointer;
+}
+
+.messsage-screen {
+  background: black;
+  z-index: 10;
+  left: 1px;
+  width: 641px;
+  height: 481px;
+  border: 5px solid gray;
+  display: none;
+}
+
+#menuBattle, #menuAbi {
+  display: none;
+  overflow-y: auto;
+  max-height: 200px;
+}
+
+#backButton {
+  background: url("../image/rightSign.png");
+  background-size: 100% 100%;
+  height: 185px;
+  opacity: 0.3;
+  -webkit-transition: all 1s; /* Safari */
+  transition: all 1s;
+}
+
+#backButton:hover {
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+#abilitiesList {
+  overflow-y: auto;
+  max-height: 180px;
+}
+#abilitiesList h3[id^='btn-abi-']{
+  display: none;
+}
+
+canvas {
+  background: url('../image/forest2.jpg');
+  z-index: 0;
+}
+
+@media (max-width: 640px) {
+  .screen {
+    width: 280px;
+    height: 470px;
+  }
+
+  .message-screen {
+    width: 281px;
+    height: 470px;
+  }
+
+  #battleCanvas {
+    width: 280px;
+    height: 470px;
+  }
+}
+
+@media (max-width: 600px) {
+  body {
+    font-size: 1.4em;
+  }
+}
+
+@media (max-width: 360px) {
+  .menu-options h3 {
+    font-size: 1.3em;
+  }
+}
