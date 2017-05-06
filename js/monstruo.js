@@ -86,7 +86,10 @@ function Monstruo() {
     this.characteristics.luk = value;
   };
   this.setHP = function(value) {
-    this.characteristics.hp = value;
+    var hp = this.characteristics.hp + value;
+    hp = hp > this.maxHp? maxHp : hp;
+    hp = hp < 0? 0 : hp;
+    this.characteristics.hp = hp;
   };
   this.setMAXHP = function(value) {
     this.characteristics.maxHp = value;

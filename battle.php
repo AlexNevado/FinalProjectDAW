@@ -13,11 +13,11 @@ $_POST['first'] = "1";
 
 if ($_SESSION['player'] == 'multi') {
   $otherMonster = Monstruo::fromArray(Entity::findOneBy("monstruos", array("userID" => new MongoId($_POST['userID']))));
-}else {
+} else {
   $otherMonster = 'null';
 }
 // db.abilities.insert({abilities:[{Punch:3},{Drain:1}]});
-$result = Entity::findOneBy("abilities",array());
+$result = Entity::findOneBy("abilities", array());
 $list = $result['abilities'];
 ?>
 <!DOCTYPE html>
@@ -38,7 +38,7 @@ $list = $result['abilities'];
     var strMonstruo = <?php print $monsterJson; ?>;
     var canvasID = '#battleCanvas';
     var yourMonster = new Monstruo();
-    var enemy;
+    var enemy1;
     var listAbilities = <?php print json_encode($list) ?>;
     if (player == 'single') {
       enemy1 = randomEnemy();
@@ -85,17 +85,26 @@ $list = $result['abilities'];
     function endBattle() {
 
     }
+    /**
+     *Show menus
+     */
     function showMenu() {
       $(document).ready(function () {
         $('#menuBattle').delay(1000).fadeIn(600);
       });
     }
+    /**
+     * Hide menus
+     */
     function hideMenu() {
       $(document).ready(function () {
         $('#menuBattle').fadeOut(600);
         $('#menuAbi').delay(1000).fadeIn(600);
       });
     }
+    /**
+     * Draw the panels
+     */
     function drawPanels(canvasID) {
       $(document).ready(function () {
         drawImage();
@@ -107,12 +116,15 @@ $list = $result['abilities'];
         //$(canvasID).setLayer('monstruo', {});
       });
     }
+    /**
+     *Calculate percentage of Hp
+     **/
     function percentageHp(monstruo) {
       return monstruo.characteristics.hp / monstruo.characteristics.maxHp;
     }
-    function aaaattack() {
-
-    }
+    /**
+     * Create randon enemy
+     */
     function randomEnemy() {
       var enemy1 = new Monstruo();
       enemy1.set("_id", "0");
@@ -149,13 +161,17 @@ $list = $result['abilities'];
       var maxHp = randomInt(1, 50);
       enemy1.setHP(maxHp);
       enemy1.setMAXHP(maxHp);
-      enemy1.addAbility("Hab3");
+      enemy1.addAbility("Punch");
+      enemy1.addAbility("Thunder");
       return enemy1;
     }
     //Create random integer
     function randomInt(min, max) {
       return Math.floor(Math.random() * (max - min + 1) + min);
     }
+    /**
+     * Show messages
+     */
     function messages(message, canvas = "#battleCanvas") {
       $(document).ready(function () {
         $(canvas).animateLayer('monstruo', {
@@ -186,7 +202,7 @@ $list = $result['abilities'];
       $('h3[id^=btn-abi-]').click(function () {
         $('#menuAbi').hide();
         alert($(this).html());
-        attack($(this).html());
+        doAction("Ability", $(this).html());
       });
       $('#backButton').click(function () {
         for (var i = 0; i < 10; i++) {
@@ -196,8 +212,62 @@ $list = $result['abilities'];
         $('#menuBattle').fadeIn(300);
       });
     });
-    function attack(){
-      
+    /**
+     * Do player action
+     */
+    function doAction(action, object) {
+      switch (action) {
+        case "Ability":
+          listAbilities.forEach(function (ability) {
+            if (ability.name == object) {
+              attack(ability);
+            }
+          });
+          break;
+        case "Objects":
+          break;
+        case "Change":
+          break;
+      }
+    }
+    /**
+     * Attack an enemy
+     */
+    function attack(ability) {
+      //Critical double the attack power if you have enough luk
+      //and can make you miss an attack
+      var random = randomInt(yourMonster.characteristics.luk, 40);
+      var critical = random > 30 ? 2 : random < 5 ? 0 : 1;
+      var newHp = (-yourMonster.characteristics.str - ability.power) * critical;
+      enemy1.setHP(newHp);
+      //Maybe in a future had to be types in abilities parameters for this but for now
+      //it's ok this way
+      if (ability.name == "Drain") {
+        yourMonster.setHP(ability.power);
+      }
+      //TODO Do some stuff with canvas, effects and shit
+      checkBarChanges();
+      if (yourMonster.characteristics.hp == 0 || enemy1.characteristics.hp == 0) {
+        endBattle();
+      }else if (player == "multi") {
+        sendJSON();
+      } else {
+        randomAction();
+        showMenu();
+      }
+    }
+    function checkBarChanges() {
+      $(document).ready(function () {
+        $(canvasID).animateLayer("bar1", {width: 300 * percentageHp(enemy1)}, 1000);
+        $(canvasID).animateLayer("bar2", {width: 200 * percentageHp(yourMonster)}, 1000);
+      });
+    }
+    function sendJSON() {
+      //TODO
+    }
+    function randomAction() {
+      //TODO
+      alert(enemy1.abilities.length);
     }
   </script>
   <style type="text/css">
