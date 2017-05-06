@@ -158,7 +158,7 @@ $list = $result['abilities'];
       enemy1.setSTR(randomInt(1, 5));
       enemy1.setDEF(randomInt(1, 5));
       enemy1.setLUK(randomInt(1, 5));
-      var maxHp = randomInt(1, 50);
+      var maxHp = randomInt(50, 80);
       enemy1.setHP(maxHp);
       enemy1.setMAXHP(maxHp);
       enemy1.addAbility("Punch");
@@ -201,7 +201,6 @@ $list = $result['abilities'];
       });
       $('h3[id^=btn-abi-]').click(function () {
         $('#menuAbi').hide();
-        alert($(this).html());
         doAction("Ability", $(this).html());
       });
       $('#backButton').click(function () {
@@ -219,8 +218,8 @@ $list = $result['abilities'];
       switch (action) {
         case "Ability":
           listAbilities.forEach(function (ability) {
-            if (ability.name == object) {
-              attack(ability);
+            if (ability.name === object) {
+              attack(yourMonster, enemy1, ability);
             }
           });
           break;
@@ -233,41 +232,76 @@ $list = $result['abilities'];
     /**
      * Attack an enemy
      */
-    function attack(ability) {
+    function attack(attacker, defender, ability) {
       //Critical double the attack power if you have enough luk
       //and can make you miss an attack
-      var random = randomInt(yourMonster.characteristics.luk, 40);
+      var random = randomInt(attacker.characteristics.luk, 40);
       var critical = random > 30 ? 2 : random < 5 ? 0 : 1;
-      var newHp = (-yourMonster.characteristics.str - ability.power) * critical;
-      enemy1.setHP(newHp);
+      var newHp = (defender.characteristics.def - attacker.characteristics.str - ability.power) * critical;
+      if (newHp < 0) {
+        defender.setHP(newHp);
+        doAnimations();
+      }
       //Maybe in a future had to be types in abilities parameters for this but for now
       //it's ok this way
       if (ability.name == "Drain") {
         yourMonster.setHP(ability.power);
+        doAnimations();
       }
       //TODO Do some stuff with canvas, effects and shit
-      checkBarChanges();
+      //checkBarChanges();
       if (yourMonster.characteristics.hp == 0 || enemy1.characteristics.hp == 0) {
         endBattle();
-      }else if (player == "multi") {
+      } else if (player == "multi") {
         sendJSON();
       } else {
-        randomAction();
-        showMenu();
+        if (attacker == yourMonster) {
+          setTimeout(function(){randomAction();},3000);
+        }else {
+          setTimeout(function(){showMenu();},3000);
+        }
       }
     }
-    function checkBarChanges() {
+    function doAnimations() {
       $(document).ready(function () {
-        $(canvasID).animateLayer("bar1", {width: 300 * percentageHp(enemy1)}, 1000);
-        $(canvasID).animateLayer("bar2", {width: 200 * percentageHp(yourMonster)}, 1000);
+        function invert() {
+          $(this).setPixels({
+            width: 800, height: 600,
+            // loop through each pixel
+            each: function(px) {
+              px.r = 255 - px.r;
+              px.g = 255 - px.g;
+              px.b = 255 - px.b;
+            }
+          });
+        }
+        $(canvasID).animateLayer("bar1", {width: 300 * percentageHp(enemy1)}, 1000)
+            .animateLayer("bar1", {load: invert},1000)
+                   .animateLayer("bar2", {width: 200 * percentageHp(yourMonster)}, 1000);
+        enemy1.hurt();
       });
     }
     function sendJSON() {
       //TODO
     }
+    function receiveJSON() {
+      //TODO receive JSON and make changes in local
+      doAnimations();
+      if (yourMonster.characteristics.hp == 0 || enemy1.characteristics.hp == 0) {
+        endBattle();
+      } else {
+        showMenu();
+      }
+    }
     function randomAction() {
       //TODO
-      alert(enemy1.abilities.length);
+      var random = randomInt(0,enemy1.abilities.length - 1);
+      listAbilities.forEach(function (ability) {
+        if (ability.name == enemy1.abilities[random]) {
+          attack(enemy1, yourMonster, ability);
+        }
+      });
+      //Add objects in future
     }
   </script>
   <style type="text/css">

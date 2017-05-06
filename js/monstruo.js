@@ -46,6 +46,17 @@ function Monstruo() {
       }, 1500);
     });
   };
+  this.hurt = function (canvas = '#battleCanvas') {
+    $(document).ready(function () {
+      $(canvas).animateLayer('monstruo', {
+        x:'-=10'
+      }, 'fast').animateLayer('monstruo', {
+        x:'+=20'
+      }, 'fast').animateLayer('monstruo', {
+        x:'-=10'
+      }, 'fast');
+    });
+  };
   this.buildWithJson = function (jsonObject) {
     this.id = jsonObject._id;
     this.userID = jsonObject.userID;
@@ -95,7 +106,7 @@ function Monstruo() {
     this.characteristics.maxHp = value;
   };
   this.addAbility = function (value) {
-    this.abilities.push({abi : value});
+    this.abilities.push(value);
   }
 
 }

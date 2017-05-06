@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5ccffd07-080f-4780-beb4-d0ef9bbad406" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/battle.php" afterPath="$PROJECT_DIR$/battle.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/monstruo.js" afterPath="$PROJECT_DIR$/js/monstruo.js" />
     </list>
@@ -31,18 +30,18 @@
       <file leaf-file-name="Entity.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/classes/Entity.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="782">
+            <state relative-caret-position="-588">
               <caret line="46" column="43" lean-forward="false" selection-start-line="46" selection-start-column="32" selection-end-line="46" selection-end-column="43" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="monstruo.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="monstruo.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/monstruo.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="45" column="15" lean-forward="true" selection-start-line="45" selection-start-column="7" selection-end-line="45" selection-end-column="15" />
+            <state relative-caret-position="685">
+              <caret line="53" column="14" lean-forward="false" selection-start-line="53" selection-start-column="14" selection-end-line="53" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -51,18 +50,18 @@
       <file leaf-file-name="Monstruo.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/classes/Monstruo.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1309">
+            <state relative-caret-position="-27">
               <caret line="77" column="30" lean-forward="false" selection-start-line="77" selection-start-column="30" selection-end-line="77" selection-end-column="30" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="battle.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="battle.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/battle.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="261" column="52" lean-forward="false" selection-start-line="261" selection-start-column="52" selection-end-line="261" selection-end-column="52" />
+            <state relative-caret-position="-597">
+              <caret line="160" column="33" lean-forward="false" selection-start-line="160" selection-start-column="33" selection-end-line="160" selection-end-column="33" />
               <folding />
             </state>
           </provider>
@@ -71,7 +70,7 @@
       <file leaf-file-name="home.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/home.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="356">
+            <state relative-caret-position="109">
               <caret line="124" column="31" lean-forward="false" selection-start-line="124" selection-start-column="31" selection-end-line="124" selection-end-column="31" />
               <folding />
             </state>
@@ -81,7 +80,7 @@
       <file leaf-file-name="User.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/classes/User.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1513">
+            <state relative-caret-position="-316">
               <caret line="89" column="23" lean-forward="false" selection-start-line="89" selection-start-column="19" selection-end-line="89" selection-end-column="23" />
               <folding />
             </state>
@@ -91,7 +90,7 @@
       <file leaf-file-name="main.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/css/main.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3179">
+            <state relative-caret-position="466">
               <caret line="259" column="1" lean-forward="false" selection-start-line="259" selection-start-column="1" selection-end-line="259" selection-end-column="1" />
               <folding />
             </state>
@@ -105,6 +104,9 @@
       <find>$user</find>
       <find>favicon.ico</find>
       <find>menuba</find>
+      <find>alert</find>
+      <find>randomE</find>
+      <find>chec</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$</dir>
@@ -397,12 +399,12 @@
       <workItem from="1493846364385" duration="10163000" />
       <workItem from="1493909054630" duration="15126000" />
       <workItem from="1493993258992" duration="12586000" />
-      <workItem from="1494067838959" duration="7141000" />
+      <workItem from="1494067838959" duration="16760000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="163794000" />
+    <option name="totallyTimeSpent" value="173413000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -499,21 +501,6 @@
           <url>file://$PROJECT_DIR$/p1.php</url>
           <line>31</line>
           <option name="timeStamp" value="56" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/battle.php</url>
-          <line>7</line>
-          <option name="timeStamp" value="173" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/battle.php</url>
-          <line>20</line>
-          <option name="timeStamp" value="174" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/battle.php</url>
-          <line>19</line>
-          <option name="timeStamp" value="175" />
         </line-breakpoint>
       </breakpoints>
       <option name="time" value="176" />
@@ -839,9 +826,25 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/home.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="109">
+          <caret line="124" column="31" lean-forward="false" selection-start-line="124" selection-start-column="31" selection-end-line="124" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-316">
+          <caret line="89" column="23" lean-forward="false" selection-start-line="89" selection-start-column="19" selection-end-line="89" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/css/main.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3179">
+        <state relative-caret-position="466">
           <caret line="259" column="1" lean-forward="false" selection-start-line="259" selection-start-column="1" selection-end-line="259" selection-end-column="1" />
           <folding />
         </state>
@@ -849,39 +852,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/classes/Entity.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="782">
+        <state relative-caret-position="-588">
           <caret line="46" column="43" lean-forward="false" selection-start-line="46" selection-start-column="32" selection-end-line="46" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/classes/User.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1513">
-          <caret line="89" column="23" lean-forward="false" selection-start-line="89" selection-start-column="19" selection-end-line="89" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/home.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="356">
-          <caret line="124" column="31" lean-forward="false" selection-start-line="124" selection-start-column="31" selection-end-line="124" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/monstruo.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="45" column="15" lean-forward="true" selection-start-line="45" selection-start-column="7" selection-end-line="45" selection-end-column="15" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/classes/Monstruo.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1309">
+        <state relative-caret-position="-27">
           <caret line="77" column="30" lean-forward="false" selection-start-line="77" selection-start-column="30" selection-end-line="77" selection-end-column="30" />
           <folding />
         </state>
@@ -889,8 +868,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/battle.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="261" column="52" lean-forward="false" selection-start-line="261" selection-start-column="52" selection-end-line="261" selection-end-column="52" />
+        <state relative-caret-position="-597">
+          <caret line="160" column="33" lean-forward="false" selection-start-line="160" selection-start-column="33" selection-end-line="160" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/monstruo.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="685">
+          <caret line="53" column="14" lean-forward="false" selection-start-line="53" selection-start-column="14" selection-end-line="53" selection-end-column="14" />
           <folding />
         </state>
       </provider>
