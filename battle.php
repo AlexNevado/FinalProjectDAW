@@ -240,13 +240,19 @@ $list = $result['abilities'];
       var newHp = (defender.characteristics.def - attacker.characteristics.str - ability.power) * critical;
       if (newHp < 0) {
         defender.setHP(newHp);
-        doAnimations();
+        if (attacker==yourMonster) {
+          doAnimations("playerAttack");
+        }else {
+          doAnimations("enemyAttack");
+        }
+      }else {
+        //TODO Miss
       }
       //Maybe in a future had to be types in abilities parameters for this but for now
       //it's ok this way
       if (ability.name == "Drain") {
         yourMonster.setHP(ability.power);
-        doAnimations();
+        doAnimations("playerCure");
       }
       //TODO Do some stuff with canvas, effects and shit
       //checkBarChanges();
@@ -256,29 +262,30 @@ $list = $result['abilities'];
         sendJSON();
       } else {
         if (attacker == yourMonster) {
-          setTimeout(function(){randomAction();},3000);
-        }else {
-          setTimeout(function(){showMenu();},3000);
+          setTimeout(function () {
+            randomAction();
+          }, 3000);
+        } else {
+          setTimeout(function () {
+            showMenu();
+          }, 3000);
         }
       }
     }
-    function doAnimations() {
+    function doAnimations(animation) {
       $(document).ready(function () {
-        function invert() {
-          $(this).setPixels({
-            width: 800, height: 600,
-            // loop through each pixel
-            each: function(px) {
-              px.r = 255 - px.r;
-              px.g = 255 - px.g;
-              px.b = 255 - px.b;
-            }
-          });
+        switch (animation) {
+          case "enemyAttack":
+            enemy1.attackAnimation();
+            $(canvasID).animateLayer("bar2", {width: 200 * percentageHp(yourMonster)}, 1000);
+            break;
+          case "playerAttack":
+            $(canvasID).animateLayer("bar1", {width: 300 * percentageHp(enemy1)}, 1000)
+            break;
+          case "playerCure":
+            $(canvasID).animateLayer("bar2", {width: 200 * percentageHp(yourMonster)}, 1000);
+            break;
         }
-        $(canvasID).animateLayer("bar1", {width: 300 * percentageHp(enemy1)}, 1000)
-            .animateLayer("bar1", {load: invert},1000)
-                   .animateLayer("bar2", {width: 200 * percentageHp(yourMonster)}, 1000);
-        enemy1.hurt();
       });
     }
     function sendJSON() {
@@ -295,7 +302,7 @@ $list = $result['abilities'];
     }
     function randomAction() {
       //TODO
-      var random = randomInt(0,enemy1.abilities.length - 1);
+      var random = randomInt(0, enemy1.abilities.length - 1);
       listAbilities.forEach(function (ability) {
         if (ability.name == enemy1.abilities[random]) {
           attack(enemy1, yourMonster, ability);
@@ -312,6 +319,7 @@ $list = $result['abilities'];
 </head>
 <!-- <body>  -->
 <body onload="startBattle()">
+
 <div class="container">
   <div class="row">
     <div class="col-xs-12" role="main">
@@ -347,6 +355,11 @@ $list = $result['abilities'];
         </div>
       </div>
       <div class="row">
+        <audio controls autoplay loop>
+          <source src="audio/battleThemeA.ogg" type="audio/ogg">
+          <source src="audio/battleThemeA.mp3" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
         <div class="col-xs-1 col-xs-offset-9">
           <a href="validate.php?logout" class="btn btn-login btn-sm">Logout</a>
         </div>

@@ -46,13 +46,13 @@ function Monstruo() {
       }, 1500);
     });
   };
-  this.hurt = function (canvas = '#battleCanvas') {
+  this.attackAnimation = function (layer = 'monstruo', canvas = '#battleCanvas') {
     $(document).ready(function () {
-      $(canvas).animateLayer('monstruo', {
+      $(canvas).animateLayer(layer, {
         x:'-=10'
-      }, 'fast').animateLayer('monstruo', {
+      }, 'fast').animateLayer(layer, {
         x:'+=20'
-      }, 'fast').animateLayer('monstruo', {
+      }, 'fast').animateLayer(layer, {
         x:'-=10'
       }, 'fast');
     });
