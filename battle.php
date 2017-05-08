@@ -173,8 +173,8 @@ $list = $result['abilities'];
       var maxHp = randomInt(1, 30);
       enemy1.setHP(maxHp);
       enemy1.setMAXHP(maxHp);
-      enemy1.addAbility("Punch");
-      enemy1.addAbility("Thunder");
+      enemy1.addAbility(1);
+      enemy1.addAbility(3);
       return enemy1;
     }
     //Create random integer
@@ -256,7 +256,7 @@ $list = $result['abilities'];
             }
           });
           break;
-        case "Objects":
+        case "items":
           break;
         case "Change":
           break;
@@ -271,78 +271,18 @@ $list = $result['abilities'];
       var random = randomInt(attacker.characteristics.luk, 40);
       var critical = random > 30 ? 2 : random < 5 ? 0 : 1;
       var newHp = (defender.characteristics.def - attacker.characteristics.str - ability.power) * critical;
-      newHp = 0;
       if (newHp < 0) {
         defender.setHP(newHp);
-        if (attacker == yourMonster) {
-          doAnimations("playerAttack");
-        } else {
-          doAnimations("enemyAttack");
-        }
+        var animation = attacker == yourMonster ? "playerAttack" : "enemyAttack";
+        doAnimations(animation);
       } else {
-        //TODO Miss
-/*
-        $(canvasID).drawText({
-          name: 'myText',
-          fillStyle: '#B00000',
-          strokeStyle: 'darkred',
-          strokeWidth: 2,
-          x: 450, y: 100,
-          fontSize: 48,
-          fontFamily: 'Verdana, sans-serif',
-          text: 'Miss'
-        })*/
-        $(canvasID).drawText({
-          layer: true,
-          name: 'myText',
-          fillStyle: '#B00000',
-          strokeStyle: 'darkred',
-          strokeWidth: 2,
-          x: 450, y: 100,
-          fontSize: '36pt',
-          fontFamily: 'Verdana, sans-serif',
-          text: 'Miss'
-        }).drawArc({
-          layer: true,
-          fillStyle: 'darkred',
-          opacity:0.2,
-          x: 450, y: 100,
-          radius: $(canvasID).measureText('myText').width / 2
-        }).animateLayer('myText',{fontSize: '66pt',},2000).delayLayer('myText', 3000).animateLayer("myText",{opacity:0},1000);
-
-/*
-* ex:
-* // Draw text
- $('canvas').drawText({
- layer: true,
- name: 'myText',
- fillStyle: '#36c',
- strokeWidth: 2,
- x: 180, y: 150,
- fontSize: '36pt',
- fontFamily: 'Verdana, sans-serif',
- text: 'Hello'
- })
- // Draw circle as wide as the text
- .drawArc({
- layer: true,
- fillStyle: '#36c',
- opacity:0.3,
- x: 180, y: 150,
- radius: $('canvas').measureText('myText').width / 2
- }).animateLayer('myText',{fontSize: '66pt',},2000)
- .delayLayer('myText', 3000)
- .animateLayer("myText",{opacity:0},1000)
- ;
-
- setTimeout(function(){ $('canvas').removeLayer('myText');
- }, 3000);
-*
-* */
+        var animation = attacker == yourMonster ? "playerMiss" : "enemyMiss";
+        doAnimations(animation);
       }
+
       //Maybe in a future had to be types in abilities parameters for this but for now
       //it's ok this way
-      if (ability.name == "Drain") {
+      if (ability.id == 2) {
         yourMonster.setHP(ability.power);
         doAnimations("playerCure");
       }
@@ -356,14 +296,15 @@ $list = $result['abilities'];
         if (attacker == yourMonster) {
           setTimeout(function () {
             randomAction();
-          }, 1000);
+          }, 2000);
         } else {
           setTimeout(function () {
             showMenu();
-          }, 1000);
+          }, 2000);
         }
       }
     }
+
     function doAnimations(animation) {
       $(document).ready(function () {
         switch (animation) {
@@ -374,17 +315,63 @@ $list = $result['abilities'];
             $(canvasID).animateLayer("hurt", {opacity: 1}, 300, function (layer) {
               $(this).animateLayer(layer, {opacity: 0}, 1000);
             });
-
             break;
           case "playerAttack":
-              $(canvasID).animateLayer("mDamage1", {opacity: 0.8}, 200, function (layer) {
-                $(this).animateLayer(layer, {opacity: 0}, 200);
-              });
-
+            $(canvasID).animateLayer("mDamage1", {opacity: 0.8}, 200, function (layer) {
+              $(this).animateLayer(layer, {opacity: 0}, 200);
+            });
             $(canvasID).animateLayer("bar1", {width: 300 * percentageHp(enemy1)}, 1000)
             break;
           case "playerCure":
             $(canvasID).animateLayer("bar2", {width: 200 * percentageHp(yourMonster)}, 1000);
+            break;
+          case "playerMiss":
+            $(canvasID).drawText({
+              layer: true,
+              name: 'Text',
+              groups: ['Miss'],
+              fillStyle: '#B00000',
+              strokeStyle: 'darkred',
+              strokeWidth: 2,
+              x: 450, y: 100,
+              fontSize: '36pt',
+              fontFamily: 'Verdana, sans-serif',
+              text: 'Miss'
+            }).drawArc({
+              layer: true,
+              groups: ['Miss'],
+              fillStyle: 'darkred',
+              opacity: 0.2,
+              x: 450, y: 100,
+              radius: $(canvasID).measureText('Text').width / 2
+            }).animateLayer('Text', {fontSize: '66pt'}, 500).delayLayer('Text', 500).animateLayer("Text", {opacity: 0}, 1000);
+            setTimeout(function () {
+              $(canvasID).removeLayerGroup('Miss');
+            }, 1500);
+            break;
+          case "enemyMiss":
+            $(canvasID).drawText({
+              layer: true,
+              name: 'Text',
+              groups: ['Miss'],
+              fillStyle: '#B00000',
+              strokeStyle: 'darkred',
+              strokeWidth: 2,
+              x: 100, y: 400,
+              fontSize: '36pt',
+              fontFamily: 'Verdana, sans-serif',
+              text: 'Miss'
+            }).drawArc({
+              layer: true,
+              groups: ['Miss'],
+              fillStyle: 'darkred',
+              opacity: 0.2,
+              x: 100, y: 400,
+              radius: $(canvasID).measureText('Text').width / 2
+            }).animateLayer('Text', {fontSize: '66pt'}, 500).delayLayer('Text', 500).animateLayer("Text", {opacity: 0}, 1000);
+            setTimeout(function () {
+              $(canvasID).removeLayerGroup('Miss');
+            }, 1500);
             break;
         }
       });
@@ -404,11 +391,11 @@ $list = $result['abilities'];
     function randomAction() {
       var random = randomInt(0, enemy1.abilities.length - 1);
       listAbilities.forEach(function (ability) {
-        if (ability.name == enemy1.abilities[random]) {
+        if (ability.id == enemy1.abilities[random]) {
           attack(enemy1, yourMonster, ability);
         }
       });
-      //TODO Add objects in future
+      //TODO Add items in future
     }
   </script>
   <style type="text/css">
