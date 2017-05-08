@@ -15,7 +15,15 @@ header("Location: index.php");
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <script src="js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="css/main.css">
-    <style>#slider { margin: 10px; }   </style>
+    <style>
+        #slider { margin: 10px; }
+        .ui-state-focus{
+            border: 1px solid #cccccc !important;
+        }
+        .ui-state-active{
+            color: #cccccc !important;
+        }
+    </style>
 </head>
 <body>
 <script></script>

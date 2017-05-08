@@ -10,7 +10,7 @@ if (!isset($_SESSION["Authenticated"]) || $_SESSION["Authenticated"] == 0) {
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Monstruos's Bizarre Adventure 2</title>
+  <title>Monstruos' Bizarre Adventure 2</title>
   <script src="js/jquery-3.2.1.min.js"></script>
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <script src="js/bootstrap.min.js"></script>
@@ -119,10 +119,10 @@ if (!isset($_SESSION["Authenticated"]) || $_SESSION["Authenticated"] == 0) {
             <div class="form-group col-sm-3 col-xs-10 col-xs-offset-1">
               <label for="selHab">Habilidades:</label>
               <select class="form-control" id="selHab" name="abi">
-                <option selected="selected">Hab1</option>
-                <option>Hab2</option>
-                <option>Hab3</option>
-                <option>Hab4</option>
+                <option value=0 selected="selected">FireBall</option>
+                <option value=1>Punch</option>
+                <option value=2>Drain</option>
+                <option value=3>Thunder</option>
               </select>
             </div>
           </div>

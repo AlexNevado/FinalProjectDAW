@@ -13,7 +13,7 @@ class Monstruo extends Entity {
   // Monstruo's characteristics
   private $characteristics;
   // Monstruos's abilities
-  private $abilites;
+  private $abilities;
 
   //Ddbb name
   const DDBB_NAME = "mba";
@@ -38,8 +38,8 @@ class Monstruo extends Entity {
     $monstruo->set('userID', $array['userID']);
     $monstruo->set('name', $array['name']);
     $monstruo->set('img', $array['img']);
-    $monstruo->set('$characteristics', $array['$characteristics']);
-    $monstruo->set('$abilites', $array['$abilites']);
+    $monstruo->set('characteristics', $array['characteristics']);
+    $monstruo->set('abilities', $array['abilities']);
 
     return $monstruo;
   }
@@ -56,7 +56,7 @@ class Monstruo extends Entity {
         "name" => $this->get('name'),
         "img" => $this->get('img'),
         "characteristics" => $this->get('characteristics'),
-        "abilities" => $this->get('abilites')
+        "abilities" => $this->get('abilities')
     );
     return $monstruo;
   }
@@ -102,6 +102,6 @@ class Monstruo extends Entity {
     $array['_id'] = (string)$array['_id'];
     $array['userID'] = (string)$array['userID'];
     $array = array_filter($array, function($var){return !is_null($var);});
-    return json_encode($array);  }
+    return json_encode($array, JSON_PRETTY_PRINT);  }
 
 }
