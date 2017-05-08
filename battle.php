@@ -17,6 +17,8 @@ if ($_SESSION['player'] == 'multi') {
   $otherMonster = 'null';
 }
 // db.abilities.insert({abilities:[{Punch:3},{Drain:1}]});
+//> db.abilities.insert({abilities:[{id:0,name:"Fireball",power:4},{id:1,name:"Punch",power:3},{id:2,name:"Drain",power:1},{id:3,name:"Thunder",power:4}]});
+
 $result = Entity::findOneBy("abilities", array());
 $list = $result['abilities'];
 ?>
@@ -47,9 +49,9 @@ $list = $result['abilities'];
     }
 
     yourMonster.buildWithJson(strMonstruo);
-    function drawImage(imgSrc = 'image/panel1.png', canvas = '#battleCanvas', x = 0, y = 300, width = 800, height = 180, name = "panel", index = 0, opacity = 1) {
+    function drawImage(imgSrc = 'image/panel1.png', x = 0, y = 300, width = 800, height = 180, name = "panel", index = 0, opacity = 1) {
       $(document).ready(function () {
-        $(canvas).drawImage({
+        $(canvasID).drawImage({
           layer: true,
           name: name,
           draggable: true,
@@ -66,9 +68,10 @@ $list = $result['abilities'];
     function startBattle() {
       $(document).ready(function () {
         enemy1.draw(0);
+        enemy1.draw(0, 'mDamage1', enemy1.img.substr(0, enemy1.img.length - 4) + "2.png", 300);
         drawPanels(canvasID);
         enemy1.move(300);
-        yourMonster.draw(1, 10, 340, 150, 150, 10, 'yourMonster');
+        yourMonster.draw(1, 'yourMonster', yourMonster.img, 10, 340, 150, 150, 10);
         if (yourMonster.characteristics.luk > enemy1.characteristics.luk) {
           showMenu();
         } else if (first) {
@@ -78,12 +81,18 @@ $list = $result['abilities'];
         }
       });
     }
-    function battle() {
-      $(document).ready(function () {
-
-      });
-    }
     function endBattle() {
+      $(document).ready(function () {
+        setTimeout(function () {
+          drawImage("image/background12.jpg", 0, 0, 640, 480, "end", 20, 0.5);
+          $('#end-screen').show();
+          if (yourMonster.characteristics.hp > enemy1.characteristics.hp) {
+            $('#end-message').html("¡Has Vencido!");
+          } else {
+            $('#end-message').html("¡Has Perdido!");
+          }
+        }, 1000);
+      });
 
     }
     /**
@@ -109,11 +118,11 @@ $list = $result['abilities'];
     function drawPanels(canvasID) {
       $(document).ready(function () {
         drawImage();
-        drawImage("image/empty-bar.png", canvasID, 50, 50, 300, 20, "empty-bar1", 1);
-        drawImage("image/bar.png", canvasID, 50, 50, 300 * percentageHp(enemy1), 20, "bar1", 2);
-        drawImage("image/empty-bar.png", canvasID, 10, 320, 200, 20, "empty-bar2", 3);
-        drawImage("image/bar.png", canvasID, 10, 320, 200 * percentageHp(yourMonster), 20, "bar2", 4);
-        drawImage("image/blood.png", canvasID, 0, 0, 640, 480, "hurt", 20, 0);
+        drawImage("image/empty-bar.png", 50, 50, 300, 20, "empty-bar1", 1);
+        drawImage("image/bar.png", 50, 50, 300 * percentageHp(enemy1), 20, "bar1", 2);
+        drawImage("image/empty-bar.png", 10, 320, 200, 20, "empty-bar2", 3);
+        drawImage("image/bar.png", 10, 320, 200 * percentageHp(yourMonster), 20, "bar2", 4);
+        drawImage("image/blood.png", 0, 0, 640, 480, "hurt", 20, 0);
 
         //alert($(canvasID).getLayer('empty-bar2').width);
         //$(canvasID).setLayer('monstruo', {});
@@ -161,7 +170,7 @@ $list = $result['abilities'];
       enemy1.setSTR(randomInt(1, 5));
       enemy1.setDEF(randomInt(1, 5));
       enemy1.setLUK(randomInt(1, 5));
-      var maxHp = randomInt(50, 80);
+      var maxHp = randomInt(1, 30);
       enemy1.setHP(maxHp);
       enemy1.setMAXHP(maxHp);
       enemy1.addAbility("Punch");
@@ -175,13 +184,24 @@ $list = $result['abilities'];
     /**
      * Show messages
      */
-    function messages(message, canvas = "#battleCanvas") {
+    /*
+     *     function messages(text="", x = 150, y = 150, width = 350, height = 200
+     , name = "message", index = 10, opacity = 1,imgSrc = 'image/message.png', canvas = '#battleCanvas') {
+     * */
+    function messages(text = "Has perdido", x = 0, y = 0, width = 640, height = 480
+        , name = "message", index = 10, opacity = 0.5, imgSrc = 'image/background12.jpg') {
       $(document).ready(function () {
-        $(canvas).animateLayer('monstruo', {
-          fontSize: 48,
-          fontFamily: 'Verdana, sans-serif',
-          text: 'Hello'
-        }, 1500, function (layer) {
+        $(canvasID).drawImage({
+          layer: true,
+          name: name,
+          draggable: true,
+          opacity: opacity,
+          source: imgSrc,
+          x: x, y: y,
+          index: index,
+          width: width,
+          height: height,
+          fromCenter: false,
         });
       });
     }
@@ -251,15 +271,74 @@ $list = $result['abilities'];
       var random = randomInt(attacker.characteristics.luk, 40);
       var critical = random > 30 ? 2 : random < 5 ? 0 : 1;
       var newHp = (defender.characteristics.def - attacker.characteristics.str - ability.power) * critical;
+      newHp = 0;
       if (newHp < 0) {
         defender.setHP(newHp);
-        if (attacker==yourMonster) {
+        if (attacker == yourMonster) {
           doAnimations("playerAttack");
-        }else {
+        } else {
           doAnimations("enemyAttack");
         }
-      }else {
+      } else {
         //TODO Miss
+/*
+        $(canvasID).drawText({
+          name: 'myText',
+          fillStyle: '#B00000',
+          strokeStyle: 'darkred',
+          strokeWidth: 2,
+          x: 450, y: 100,
+          fontSize: 48,
+          fontFamily: 'Verdana, sans-serif',
+          text: 'Miss'
+        })*/
+        $(canvasID).drawText({
+          layer: true,
+          name: 'myText',
+          fillStyle: '#B00000',
+          strokeStyle: 'darkred',
+          strokeWidth: 2,
+          x: 450, y: 100,
+          fontSize: '36pt',
+          fontFamily: 'Verdana, sans-serif',
+          text: 'Miss'
+        }).drawArc({
+          layer: true,
+          fillStyle: 'darkred',
+          opacity:0.2,
+          x: 450, y: 100,
+          radius: $(canvasID).measureText('myText').width / 2
+        }).animateLayer('myText',{fontSize: '66pt',},2000).delayLayer('myText', 3000).animateLayer("myText",{opacity:0},1000);
+
+/*
+* ex:
+* // Draw text
+ $('canvas').drawText({
+ layer: true,
+ name: 'myText',
+ fillStyle: '#36c',
+ strokeWidth: 2,
+ x: 180, y: 150,
+ fontSize: '36pt',
+ fontFamily: 'Verdana, sans-serif',
+ text: 'Hello'
+ })
+ // Draw circle as wide as the text
+ .drawArc({
+ layer: true,
+ fillStyle: '#36c',
+ opacity:0.3,
+ x: 180, y: 150,
+ radius: $('canvas').measureText('myText').width / 2
+ }).animateLayer('myText',{fontSize: '66pt',},2000)
+ .delayLayer('myText', 3000)
+ .animateLayer("myText",{opacity:0},1000)
+ ;
+
+ setTimeout(function(){ $('canvas').removeLayer('myText');
+ }, 3000);
+*
+* */
       }
       //Maybe in a future had to be types in abilities parameters for this but for now
       //it's ok this way
@@ -277,11 +356,11 @@ $list = $result['abilities'];
         if (attacker == yourMonster) {
           setTimeout(function () {
             randomAction();
-          }, 3000);
+          }, 1000);
         } else {
           setTimeout(function () {
             showMenu();
-          }, 3000);
+          }, 1000);
         }
       }
     }
@@ -291,13 +370,17 @@ $list = $result['abilities'];
           case "enemyAttack":
             enemy1.attackAnimation();
             $(canvasID).animateLayer("bar2", {width: 200 * percentageHp(yourMonster)}, 1000);
-            drawImage("image/blood.png", canvasID, 0, 0, 640, 480, "hurt", 20);
-            $(canvasID).animateLayer("hurt", {opacity:1}, 300, function(layer) {
-              $(this).animateLayer(layer, {opacity:0}, 1000);
+            drawImage("image/blood.png", 0, 0, 640, 480, "hurt", 20);
+            $(canvasID).animateLayer("hurt", {opacity: 1}, 300, function (layer) {
+              $(this).animateLayer(layer, {opacity: 0}, 1000);
             });
 
             break;
           case "playerAttack":
+              $(canvasID).animateLayer("mDamage1", {opacity: 0.8}, 200, function (layer) {
+                $(this).animateLayer(layer, {opacity: 0}, 200);
+              });
+
             $(canvasID).animateLayer("bar1", {width: 300 * percentageHp(enemy1)}, 1000)
             break;
           case "playerCure":
@@ -319,14 +402,13 @@ $list = $result['abilities'];
       }
     }
     function randomAction() {
-      //TODO
       var random = randomInt(0, enemy1.abilities.length - 1);
       listAbilities.forEach(function (ability) {
         if (ability.name == enemy1.abilities[random]) {
           attack(enemy1, yourMonster, ability);
         }
       });
-      //Add objects in future
+      //TODO Add objects in future
     }
   </script>
   <style type="text/css">
@@ -343,37 +425,44 @@ $list = $result['abilities'];
     <div class="col-xs-12" role="main">
       <div class="row">
         <div class="col-xs-12">
-          <div class="screen">
-            <div class="col-sm-4 col-sm-offset-8 col-xs-offset-6 menu-options" id="menuBattle">
-              <h3 id="btn-abi">Habilidades</h3>
-              <h3 id="btn-obj">Objetos</h3>
-              <h3 id="btn-chn">Cambio</h3>
-            </div>
-            <div class="col-sm-6 col-sm-offset-6 col-xs-offset-2 menu-options" id="menuAbi">
-              <div class="col-xs-10" id="abilitiesList">
-                <?php
-                for ($i = 0; $i < 10; $i++) {
-                  ?>
-                  <div class="col-xs-3">
-                    <img id="sign<?php print $i; ?>" class="img-sign" src="image/rightSign.png" width="20" height="20">
-                  </div>
-                  <div class="col-xs-9">
-                    <h3 id="btn-abi-<?php print $i; ?>">Habilidad<?php print $i; ?></h3>
-                  </div>
+          <form>
+            <div class="screen">
+              <div class="col-sm-6 col-sm-offset-3 col-xs-offset-1" id="end-screen">
+                <h2 id="end-message"></h2>
+                <input type="submit" class="btn btn-lg btn-battle" value="Aceptar">
+              </div>
+              <div class="col-sm-4 col-sm-offset-8 col-xs-offset-6 menu-options" id="menuBattle">
+                <h3 id="btn-abi">Habilidades</h3>
+                <h3 id="btn-obj">Objetos</h3>
+                <h3 id="btn-chn">Cambio</h3>
+              </div>
+              <div class="col-sm-6 col-sm-offset-6 col-xs-offset-1 menu-options" id="menuAbi">
+                <div class="col-xs-10" id="abilitiesList">
                   <?php
-                }
-                ?>
-              </div>
-              <div class="col-xs-1" id="backButton">
+                  for ($i = 0; $i < 10; $i++) {
+                    ?>
+                    <div class="col-xs-3">
+                      <img id="sign<?php print $i; ?>" class="img-sign" src="image/rightSign.png" width="20"
+                           height="20">
+                    </div>
+                    <div class="col-xs-9">
+                      <h3 id="btn-abi-<?php print $i; ?>">Habilidad<?php print $i; ?></h3>
+                    </div>
+                    <?php
+                  }
+                  ?>
+                </div>
+                <div class="col-xs-1" id="backButton">
+                </div>
               </div>
             </div>
-          </div>
-          <div class="screen messsage-screen"></div>
-          <canvas id="battleCanvas" width="640" height="480"></canvas>
+
+            <canvas id="battleCanvas" width="640" height="480"></canvas>
+          </form>
         </div>
       </div>
       <div class="row">
-        <audio controls  loop>
+        <audio controls loop>
           <source src="audio/battleThemeA.ogg" type="audio/ogg">
           <source src="audio/battleThemeA.mp3" type="audio/mpeg">
           Your browser does not support the audio element.

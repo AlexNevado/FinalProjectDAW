@@ -104,6 +104,16 @@ input[type="number"] {
   color: black;
   background: lightgray;
 }
+.btn-battle {
+  color: black;
+  background: lightblue;
+  border-radius: 20px 0px 20px;
+}
+.btn-battle:hover {
+  background: black;
+  box-shadow: 1px 1px 10px 1px white;
+  opacity: 0.7;
+}
 
 .btn-login:hover {
   box-shadow: 1px 1px 10px 1px white;
@@ -146,7 +156,6 @@ input[type="number"] {
 }
 
 .userDelete {
-
 }
 
 .userDelete:hover {
@@ -187,14 +196,21 @@ input[type="number"] {
   cursor: pointer;
 }
 
-.messsage-screen {
-  background: black;
-  z-index: 10;
-  left: 1px;
-  width: 641px;
-  height: 481px;
-  border: 5px solid gray;
+#end-screen {
+  margin-top: 150px;
   display: none;
+}
+#end-screen input:hover {
+  text-shadow: 0 0 10px #fff,
+  0 0 20px #fff,
+  0 0 30px #fff,
+  0 0 40px #004d99,
+  0 0 70px #004d99,
+  0 0 80px #004d99,
+  0 0 100px #004d99,
+  0 0 150px #004d99;
+  color: lightgray;
+  cursor: pointer;
 }
 
 #menuBattle, #menuAbi {

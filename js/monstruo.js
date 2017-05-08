@@ -12,7 +12,7 @@ function Monstruo() {
   };
   this.abilities = [];
 
-  this.draw = function (opacity = 1, x = 0, y = 0, width = 300, height = 300,index = 9,name ='monstruo', canvas = '#battleCanvas', img = this.img) {
+  this.draw = function (opacity = 1, name ='monstruo', img = this.img, x = 0, y = 0, width = 300, height = 300,index = 9, canvas = '#battleCanvas') {
       $(document).ready(function () {
         $(canvas).drawImage({
           layer: true,
@@ -26,7 +26,7 @@ function Monstruo() {
           fromCenter: false,
           opacity: opacity,
           shadowX: 10, shadowY: 10,
-          shadowBlur: 0,
+          shadowBlur: 2,
           shadowColor: 'rgba(0, 0, 0, 0.5)'
         });
       });
