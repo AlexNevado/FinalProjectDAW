@@ -47,12 +47,13 @@ $list = $result['abilities'];
     }
 
     yourMonster.buildWithJson(strMonstruo);
-    function drawImage(imgSrc = 'image/panel1.png', canvas = '#battleCanvas', x = 0, y = 300, width = 800, height = 180, name = "panel", index = 0) {
+    function drawImage(imgSrc = 'image/panel1.png', canvas = '#battleCanvas', x = 0, y = 300, width = 800, height = 180, name = "panel", index = 0, opacity = 1) {
       $(document).ready(function () {
         $(canvas).drawImage({
           layer: true,
           name: name,
           draggable: true,
+          opacity: opacity,
           source: imgSrc,
           x: x, y: y,
           index: index,
@@ -112,6 +113,8 @@ $list = $result['abilities'];
         drawImage("image/bar.png", canvasID, 50, 50, 300 * percentageHp(enemy1), 20, "bar1", 2);
         drawImage("image/empty-bar.png", canvasID, 10, 320, 200, 20, "empty-bar2", 3);
         drawImage("image/bar.png", canvasID, 10, 320, 200 * percentageHp(yourMonster), 20, "bar2", 4);
+        drawImage("image/blood.png", canvasID, 0, 0, 640, 480, "hurt", 20, 0);
+
         //alert($(canvasID).getLayer('empty-bar2').width);
         //$(canvasID).setLayer('monstruo', {});
       });
@@ -187,7 +190,8 @@ $list = $result['abilities'];
         $('#menuBattle').hide();
         $('#menuAbi').fadeIn(300);
         for (var i = 0; i < yourMonster.abilities.length; i++) {
-          $('#btn-abi-' + i).html(yourMonster.abilities[i]);
+          var ability = getAbility(yourMonster.abilities[i]);
+          $('#btn-abi-' + i).html(ability.name);
           $('#btn-abi-' + i).show();
         }
       });
@@ -211,6 +215,15 @@ $list = $result['abilities'];
         $('#menuBattle').fadeIn(300);
       });
     });
+    function getAbility(id) {
+      var ability;
+      listAbilities.forEach(function (object) {
+        if (object.id == id) {
+          ability = object;
+        }
+      });
+      return ability;
+    }
     /**
      * Do player action
      */
@@ -278,6 +291,11 @@ $list = $result['abilities'];
           case "enemyAttack":
             enemy1.attackAnimation();
             $(canvasID).animateLayer("bar2", {width: 200 * percentageHp(yourMonster)}, 1000);
+            drawImage("image/blood.png", canvasID, 0, 0, 640, 480, "hurt", 20);
+            $(canvasID).animateLayer("hurt", {opacity:1}, 300, function(layer) {
+              $(this).animateLayer(layer, {opacity:0}, 1000);
+            });
+
             break;
           case "playerAttack":
             $(canvasID).animateLayer("bar1", {width: 300 * percentageHp(enemy1)}, 1000)
@@ -355,7 +373,7 @@ $list = $result['abilities'];
         </div>
       </div>
       <div class="row">
-        <audio controls autoplay loop>
+        <audio controls  loop>
           <source src="audio/battleThemeA.ogg" type="audio/ogg">
           <source src="audio/battleThemeA.mp3" type="audio/mpeg">
           Your browser does not support the audio element.

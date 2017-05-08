@@ -119,10 +119,10 @@ if (!isset($_SESSION["Authenticated"]) || $_SESSION["Authenticated"] == 0) {
             <div class="form-group col-sm-3 col-xs-10 col-xs-offset-1">
               <label for="selHab">Habilidades:</label>
               <select class="form-control" id="selHab" name="abi">
-                <option selected="selected">FireBall</option>
-                <option>Punch</option>
-                <option>Drain</option>
-                <option>Thunder</option>
+                <option value=0 selected="selected">FireBall</option>
+                <option value=1>Punch</option>
+                <option value=2>Drain</option>
+                <option value=3>Thunder</option>
               </select>
             </div>
           </div>
