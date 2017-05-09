@@ -32,14 +32,6 @@ function Monstruo() {
       });
     };
   this.move = function ( x = 0, y = 0, opacity = 1, canvas = '#battleCanvas') {
-    /*
-      Example with callback function
-     $(document).ready(function () {
-     $(canvas).animateLayer('monstruo', {
-     x:'+=' + x, opacity: 1
-     }, 1500, function(layer) {//calback function});
-     });
-     */
     $(document).ready(function () {
       $(canvas).animateLayer('monstruo', {
         x:'+=' + x, opacity: opacity

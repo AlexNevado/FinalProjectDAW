@@ -55,6 +55,7 @@ if (isset($accessToken)) {
     // Set users properties and save
     $user->set("_id", new MongoId());
     $user->set("username", (string)$user->get('_id'));
+    $user->set("coins", 10);
     $user->save();
     $_SESSION['user'] = array(
         '_id' => (string)$user->get('_id'),

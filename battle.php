@@ -17,9 +17,10 @@ if ($_SESSION['player'] == 'multi') {
   $otherMonster = 'null';
 }
 // db.abilities.insert({abilities:[{id:0,name:"Fireball",power:4},{id:1,name:"Punch",power:3},{id:2,name:"Drain",power:1},{id:3,name:"Thunder",power:4}]});
+// db.items.insert({items:[{id:0, name:"Poción", power:6},{id:1, name:"Antídoto"},{id:2, name:"Bomba", power:5},{id:3, name:"Revivir", power:2}]});
 
-$result = Entity::findOneBy("abilities", array());
-$list = $result['abilities'];
+$list = Entity::findOneBy("miscellaneous", array("",array("abilities"=>1)));
+$a=0;
 ?>
 <!DOCTYPE html>
 <html>
@@ -44,8 +45,8 @@ $list = $result['abilities'];
     } else {
       enemy1 = <?php print $otherMonster; ?>;
     }
-
     yourMonster.buildWithJson(strMonstruo);
+
     function drawImage(imgSrc = 'image/panel1.png', x = 0, y = 300, width = 800, height = 180, name = "panel", index = 0, opacity = 1) {
       $(document).ready(function () {
         $(canvasID).drawImage({
@@ -62,6 +63,7 @@ $list = $result['abilities'];
         });
       });
     }
+
     function startBattle() {
       $(document).ready(function () {
         enemy1.draw(0);
@@ -78,6 +80,7 @@ $list = $result['abilities'];
         }
       });
     }
+
     function endBattle() {
       $(document).ready(function () {
         setTimeout(function () {
@@ -90,8 +93,8 @@ $list = $result['abilities'];
           }
         }, 1000);
       });
-
     }
+
     /**
      *Show menus
      */
@@ -100,6 +103,7 @@ $list = $result['abilities'];
         $('#menuBattle').delay(1000).fadeIn(600);
       });
     }
+
     /**
      * Hide menus
      */
@@ -109,6 +113,7 @@ $list = $result['abilities'];
         $('#menuAbi').delay(1000).fadeIn(600);
       });
     }
+
     /**
      * Draw the panels
      */
@@ -125,12 +130,14 @@ $list = $result['abilities'];
         //$(canvasID).setLayer('monstruo', {});
       });
     }
+
     /**
      *Calculate percentage of Hp
      **/
     function percentageHp(monstruo) {
       return monstruo.characteristics.hp / monstruo.characteristics.maxHp;
     }
+
     /**
      * Create randon enemy
      */
@@ -174,12 +181,14 @@ $list = $result['abilities'];
       enemy1.addAbility(3);
       return enemy1;
     }
+
     /**
      * Create random integer
      */
     function randomInt(min, max) {
       return Math.floor(Math.random() * (max - min + 1) + min);
     }
+
     /**
      * Show messages
      */
@@ -204,38 +213,9 @@ $list = $result['abilities'];
         });
       });
     }
-    $(document).ready(function () {
-      $('#btn-abi').click(function () {
-        $('#menuBattle').hide();
-        $('#menuAbi').fadeIn(300);
-        for (var i = 0; i < yourMonster.abilities.length; i++) {
-          var ability = getAbility(yourMonster.abilities[i]);
-          $('#btn-abi-' + i).html(ability.name);
-          $('#btn-abi-' + i).show();
-        }
-      });
-      $('h3[id^=btn-abi-]').mouseenter(function () {
-        var signNumber = $(this).attr('id').slice(-1);
-        $('#sign' + signNumber).fadeIn(200);
-      });
-      $('h3[id^=btn-abi-]').mouseleave(function () {
-        var signNumber = $(this).attr('id').slice(-1);
-        $('#sign' + signNumber).fadeOut(200);
-      });
-      $('h3[id^=btn-abi-]').click(function () {
-        $('#menuAbi').hide();
-        doAction("Ability", $(this).html());
-      });
-      $('#backButton').click(function () {
-        for (var i = 0; i < 10; i++) {
-          $('#btn-abi-' + i).hide();
-        }
-        $('#menuAbi').hide();
-        $('#menuBattle').fadeIn(300);
-      });
-    });
+
     /**
-     * Get an ability by theri id
+     * Get an ability by their id
      */
     function getAbility(id) {
       var ability;
@@ -246,6 +226,7 @@ $list = $result['abilities'];
       });
       return ability;
     }
+
     /**
      * Do player action
      */
@@ -264,6 +245,7 @@ $list = $result['abilities'];
           break;
       }
     }
+
     /**
      * Attack an enemy
      */
@@ -276,7 +258,13 @@ $list = $result['abilities'];
       if (newHp < 0) {
         defender.setHP(newHp);
         var animation = attacker == yourMonster ? "playerAttack" : "enemyAttack";
-        doAnimations(animation);
+        if (ability.id == 0) {
+          fireball();
+          fireball(2);
+          fireball(3);
+          fireball(4);
+        }
+        doAnimations(animation, ability.id);
       } else {
         var animation = attacker == yourMonster ? "playerMiss" : "enemyMiss";
         doAnimations(animation);
@@ -305,10 +293,11 @@ $list = $result['abilities'];
         }
       }
     }
+
     /**
      * Do animations and effects for the battle
      */
-    function doAnimations(animation) {
+    function doAnimations(animation, animationId) {
       $(document).ready(function () {
         switch (animation) {
           case "enemyAttack":
@@ -320,9 +309,38 @@ $list = $result['abilities'];
             });
             break;
           case "playerAttack":
-            $(canvasID).animateLayer("mDamage1", {opacity: 0.8}, 200, function (layer) {
-              $(this).animateLayer(layer, {opacity: 0}, 200);
-            });
+            if (animationId == 0) {
+              $(canvasID).animateLayer("fireball4", {x: "+=300", y: "-=140"}, {duration: 800, easing: 'swing'});
+              $(canvasID).delayLayer("fireball3", 50).animateLayer("fireball3", {x: "+=300", y: "-=140"}, {
+                duration: 800,
+                easing: 'swing'
+              });
+              $(canvasID).delayLayer("fireball2", 100).animateLayer("fireball2", {x: "+=300", y: "-=140"}, {
+                duration: 800,
+                easing: 'swing'
+              });
+              $(canvasID).delayLayer("fireball1", 150).animateLayer("fireball1", {x: "+=300", y: "-=140"}, {
+                duration: 800,
+                easing: 'swing'
+              });
+              $(canvasID).drawRect({
+                layer: true,
+                name: 'flash',
+                fillStyle: 'white',
+                x: 320, y: 240,
+                width: 640,
+                height: 480,
+                index: 90,
+                opacity: 0,
+              }).animateLayer('flash', {opacity: 1}, 800, function (layer) {
+                $(this).removeLayerGroup('fireballs');
+                $(this).animateLayer(layer, {opacity: 0}, 300);
+              });
+            } else {
+              $(canvasID).animateLayer("mDamage1", {opacity: 0.8}, 200, function (layer) {
+                $(this).animateLayer(layer, {opacity: 0}, 200);
+              });
+            }
             $(canvasID).animateLayer("bar1", {width: 300 * percentageHp(enemy1)}, 1000)
             break;
           case "playerCure":
@@ -380,11 +398,30 @@ $list = $result['abilities'];
       });
     }
     /**
+     * Draw a fireball
+     */
+    function fireball(i = 1) {
+      $(document).ready(function () {
+        $(canvasID).drawImage({
+          layer: true,
+          name: "fireball" + i,
+          groups: ['fireballs'],
+          source: 'image/fireball.png',
+          shadowColor: 'red',
+          shadowBlur: 10,
+          x: 180, y: 250,
+          width: 100 * i / 4, height: 100 * i / 4,
+        });
+      });
+    }
+
+    /**
      * Send JSON to server
      */
     function sendJSON() {
       //TODO
     }
+
     /**
      * Receive JSON from server
      */
@@ -397,6 +434,7 @@ $list = $result['abilities'];
         showMenu();
       }
     }
+
     function randomAction() {
       var random = randomInt(0, enemy1.abilities.length - 1);
       listAbilities.forEach(function (ability) {
@@ -406,6 +444,54 @@ $list = $result['abilities'];
       });
       //TODO Add items in future
     }
+
+    //Mouse Functions
+    $(document).ready(function () {
+      $('#btn-abi').click(function () {
+        $('#menuBattle').hide();
+        $('#menuAbi').fadeIn(300);
+        for (var i = 0; i < yourMonster.abilities.length; i++) {
+          var ability = getAbility(yourMonster.abilities[i]);
+          $('#btn-abi-' + i).html(ability.name);
+          $('#btn-abi-' + i).show();
+        }
+      });
+      $('#btn-item').click(function () {
+        $('#menuBattle').hide();
+        $('#menuItems').fadeIn(300);
+        for (var i = 10; i < yourMonster.abilities.length + 10; i++) {
+          var ability = getAbility(yourMonster.abilities[i - 10]);
+          $('#btn-item-' + i).html("-" + ability.name);
+          $('#btn-item-' + i).show();
+        }
+      });
+      $('h3[id^=btn-abi-]').mouseenter(function () {
+        var signNumber = $(this).attr('id').slice(-1);
+        $('#sign' + signNumber).fadeIn(200);
+      });
+      $('h3[id^=btn-abi-]').mouseleave(function () {
+        var signNumber = $(this).attr('id').slice(-1);
+        $('#sign' + signNumber).fadeOut(200);
+      });
+      $('h3[id^=btn-item-]').mouseenter(function () {
+        $(this).css("font-size", "1.2em");
+      });
+      $('h3[id^=btn-item-]').mouseleave(function () {
+        $(this).css("font-size", "10pt");
+      });
+      $('h3[id^=btn-abi-]').click(function () {
+        $('#menuAbi').hide();
+        doAction("Ability", $(this).html());
+      });
+      $('.backButton').click(function () {
+        for (var i = 0; i < 10; i++) {
+          $('#btn-abi-' + i).hide();
+        }
+        $('#menuAbi').hide();
+        $('#menuItems').hide();
+        $('#menuBattle').fadeIn(300);
+      });
+    });
   </script>
 </head>
 <!-- <body>  -->
@@ -423,7 +509,7 @@ $list = $result['abilities'];
               </div>
               <div class="col-sm-4 col-sm-offset-8 col-xs-offset-6 menu-options" id="menuBattle">
                 <h3 id="btn-abi">Habilidades</h3>
-                <h3 id="btn-obj">Objetos</h3>
+                <h3 id="btn-item">Objetos</h3>
                 <h3 id="btn-chn">Cambio</h3>
               </div>
               <div class="col-sm-6 col-sm-offset-6 col-xs-offset-1 menu-options" id="menuAbi">
@@ -432,11 +518,19 @@ $list = $result['abilities'];
                   abilitiesButtons();
                   ?>
                 </div>
-                <div class="col-xs-1" id="backButton">
+                <div class="col-xs-1 backButton">
+                </div>
+              </div>
+              <div class="col-sm-8 col-sm-offset-4 col-xs-offset-1 menu-options" id="menuItems">
+                <div class="col-xs-10" id="itemList">
+                  <?php
+                  itemsButtons();
+                  ?>
+                </div>
+                <div class="col-xs-1 backButton">
                 </div>
               </div>
             </div>
-
             <canvas id="battleCanvas" width="640" height="480"></canvas>
           </form>
         </div>

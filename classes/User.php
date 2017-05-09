@@ -9,6 +9,10 @@ class User extends Entity {
   private $facebookID;
   //User's monstruos
   private $monstruos;
+  //User's items
+  private $items;
+  //User's coins;
+  private $coins;
 
   //Ddbb name
   const DDBB_NAME = "mba";
@@ -30,6 +34,8 @@ class User extends Entity {
     $user->set('username', $array['username']);
     $user->set('facebookID', $array['facebookID']);
     $user->set('monstruos', $array['monstruos']);
+    $user->set('items', $array['items']);
+    $user->set('coins', $array['coins']);
 
     return $user;
   }
@@ -45,7 +51,9 @@ class User extends Entity {
         "_id" => $this->get('_id'),
         "username" => $this->get('username'),
         "facebookID" => $this->get('facebookID'),
-        "monstruos" => $this->get('monstruos')
+        "monstruos" => $this->get('monstruos'),
+        "items" => $this->get('items'),
+        "coins" => $this->get('coins')
     );
     $user['password'] = $value;
     return $user;
@@ -87,6 +95,17 @@ class User extends Entity {
    */
   public function addMonstruo($monstruoID) {
     $newData = array('monstruos' => $monstruoID);
+    return parent::push(self::USERS_COLLECTION, $newData);
+  }
+  /**
+   * Add items tu user
+   *
+   * @param $monstruoID
+   * @return array
+   */
+  public function addItems($itemsID, $amount) {
+    $result = Entity::findOneBy("items",array(""));
+    $newData = array('items' => array( "id" => $itemsID, "amount" => $amount));
     return parent::push(self::USERS_COLLECTION, $newData);
   }
 
