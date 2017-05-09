@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5ccffd07-080f-4780-beb4-d0ef9bbad406" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/battle.php" afterPath="$PROJECT_DIR$/battle.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions.php" afterPath="$PROJECT_DIR$/functions.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -47,11 +47,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="battle.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="battle.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/battle.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-306">
-              <caret line="284" column="25" lean-forward="false" selection-start-line="284" selection-start-column="25" selection-end-line="284" selection-end-column="25" />
+            <state relative-caret-position="121">
+              <caret line="349" column="68" lean-forward="false" selection-start-line="349" selection-start-column="61" selection-end-line="349" selection-end-column="68" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="prueba.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/prueba.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="223">
+              <caret line="62" column="33" lean-forward="false" selection-start-line="62" selection-start-column="25" selection-end-line="62" selection-end-column="33" />
               <folding />
             </state>
           </provider>
@@ -96,16 +106,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="home.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/home.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2108">
-              <caret line="124" column="31" lean-forward="false" selection-start-line="124" selection-start-column="31" selection-end-line="124" selection-end-column="31" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
@@ -119,8 +119,8 @@
       <file leaf-file-name="functions.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/functions.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="118">
-              <caret line="101" column="0" lean-forward="false" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
+            <state relative-caret-position="136">
+              <caret line="122" column="25" lean-forward="false" selection-start-line="122" selection-start-column="9" selection-end-line="122" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -159,6 +159,7 @@
       <find>doAction</find>
       <find>randomen</find>
       <find>randomene</find>
+      <find>delayla</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$</dir>
@@ -184,7 +185,6 @@
         <option value="$PROJECT_DIR$/classes/Entity.inc" />
         <option value="$PROJECT_DIR$/p1.php" />
         <option value="$PROJECT_DIR$/fb-callback.php" />
-        <option value="$PROJECT_DIR$/functions.php" />
         <option value="$PROJECT_DIR$/register.php" />
         <option value="$PROJECT_DIR$/validate.php" />
         <option value="$PROJECT_DIR$/js/enemy.js" />
@@ -197,7 +197,9 @@
         <option value="$PROJECT_DIR$/home.php" />
         <option value="$PROJECT_DIR$/css/main.css" />
         <option value="$PROJECT_DIR$/js/monstruo.js" />
+        <option value="$PROJECT_DIR$/functions.php" />
         <option value="$PROJECT_DIR$/battle.php" />
+        <option value="$PROJECT_DIR$/prueba.php" />
       </list>
     </option>
   </component>
@@ -468,12 +470,12 @@
       <workItem from="1494067838959" duration="16760000" />
       <workItem from="1494169847815" duration="12165000" />
       <workItem from="1494254055183" duration="10440000" />
-      <workItem from="1494276672898" duration="5133000" />
+      <workItem from="1494276672898" duration="9399000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="201151000" />
+    <option name="totallyTimeSpent" value="205417000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -573,22 +575,22 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/functions.php</url>
-          <line>98</line>
+          <line>113</line>
           <option name="timeStamp" value="176" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/functions.php</url>
-          <line>99</line>
+          <line>114</line>
           <option name="timeStamp" value="177" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/functions.php</url>
-          <line>100</line>
+          <line>115</line>
           <option name="timeStamp" value="178" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/functions.php</url>
-          <line>101</line>
+          <line>116</line>
           <option name="timeStamp" value="179" />
         </line-breakpoint>
       </breakpoints>
@@ -597,14 +599,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/functions.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="3" column="25" lean-forward="false" selection-start-line="3" selection-start-column="25" selection-end-line="3" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/p1.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="396">
@@ -966,16 +960,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/functions.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="118">
-          <caret line="101" column="0" lean-forward="false" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
+        <state relative-caret-position="136">
+          <caret line="122" column="25" lean-forward="false" selection-start-line="122" selection-start-column="9" selection-end-line="122" selection-end-column="25" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/battle.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-306">
-          <caret line="284" column="25" lean-forward="false" selection-start-line="284" selection-start-column="25" selection-end-line="284" selection-end-column="25" />
+        <state relative-caret-position="121">
+          <caret line="349" column="68" lean-forward="false" selection-start-line="349" selection-start-column="61" selection-end-line="349" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/prueba.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="62" column="33" lean-forward="false" selection-start-line="62" selection-start-column="25" selection-end-line="62" selection-end-column="33" />
           <folding />
         </state>
       </provider>

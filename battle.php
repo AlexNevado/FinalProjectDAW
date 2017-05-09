@@ -16,8 +16,7 @@ if ($_SESSION['player'] == 'multi') {
 } else {
   $otherMonster = 'null';
 }
-// db.abilities.insert({abilities:[{Punch:3},{Drain:1}]});
-//> db.abilities.insert({abilities:[{id:0,name:"Fireball",power:4},{id:1,name:"Punch",power:3},{id:2,name:"Drain",power:1},{id:3,name:"Thunder",power:4}]});
+// db.abilities.insert({abilities:[{id:0,name:"Fireball",power:4},{id:1,name:"Punch",power:3},{id:2,name:"Drain",power:1},{id:3,name:"Thunder",power:4}]});
 
 $result = Entity::findOneBy("abilities", array());
 $list = $result['abilities'];
@@ -27,8 +26,6 @@ $list = $result['abilities'];
 <head>
   <title>Monstruos' Bizarre Adventure</title>
   <script src="js/jquery-3.2.1.min.js"></script>
-  <!-- <script src="https://code.jquery.com/jquery-migrate-3.0.0.js"></script>-->
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script> -->
   <script src="js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/main.css">
@@ -177,7 +174,9 @@ $list = $result['abilities'];
       enemy1.addAbility(3);
       return enemy1;
     }
-    //Create random integer
+    /**
+     * Create random integer
+     */
     function randomInt(min, max) {
       return Math.floor(Math.random() * (max - min + 1) + min);
     }
@@ -235,6 +234,9 @@ $list = $result['abilities'];
         $('#menuBattle').fadeIn(300);
       });
     });
+    /**
+     * Get an ability by theri id
+     */
     function getAbility(id) {
       var ability;
       listAbilities.forEach(function (object) {
@@ -286,8 +288,7 @@ $list = $result['abilities'];
         yourMonster.setHP(ability.power);
         doAnimations("playerCure");
       }
-      //TODO Do some stuff with canvas, effects and shit
-      //checkBarChanges();
+
       if (yourMonster.characteristics.hp == 0 || enemy1.characteristics.hp == 0) {
         endBattle();
       } else if (player == "multi") {
@@ -304,7 +305,9 @@ $list = $result['abilities'];
         }
       }
     }
-
+    /**
+     * Do animations and effects for the battle
+     */
     function doAnimations(animation) {
       $(document).ready(function () {
         switch (animation) {
@@ -376,9 +379,15 @@ $list = $result['abilities'];
         }
       });
     }
+    /**
+     * Send JSON to server
+     */
     function sendJSON() {
       //TODO
     }
+    /**
+     * Receive JSON from server
+     */
     function receiveJSON() {
       //TODO receive JSON and make changes in local
       doAnimations();
@@ -398,15 +407,9 @@ $list = $result['abilities'];
       //TODO Add items in future
     }
   </script>
-  <style type="text/css">
-    #battleCanvas {
-      border: 1px solid black;
-    }
-  </style>
 </head>
 <!-- <body>  -->
 <body onload="startBattle()">
-
 <div class="container">
   <div class="row">
     <div class="col-xs-12" role="main">
@@ -426,17 +429,7 @@ $list = $result['abilities'];
               <div class="col-sm-6 col-sm-offset-6 col-xs-offset-1 menu-options" id="menuAbi">
                 <div class="col-xs-10" id="abilitiesList">
                   <?php
-                  for ($i = 0; $i < 10; $i++) {
-                    ?>
-                    <div class="col-xs-3">
-                      <img id="sign<?php print $i; ?>" class="img-sign" src="image/rightSign.png" width="20"
-                           height="20">
-                    </div>
-                    <div class="col-xs-9">
-                      <h3 id="btn-abi-<?php print $i; ?>">Habilidad<?php print $i; ?></h3>
-                    </div>
-                    <?php
-                  }
+                  abilitiesButtons();
                   ?>
                 </div>
                 <div class="col-xs-1" id="backButton">

@@ -5,7 +5,6 @@ foreach (glob("classes/*.php") as $filename) {
   include $filename;
 }
 
-
 $fb = new Facebook\Facebook([
     'app_id' => '259915584478602',
     'app_secret' => 'be739ec8db993b668937fe4c7c58c649',
@@ -16,7 +15,9 @@ $helper = $fb->getRedirectLoginHelper();
 $permissions = ['email']; // optional
 $loginUrl = $helper->getLoginUrl('http://mba2.com/fb-callback.php', $permissions);
 $GLOBALS['loginUrl'] = $loginUrl;
-
+/**
+ * Create register interface
+ */
 function register() {
   ?>
   <form action="register.php" method="post">
@@ -44,6 +45,9 @@ function register() {
   <?php
 }
 
+/**
+ * Create login interface
+ */
 function login() {
   ?>
   <form action="validate.php" method="post">
@@ -69,6 +73,10 @@ function login() {
   <?php
 }
 
+/**
+ * Send message error
+ * @param $message
+ */
 function errorMessage($message) {
   ?>
   <div class="row">
@@ -79,6 +87,9 @@ function errorMessage($message) {
   <?php
 }
 
+/**
+ * Create footer
+ */
 function footer() {
   ?>
   <div class="row">
@@ -95,9 +106,30 @@ function footer() {
   <?php
 }
 
+/**
+ * Check if the user has monstruos
+ * @return bool
+ */
 function hasMonstruos() {
   $result = Entity::findOneBy("monstruos", array("userID" => new MongoId($_SESSION['user']['_id'])));
   if (empty($result))
     return false;
   return true;
+}
+
+/**
+ * Create abilities buttons on battle
+ */
+function abilitiesButtons() {
+  for ($i = 0; $i < 10; $i++) {
+    ?>
+    <div class="col-xs-3">
+      <img id="sign<?php print $i; ?>" class="img-sign" src="image/rightSign.png" width="20"
+           height="20">
+    </div>
+    <div class="col-xs-9">
+      <h3 id="btn-abi-<?php print $i; ?>">Habilidad<?php print $i; ?></h3>
+    </div>
+    <?php
+  }
 }
