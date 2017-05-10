@@ -23,7 +23,7 @@ $user = User::fromArray(Entity::findOneBy("users", array("_id" => new MongoId($_
 $abilitiesList = $list['abilities'];
 $itemList = $list['items'];
 $userArray = array(
-    "id" => $user->get("_id"),
+    "id" => (string)$user->get("_id"),
     "username" => $user->get("username"),
     "coins" => $user->get("coins"),
     "items" => $user->get("items"),
@@ -39,6 +39,7 @@ $userArray = array(
   <link rel="stylesheet" href="css/main.css">
   <script src="js/jcanvas.min.js"></script>
   <script src="js/monstruo.js"></script>
+  <script src="js/user.js"></script>
   <script type="application/javascript">
     var canvasID = '#battleCanvas';
     var first = <?php print json_encode($_POST['first']); ?>;
@@ -47,7 +48,7 @@ $userArray = array(
     var abilitiesList = <?php print json_encode($abilitiesList) ?>;
     var itemsList = <?php print json_encode($itemList) ?>;
     var user = new User();
-    user.buildWithJson(<?php print json_encode($userArray) ?>;);
+    user.buildWithJson(<?php print json_encode($userArray) ?>);
     var yourMonster = new Monstruo();
     yourMonster.buildWithJson(strMonstruo);
     var enemy1;
