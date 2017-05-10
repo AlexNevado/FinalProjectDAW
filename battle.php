@@ -16,14 +16,18 @@ if ($_SESSION['player'] == 'multi') {
 } else {
   $otherMonster = 'null';
 }
-// db.abilities.insert({abilities:[{id:0,name:"Fireball",power:4},{id:1,name:"Punch",power:3},{id:2,name:"Drain",power:1},{id:3,name:"Thunder",power:4}]});
-// db.items.insert({items:[{id:0, name:"Poción", power:6},{id:1, name:"Antídoto"},{id:2, name:"Bomba", power:5},{id:3, name:"Revivir", power:2}]});
+// db.miscellaneous.insert({abilities:[{id:0,name:"Fireball",power:4},{id:1,name:"Punch",power:3},{id:2,name:"Drain",power:1},{id:3,name:"Thunder",power:4}], items:[{id:0, name:"Poción", power:6},{id:1, name:"Antídoto"},{id:2, name:"Bomba", power:5},{id:3, name:"Revivir", power:2}]})
 
 $list = Entity::findOneBy("miscellaneous", array());
 $user = User::fromArray(Entity::findOneBy("users", array("_id" => new MongoId($_SESSION['user']['_id']))));
 $abilitiesList = $list['abilities'];
 $itemList = $list['items'];
-
+$userArray = array(
+    "id" => $user->get("_id"),
+    "username" => $user->get("username"),
+    "coins" => $user->get("coins"),
+    "items" => $user->get("items"),
+);
 ?>
 <!DOCTYPE html>
 <html>
@@ -36,20 +40,22 @@ $itemList = $list['items'];
   <script src="js/jcanvas.min.js"></script>
   <script src="js/monstruo.js"></script>
   <script type="application/javascript">
+    var canvasID = '#battleCanvas';
     var first = <?php print json_encode($_POST['first']); ?>;
     var player = <?php print json_encode($_SESSION['player']); ?>;
     var strMonstruo = <?php print $monsterJson; ?>;
     var abilitiesList = <?php print json_encode($abilitiesList) ?>;
     var itemsList = <?php print json_encode($itemList) ?>;
-    var canvasID = '#battleCanvas';
+    var user = new User();
+    user.buildWithJson(<?php print json_encode($userArray) ?>;);
     var yourMonster = new Monstruo();
+    yourMonster.buildWithJson(strMonstruo);
     var enemy1;
     if (player == 'single') {
       enemy1 = randomEnemy();
     } else {
       enemy1 = <?php print $otherMonster; ?>;
     }
-    yourMonster.buildWithJson(strMonstruo);
 
     function drawImage(imgSrc = 'image/panel1.png', x = 0, y = 300, width = 800, height = 180, name = "panel", index = 0, opacity = 1) {
       $(document).ready(function () {
