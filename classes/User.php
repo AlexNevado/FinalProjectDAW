@@ -94,9 +94,15 @@ class User extends Entity {
    * @return array
    */
   public function addMonstruo($monstruoID) {
-    $newData = array('monstruos' => $monstruoID);
-    return parent::push(self::USERS_COLLECTION, $newData);
+    $user = Entity::findOneBy("users", array("_id" => new MongoId($_SESSION['user']['_id'])));
+    if(!empty($user)) {
+      $user['monstruos'][] = new MongoId($monstruoID);
+      $user = User::fromArray($user);
+      return $user->save();
+    }
+    return NULL;
   }
+
   /**
    * Add items tu user
    *
@@ -104,9 +110,26 @@ class User extends Entity {
    * @return array
    */
   public function addItems($itemsID, $amount) {
-    $result = Entity::findOneBy("items",array(""));
-    $newData = array('items' => array( "id" => $itemsID, "amount" => $amount));
-    return parent::push(self::USERS_COLLECTION, $newData);
+    $exist = FALSE;
+    $user = Entity::findOneBy("users", array("_id" => new MongoId($_SESSION['user']['_id'])));
+    if(!empty($user) && isset($user['items'])) {
+      foreach ($user['items'] as &$item) {
+        if ($item['id'] == $itemsID) {
+          $item['amount'] += $amount;
+          $exist = TRUE;
+          break;
+        }
+      }
+    }
+
+    if (!$exist) {
+      $user['items'][] = array(
+          "id" => $itemsID,
+          "amount" => $amount,
+      );
+    }
+    $user = User::fromArray($user);
+    return $user->save();
   }
 
   /**

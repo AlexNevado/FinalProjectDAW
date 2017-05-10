@@ -21,8 +21,7 @@ if ($_SESSION['player'] == 'multi') {
 // db.miscellaneous.insert({abilities:[{id:0,name:"Fireball",power:4},{id:1,name:"Punch",power:3},{id:2,name:"Drain",power:1},{id:3,name:"Thunder",power:4}], items:[{id:0, name:"Poción", power:6},{id:1, name:"Antídoto"},{id:2, name:"Bomba", power:5},{id:3, name:"Revivir", power:2}]})
 
 $user = User::fromArray(Entity::findOneBy("users", array("_id" => new MongoId($_SESSION['user']['_id']))));
-$user->addItems(3,1);
-$user->save();
+$user->addItems(2,15);
 $result = Entity::findOneBy("abilities", array());
 $list = $result['abilities'];
 

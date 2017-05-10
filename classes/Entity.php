@@ -82,6 +82,21 @@ abstract class Entity {
   }
 
   /**
+   * Find method by field and value
+   *
+   * @param $collectionName
+   * @param $arraySearch
+   * @return array|null
+   */
+  static function findAllBy($collectionName, $arraySearch) {
+    $db = self::DDBB_NAME;
+
+    $connection = new MongoClient();
+    $collection = $connection->$db->$collectionName;
+    return $collection->find($arraySearch, array('password' => 0));
+  }
+
+  /**
    * Get properties
    *
    * @param $field

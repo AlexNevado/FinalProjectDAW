@@ -8,10 +8,8 @@ if (isset ($_POST["username"]) && isset($_POST['password'])) {
   $result = $user->findByField("username");
 
   if (!empty($result)) {
-    $_SESSION['user']['_id'] = (string) $result['_id'];
     header("Location: index.php?register&&error");
   } else {
-    $_SESSION['user']['_id'] = (string) $user->get('_id');
     $user->set("coins", 10);
     $user->create(md5($_POST["password"]));
     header("Location: index.php");

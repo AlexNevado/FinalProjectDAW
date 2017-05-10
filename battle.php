@@ -19,8 +19,11 @@ if ($_SESSION['player'] == 'multi') {
 // db.abilities.insert({abilities:[{id:0,name:"Fireball",power:4},{id:1,name:"Punch",power:3},{id:2,name:"Drain",power:1},{id:3,name:"Thunder",power:4}]});
 // db.items.insert({items:[{id:0, name:"Poción", power:6},{id:1, name:"Antídoto"},{id:2, name:"Bomba", power:5},{id:3, name:"Revivir", power:2}]});
 
-$list = Entity::findOneBy("miscellaneous", array("",array("abilities"=>1)));
-$a=0;
+$list = Entity::findOneBy("miscellaneous", array());
+$user = User::fromArray(Entity::findOneBy("users", array("_id" => new MongoId($_SESSION['user']['_id']))));
+$abilitiesList = $list['abilities'];
+$itemList = $list['items'];
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -36,10 +39,11 @@ $a=0;
     var first = <?php print json_encode($_POST['first']); ?>;
     var player = <?php print json_encode($_SESSION['player']); ?>;
     var strMonstruo = <?php print $monsterJson; ?>;
+    var abilitiesList = <?php print json_encode($abilitiesList) ?>;
+    var itemsList = <?php print json_encode($itemList) ?>;
     var canvasID = '#battleCanvas';
     var yourMonster = new Monstruo();
     var enemy1;
-    var listAbilities = <?php print json_encode($list) ?>;
     if (player == 'single') {
       enemy1 = randomEnemy();
     } else {
@@ -219,7 +223,7 @@ $a=0;
      */
     function getAbility(id) {
       var ability;
-      listAbilities.forEach(function (object) {
+      abilitiesList.forEach(function (object) {
         if (object.id == id) {
           ability = object;
         }
@@ -233,7 +237,7 @@ $a=0;
     function doAction(action, object) {
       switch (action) {
         case "Ability":
-          listAbilities.forEach(function (ability) {
+          abilitiesList.forEach(function (ability) {
             if (ability.name === object) {
               attack(yourMonster, enemy1, ability);
             }
@@ -437,7 +441,7 @@ $a=0;
 
     function randomAction() {
       var random = randomInt(0, enemy1.abilities.length - 1);
-      listAbilities.forEach(function (ability) {
+      abilitiesList.forEach(function (ability) {
         if (ability.id == enemy1.abilities[random]) {
           attack(enemy1, yourMonster, ability);
         }
