@@ -137,7 +137,7 @@ function abilitiesButtons() {
  * Create abilities buttons on battle
  */
 function itemsButtons() {
-  for ($i = 10; $i < 20; $i++) {
+  for ($i = 0; $i < 17; $i++) {
     ?>
     <div class="col-xs-4 item">
       <h3 id="btn-item-<?php print $i; ?>">-<?php print $i; ?></h3>

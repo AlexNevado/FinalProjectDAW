@@ -137,8 +137,6 @@ $userArray = array(
         drawImage("image/bar.png", 10, 320, 200 * percentageHp(yourMonster), 20, "bar2", 4);
         drawImage("image/blood.png", 0, 0, 640, 480, "hurt", 20, 0);
 
-        //alert($(canvasID).getLayer('empty-bar2').width);
-        //$(canvasID).setLayer('monstruo', {});
       });
     }
 
@@ -181,11 +179,11 @@ $userArray = array(
           img = "image/monstersAvatars/Naga.png";
           break;
       }
+      var maxHp = randomInt(1, 30);
       enemy1.set("img", img);
       enemy1.setSTR(randomInt(1, 5));
       enemy1.setDEF(randomInt(1, 5));
       enemy1.setLUK(randomInt(1, 5));
-      var maxHp = randomInt(1, 30);
       enemy1.setHP(maxHp);
       enemy1.setMAXHP(maxHp);
       enemy1.addAbility(1);
@@ -239,20 +237,38 @@ $userArray = array(
     }
 
     /**
+     * Get an item by their id
+     */
+    function getItem(id) {
+      var item;
+      itemsList.forEach(function (object) {
+        if (object.id == id) {
+          item = object;
+        }
+      });
+      return item;
+    }
+
+    /**
      * Do player action
      */
-    function doAction(action, object) {
+    function doAction(action, string) {
       switch (action) {
-        case "Ability":
+        case "ability":
           abilitiesList.forEach(function (ability) {
-            if (ability.name === object) {
+            if (ability.name === string) {
               attack(yourMonster, enemy1, ability);
             }
           });
           break;
-        case "items":
+        case "item":
+          itemsList.forEach(function (item) {
+            if (item.name === string) {
+              useItem(yourMonster, enemy1, item);
+            }
+          });
           break;
-        case "Change":
+        case "change":
           break;
       }
     }
@@ -303,6 +319,13 @@ $userArray = array(
           }, 2000);
         }
       }
+    }
+
+    /**
+     * Use items
+     */
+    function useItem() {
+
     }
 
     /**
@@ -464,16 +487,18 @@ $userArray = array(
         for (var i = 0; i < yourMonster.abilities.length; i++) {
           var ability = getAbility(yourMonster.abilities[i]);
           $('#btn-abi-' + i).html(ability.name);
+          $('#btn-abi-' + i).val(ability.id);
           $('#btn-abi-' + i).show();
         }
       });
       $('#btn-item').click(function () {
         $('#menuBattle').hide();
         $('#menuItems').fadeIn(300);
-        for (var i = 10; i < yourMonster.abilities.length + 10; i++) {
-          var ability = getAbility(yourMonster.abilities[i - 10]);
-          $('#btn-item-' + i).html("-" + ability.name);
+        for (var i = 0; i < user.items.length ; i++) {
+          var item = getItem(user.items[i].id);
+          $('#btn-item-' + i).html("-" + item.name);
           $('#btn-item-' + i).show();
+          $('#btn-item-' + i).parent().show();
         }
       });
       $('h3[id^=btn-abi-]').mouseenter(function () {
@@ -488,11 +513,16 @@ $userArray = array(
         $(this).css("font-size", "1.2em");
       });
       $('h3[id^=btn-item-]').mouseleave(function () {
-        $(this).css("font-size", "10pt");
+        $(this).css("font-size", "0.9em");
       });
       $('h3[id^=btn-abi-]').click(function () {
         $('#menuAbi').hide();
-        doAction("Ability", $(this).html());
+        doAction("ability", $(this).html());
+      });
+      $('h3[id^=btn-item-]').click(function () {
+        var itemName = $(this).html();
+        $('#menuItem').hide();
+        doAction("item", itemName.substring(1, itemName.length);
       });
       $('.backButton').click(function () {
         for (var i = 0; i < 10; i++) {
