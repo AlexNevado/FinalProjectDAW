@@ -22,12 +22,12 @@ if ($_SESSION['player'] == 'multi') {
   $otherMonster = 'null';
 }
 /*
- db.miscellaneous.insert({abilities:[{id:0,name:"Fireball",power:4},{id:1,name:"Punch",power:3},{id:2,name:"Drain",power:1},{id:3,name:"Thunder",power:4}],
+ db.miscellaneous.insert({skills:[{id:0,name:"Fireball",power:4},{id:1,name:"Punch",power:3},{id:2,name:"Drain",power:1},{id:3,name:"Thunder",power:4}],
 items:[{id:0, name:"Poción", power:6, type:'cure'},{id:1, name:"Antídoto" , type:"cure"},{id:2, name:"Bomba", power:5, type:"damage"},{id:3, name:"Revivir", power:2, type:"cure"}]})
 */
 $list = Entity::findOneBy("miscellaneous", array());
 $user = User::fromArray(Entity::findOneBy("users", array("_id" => new MongoId($_SESSION['user']['_id']))));
-$abilitiesList = $list['abilities'];
+$skillsList = $list['skills'];
 $itemList = $list['items'];
 $userMonstruosList = $user->get("monstruos");
 foreach ($userMonstruosList as $key => $monstruo){
@@ -75,7 +75,7 @@ $a=0;
     var first = <?php print json_encode($_POST['first']); ?>;
     var player = <?php print json_encode($_SESSION['player']); ?>;
     //var strMonstruo = JSON.parse(playerMonstruos[0]);
-    var abilitiesList = <?php print json_encode($abilitiesList) ?>;
+    var skillsList = <?php print json_encode($skillsList) ?>;
     var itemsList = <?php print json_encode($itemList) ?>;
     var enemy;
     if (player == 'single') {
@@ -103,14 +103,14 @@ $a=0;
                 <input type="submit" class="btn btn-lg btn-battle" value="Aceptar">
               </div>
               <div class="col-sm-4 col-sm-offset-8 col-xs-offset-6 menu-options" id="menuBattle">
-                <h3 id="btn-abi">Habilidades</h3>
+                <h3 id="btn-skill">Habilidades</h3>
                 <h3 id="btn-item">Objetos</h3>
                 <h3 id="btn-change">Cambio</h3>
               </div>
-              <div class="col-sm-6 col-sm-offset-6 col-xs-offset-1 menu-options" id="menuAbi">
-                <div class="col-xs-10" id="abilitiesList">
+              <div class="col-sm-6 col-sm-offset-6 col-xs-offset-1 menu-options" id="menuSkills">
+                <div class="col-xs-10" id="skillsList">
                   <?php
-                  abilitiesButtons();
+                  skillsButtons();
                   ?>
                 </div>
                 <div class="col-xs-1 backButton">

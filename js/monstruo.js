@@ -10,7 +10,7 @@ function Monstruo() {
       maxHp: 0,
       hp   : 0
   };
-  this.abilities = [];
+  this.skills = [];
 
   this.draw = function (opacity = 1, name ='monstruo', img = this.img, x = 0, y = 0, width = 300, height = 300,index = 9, canvas = '#battleCanvas') {
       $(document).ready(function () {
@@ -34,7 +34,7 @@ function Monstruo() {
   this.move = function ( x = 0, y = 0, opacity = 1, canvas = '#battleCanvas') {
     $(document).ready(function () {
       $(canvas).animateLayer('monstruo', {
-        x:'+=' + x, opacity: opacity
+        x: '+=' + x, y: '+=' + y, opacity: opacity
       }, 1500);
     });
   };
@@ -55,7 +55,7 @@ function Monstruo() {
     this.name = jsonObject.name;
     this.img = jsonObject.img;
     this.characteristics = jsonObject.characteristics;
-    this.abilities = jsonObject.abilities;
+    this.skills = jsonObject.skills;
   };
   this.set = function (field, value) {
     switch (field) {
@@ -74,8 +74,8 @@ function Monstruo() {
       case "characteristics":
         this.characteristics = value;
         break;
-      case "abilities":
-        this.abilities = value;
+      case "skills":
+        this.skills = value;
         break;
     }
   };
@@ -97,8 +97,8 @@ function Monstruo() {
   this.setMAXHP = function(value) {
     this.characteristics.maxHp = value;
   };
-  this.addAbility = function (value) {
-    this.abilities.push(value);
+  this.addskill = function (value) {
+    this.skills.push(value);
   }
 
 }

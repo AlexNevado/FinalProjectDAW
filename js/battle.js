@@ -21,7 +21,7 @@ function startBattle() {
     enemy.draw(0, 'mDamage1', enemy.img.substr(0, enemy.img.length - 4) + "2.png", 300);
     drawPanels(canvasID);
     enemy.move(300);
-    yourMonster.draw(1, 'yourMonster', yourMonster.img, 10, 340, 150, 150, 10);
+    yourMonster.draw(1, 'yourMonster', yourMonster.img, 10, 340, 150, 150, 15);
     if (yourMonster.characteristics.luk > enemy.characteristics.luk) {
       showMenu();
     } else if (first) {
@@ -61,7 +61,7 @@ function showMenu() {
 function hideMenu() {
   $(document).ready(function () {
     $('#menuBattle').fadeOut(600);
-    $('#menuAbi').delay(1000).fadeIn(600);
+    $('#menuSkills').delay(1000).fadeIn(600);
   });
 }
 
@@ -76,7 +76,7 @@ function drawPanels(canvasID) {
     drawImage("image/empty-bar.png", 10, 320, 200, 20, "empty-bar2", 3);
     drawImage("image/bar.png", 10, 320, 200 * percentageHp(yourMonster), 20, "bar2", 4);
     drawImage("image/blood.png", 0, 0, 640, 480, "hurt", 20, 0);
-
+    drawImage('image/panel2.jpg', 0, 0, 640, 480, "panel2", 6, 0);
   });
 }
 
@@ -127,8 +127,8 @@ function randomEnemy(mode) {
   enemy.setLUK(randomInt(1, 5) * level);
   enemy.setMAXHP(maxHp);
   enemy.setHP(maxHp);
-  enemy.addAbility(1);
-  enemy.addAbility(3);
+  enemy.addskill(1);
+  enemy.addskill(3);
   return enemy;
 }
 
@@ -165,16 +165,16 @@ function messages(text = "Has perdido", x = 0, y = 0, width = 640, height = 480
 }
 
 /**
- * Get an ability by their id
+ * Get an skill by their id
  */
-function getAbility(id) {
-  var ability;
-  abilitiesList.forEach(function (object) {
+function getskill(id) {
+  var skill;
+  skillsList.forEach(function (object) {
     if (object.id == id) {
-      ability = object;
+      skill = object;
     }
   });
-  return ability;
+  return skill;
 }
 
 /**
@@ -195,10 +195,10 @@ function getItem(id) {
  */
 function doAction(action, string) {
   switch (action) {
-    case "ability":
-      abilitiesList.forEach(function (ability) {
-        if (ability.name === string) {
-          attack(yourMonster, enemy, ability);
+    case "skill":
+      skillsList.forEach(function (skill) {
+        if (skill.name === string) {
+          attack(yourMonster, enemy, skill);
         }
       });
       break;
@@ -210,7 +210,6 @@ function doAction(action, string) {
       });
       break;
     case "change":
-      drawImage('image/panel2.jpg',0,0,640,480,"panel2",50,0);
       createMenuList();
       break;
   }
@@ -219,31 +218,31 @@ function doAction(action, string) {
 /**
  * Attack an enemy
  */
-function attack(attacker, defender, ability) {
+function attack(attacker, defender, skill) {
   //Critical double the attack power if you have enough luk
   //and can make you miss an attack
   var random = randomInt(attacker.characteristics.luk, 40);
   var critical = random > 30 ? 2 : random < 5 ? 0 : 1;
-  var newHp = (defender.characteristics.def - attacker.characteristics.str - ability.power) * critical;
+  var newHp = (defender.characteristics.def - attacker.characteristics.str - skill.power) * critical;
   if (newHp < 0) {
     defender.setHP(newHp);
     var animation = attacker == yourMonster ? "playerAttack" : "enemyAttack";
-    if (ability.id == 0) {
+    if (skill.id == 0) {
       fireball();
       fireball(2);
       fireball(3);
       fireball(4);
     }
-    doAnimations(animation, ability.id);
+    doAnimations(animation, skill.id);
   } else {
     var animation = attacker == yourMonster ? "playerMiss" : "enemyMiss";
     doAnimations(animation);
   }
 
-  //Maybe in a future had to be types in abilities parameters for this but for now
+  //Maybe in a future had to be types in skills parameters for this but for now
   //it's ok this way
-  if (ability.id == 2) {
-    yourMonster.setHP(ability.power);
+  if (skill.id == 2) {
+    yourMonster.setHP(skill.power);
     doAnimations("playerCure");
   }
   if (attacker == yourMonster) {
@@ -282,6 +281,7 @@ function useItem(item) {
 function createMenuList() {
   $(document).ready(function () {
     $(canvasID).animateLayer("panel2", {opacity:1},1200);
+    yourMonster.move(0, -300);
   });
 }
 function nextMove(who) {
@@ -443,10 +443,10 @@ function receiveJSON() {
 }
 
 function randomAction() {
-  var random = randomInt(0, enemy.abilities.length - 1);
-  abilitiesList.forEach(function (ability) {
-    if (ability.id == enemy.abilities[random]) {
-      attack(enemy, yourMonster, ability);
+  var random = randomInt(0, enemy.skills.length - 1);
+  skillsList.forEach(function (skill) {
+    if (skill.id == enemy.skills[random]) {
+      attack(enemy, yourMonster, skill);
     }
   });
   //TODO Add items in future
@@ -462,11 +462,11 @@ function checkItems() {
 //Mouse Functions
 $(document).ready(function () {
   // Effects
-  $('h3[id^=btn-abi-]').mouseenter(function () {
+  $('h3[id^=btn-skill-]').mouseenter(function () {
     var signNumber = $(this).attr('id').slice(-1);
     $('#sign' + signNumber).fadeIn(200);
   });
-  $('h3[id^=btn-abi-]').mouseleave(function () {
+  $('h3[id^=btn-skill-]').mouseleave(function () {
     var signNumber = $(this).attr('id').slice(-1);
     $('#sign' + signNumber).fadeOut(200);
   });
@@ -477,14 +477,14 @@ $(document).ready(function () {
     $(this).css("font-size", "0.9em");
   });
   // Click functions
-  $('#btn-abi').click(function () {
+  $('#btn-skill').click(function () {
     $('#menuBattle').hide();
-    $('#menuAbi').fadeIn(300);
-    for (var i = 0; i < yourMonster.abilities.length; i++) {
-      var ability = getAbility(yourMonster.abilities[i]);
-      $('#btn-abi-' + i).html(ability.name);
-      $('#btn-abi-' + i).val(ability.id);
-      $('#btn-abi-' + i).show();
+    $('#menuSkills').fadeIn(300);
+    for (var i = 0; i < yourMonster.skills.length; i++) {
+      var skill = getskill(yourMonster.skills[i]);
+      $('#btn-skill-' + i).html(skill.name);
+      $('#btn-skill-' + i).val(skill.id);
+      $('#btn-skill-' + i).show();
     }
   });
   $('#btn-item').click(function () {
@@ -507,9 +507,9 @@ $(document).ready(function () {
     $('#menuBattle').hide();
     doAction("change");
   });
-  $('h3[id^=btn-abi-]').click(function () {
-    $('#menuAbi').hide();
-    doAction("ability", $(this).html());
+  $('h3[id^=btn-skill-]').click(function () {
+    $('#menuSkills').hide();
+    doAction("skill", $(this).html());
   });
   $('h3[id^=btn-item-]').click(function () {
     var itemName = $(this).html();
@@ -519,10 +519,10 @@ $(document).ready(function () {
   });
   $('.backButton').click(function () {
     for (var i = 0; i < 17; i++) {
-      $('#btn-abi-' + i).hide();
+      $('#btn-skill-' + i).hide();
       $('#btn-item-' + i).hide();
     }
-    $('#menuAbi').hide();
+    $('#menuSkills').hide();
     $('#menuItems').hide();
     $('#menuBattle').fadeIn(300);
   });

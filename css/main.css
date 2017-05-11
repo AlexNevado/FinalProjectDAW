@@ -213,7 +213,7 @@ input[type="number"] {
   cursor: pointer;
 }
 
-#menuBattle, #menuAbi, #menuItems {
+#menuBattle, #menuSkills, #menuItems {
   display: none;
   max-height: 200px;
 }
@@ -233,11 +233,11 @@ input[type="number"] {
   cursor: pointer;
 }
 
-#abilitiesList,#itemList {
+#skillsList,#itemList {
   overflow-y: auto;
   max-height: 180px;
 }
-#abilitiesList h3[id^='btn-abi-'], #itemList h3[id^='btn-item-']{
+#skillsList h3[id^='btn-skill-'], #itemList h3[id^='btn-item-']{
   display: none;
 }
 #itemList h3 {
