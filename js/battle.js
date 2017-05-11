@@ -91,7 +91,7 @@ function percentageHp(monstruo) {
  * Create randon enemy
  */
 function randomEnemy(mode) {
-  var level = mode == "easy"? 1 : mode == "middle"? 2 : 5;
+  var level = mode == "easy" ? 1 : mode == "middle" ? 2 : 5;
   var enemy = new Monstruo();
   enemy.set("_id", "0");
   enemy.set("userID", "CPU");
@@ -120,7 +120,7 @@ function randomEnemy(mode) {
       img = "image/monstersAvatars/Naga.png";
       break;
   }
-  var maxHp = randomInt(20 , 50) * level;
+  var maxHp = randomInt(20, 50) * level;
   enemy.set("img", img);
   enemy.setSTR(randomInt(1, 5) * level);
   enemy.setDEF(randomInt(1, 5) * level);
@@ -280,8 +280,8 @@ function useItem(item) {
  */
 function createMenuList() {
   $(document).ready(function () {
-    $(canvasID).animateLayer("panel2", {opacity:1},1200);
-    yourMonster.move(0, -300);
+    $(canvasID).animateLayer("panel2", {opacity: 1}, 1200);
+    enemy.move(0, -300);
   });
 }
 function nextMove(who) {
@@ -490,16 +490,18 @@ $(document).ready(function () {
   $('#btn-item').click(function () {
     $('#menuBattle').hide();
     $('#menuItems').fadeIn(300);
-    checkItems();
-    for (var i = 0; i < 17; i++) {
-      $('#btn-item-' + i).hide();
-    }
-    for (var i = 0; i < user.items.length; i++) {
-      var item = getItem(user.items[i].id);
-      if (item != null) {
-        $('#btn-item-' + i).html("-" + item.name);
-        $('#btn-item-' + i).show();
-        $('#btn-item-' + i).parent().show();
+    if (user.items != null) {
+      checkItems();
+      $('#btn-item-' + i).each(function() {
+        $(this).hide();
+      });
+      for (var i = 0; i < user.items.length; i++) {
+        var item = getItem(user.items[i].id);
+        if (item != null) {
+          $('#btn-item-' + i).html("-" + item.name);
+          $('#btn-item-' + i).show();
+          $('#btn-item-' + i).parent().show();
+        }
       }
     }
   });
