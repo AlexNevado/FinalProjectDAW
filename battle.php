@@ -16,8 +16,10 @@ if ($_SESSION['player'] == 'multi') {
 } else {
   $otherMonster = 'null';
 }
-// db.miscellaneous.insert({abilities:[{id:0,name:"Fireball",power:4},{id:1,name:"Punch",power:3},{id:2,name:"Drain",power:1},{id:3,name:"Thunder",power:4}], items:[{id:0, name:"Poción", power:6},{id:1, name:"Antídoto"},{id:2, name:"Bomba", power:5},{id:3, name:"Revivir", power:2}]})
-
+/*
+ db.miscellaneous.insert({abilities:[{id:0,name:"Fireball",power:4},{id:1,name:"Punch",power:3},{id:2,name:"Drain",power:1},{id:3,name:"Thunder",power:4}],
+items:[{id:0, name:"Poción", power:6, type:'cure'},{id:1, name:"Antídoto" , type:"cure"},{id:2, name:"Bomba", power:5, type:"damage"},{id:3, name:"Revivir", power:2, type:"cure"}]})
+*/
 $list = Entity::findOneBy("miscellaneous", array());
 $user = User::fromArray(Entity::findOneBy("users", array("_id" => new MongoId($_SESSION['user']['_id']))));
 $abilitiesList = $list['abilities'];
@@ -179,13 +181,13 @@ $userArray = array(
           img = "image/monstersAvatars/Naga.png";
           break;
       }
-      var maxHp = randomInt(1, 30);
+      var maxHp = randomInt(100, 200);
       enemy1.set("img", img);
       enemy1.setSTR(randomInt(1, 5));
       enemy1.setDEF(randomInt(1, 5));
       enemy1.setLUK(randomInt(1, 5));
-      enemy1.setHP(maxHp);
       enemy1.setMAXHP(maxHp);
+      enemy1.setHP(maxHp);
       enemy1.addAbility(1);
       enemy1.addAbility(3);
       return enemy1;
@@ -264,7 +266,7 @@ $userArray = array(
         case "item":
           itemsList.forEach(function (item) {
             if (item.name === string) {
-              useItem(yourMonster, enemy1, item);
+              useItem(item);
             }
           });
           break;
@@ -303,28 +305,50 @@ $userArray = array(
         yourMonster.setHP(ability.power);
         doAnimations("playerCure");
       }
+      if(attacker == yourMonster) {
 
-      if (yourMonster.characteristics.hp == 0 || enemy1.characteristics.hp == 0) {
-        endBattle();
-      } else if (player == "multi") {
-        sendJSON();
-      } else {
-        if (attacker == yourMonster) {
-          setTimeout(function () {
-            randomAction();
-          }, 2000);
-        } else {
-          setTimeout(function () {
-            showMenu();
-          }, 2000);
-        }
       }
+      var who = attacker == yourMonster? "cpu" : "player";
+      nextMove(who);
     }
 
     /**
      * Use items
      */
-    function useItem() {
+    function useItem(item) {
+      switch (item.type) {
+        case 'cure':
+          var newHp = (20 * item.power);
+          yourMonster.setHP(newHp);
+          doAnimations("playerCure");
+          break;
+        case 'damage':
+          var newHp = -(10 * item.power);
+          enemy1.setHP(newHp);
+          doAnimations("playerAttack");
+          break;
+      }
+      user.items.forEach(function (userItem) {
+        if (userItem.id == item.id) {
+          userItem.amount -=1;
+        }
+      });
+      nextMove("cpu");
+    }
+    function nextMove(who) {
+      if (yourMonster.characteristics.hp == 0 || enemy1.characteristics.hp == 0) {
+        endBattle();
+      } else if (player == "multi") {
+        sendJSON();
+      } else if (who == "cpu") {
+        setTimeout(function () {
+          randomAction();
+        }, 1800);
+      } else {
+        setTimeout(function () {
+          showMenu();
+        }, 1800);
+      }
 
     }
 
@@ -479,6 +503,13 @@ $userArray = array(
       //TODO Add items in future
     }
 
+    function checkItems() {
+      for (var i=0; i < user.items.length; i++) {
+        if(user.items[i].amount < 1) {
+          user.items.splice(i, 1);
+        }
+      }
+    }
     //Mouse Functions
     $(document).ready(function () {
       $('#btn-abi').click(function () {
@@ -494,11 +525,17 @@ $userArray = array(
       $('#btn-item').click(function () {
         $('#menuBattle').hide();
         $('#menuItems').fadeIn(300);
+        checkItems();
+        for (var i = 0; i < 17; i++) {
+          $('#btn-item-' + i).hide();
+        }
         for (var i = 0; i < user.items.length ; i++) {
           var item = getItem(user.items[i].id);
-          $('#btn-item-' + i).html("-" + item.name);
-          $('#btn-item-' + i).show();
-          $('#btn-item-' + i).parent().show();
+          if (item != null) {
+            $('#btn-item-' + i).html("-" + item.name);
+            $('#btn-item-' + i).show();
+            $('#btn-item-' + i).parent().show();
+          }
         }
       });
       $('h3[id^=btn-abi-]').mouseenter(function () {
@@ -521,12 +558,14 @@ $userArray = array(
       });
       $('h3[id^=btn-item-]').click(function () {
         var itemName = $(this).html();
-        $('#menuItem').hide();
-        doAction("item", itemName.substring(1, itemName.length);
+        itemName = itemName.substring(1, itemName.length);
+        $('#menuItems').hide();
+        doAction("item", itemName);
       });
       $('.backButton').click(function () {
-        for (var i = 0; i < 10; i++) {
+        for (var i = 0; i < 17; i++) {
           $('#btn-abi-' + i).hide();
+          $('#btn-item-' + i).hide();
         }
         $('#menuAbi').hide();
         $('#menuItems').hide();

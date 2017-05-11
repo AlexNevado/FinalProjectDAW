@@ -90,8 +90,8 @@ function Monstruo() {
   };
   this.setHP = function(value) {
     var hp = this.characteristics.hp + value;
-    hp = hp > this.maxHp? maxHp : hp;
-    hp = hp < 0? 0 : hp;
+    hp = hp >= this.characteristics.maxHp? this.characteristics.maxHp : hp;
+    hp = hp <= 0? 0 : hp;
     this.characteristics.hp = hp;
   };
   this.setMAXHP = function(value) {
