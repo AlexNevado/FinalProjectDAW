@@ -17,12 +17,12 @@ function drawImage(imgSrc = 'image/panel1.png', x = 0, y = 300, width = 800, hei
 
 function startBattle() {
   $(document).ready(function () {
-    enemy1.draw(0);
-    enemy1.draw(0, 'mDamage1', enemy1.img.substr(0, enemy1.img.length - 4) + "2.png", 300);
+    enemy.draw(0);
+    enemy.draw(0, 'mDamage1', enemy.img.substr(0, enemy.img.length - 4) + "2.png", 300);
     drawPanels(canvasID);
-    enemy1.move(300);
+    enemy.move(300);
     yourMonster.draw(1, 'yourMonster', yourMonster.img, 10, 340, 150, 150, 10);
-    if (yourMonster.characteristics.luk > enemy1.characteristics.luk) {
+    if (yourMonster.characteristics.luk > enemy.characteristics.luk) {
       showMenu();
     } else if (first) {
       showMenu();
@@ -37,7 +37,7 @@ function endBattle() {
     setTimeout(function () {
       drawImage("image/background12.jpg", 0, 0, 640, 480, "end", 20, 0.5);
       $('#end-screen').show();
-      if (yourMonster.characteristics.hp > enemy1.characteristics.hp) {
+      if (yourMonster.characteristics.hp > enemy.characteristics.hp) {
         $('#end-message').html("¡Has Vencido!");
       } else {
         $('#end-message').html("¡Has Perdido!");
@@ -72,7 +72,7 @@ function drawPanels(canvasID) {
   $(document).ready(function () {
     drawImage();
     drawImage("image/empty-bar.png", 50, 50, 300, 20, "empty-bar1", 1);
-    drawImage("image/bar.png", 50, 50, 300 * percentageHp(enemy1), 20, "bar1", 2);
+    drawImage("image/bar.png", 50, 50, 300 * percentageHp(enemy), 20, "bar1", 2);
     drawImage("image/empty-bar.png", 10, 320, 200, 20, "empty-bar2", 3);
     drawImage("image/bar.png", 10, 320, 200 * percentageHp(yourMonster), 20, "bar2", 4);
     drawImage("image/blood.png", 0, 0, 640, 480, "hurt", 20, 0);
@@ -92,10 +92,10 @@ function percentageHp(monstruo) {
  */
 function randomEnemy(mode) {
   var level = mode == "easy"? 1 : mode == "middle"? 2 : 5;
-  var enemy1 = new Monstruo();
-  enemy1.set("_id", "0");
-  enemy1.set("userID", "CPU");
-  enemy1.set("name", "enemyXYZ");
+  var enemy = new Monstruo();
+  enemy.set("_id", "0");
+  enemy.set("userID", "CPU");
+  enemy.set("name", "enemyXYZ");
   var img;
   switch (randomInt(0, 6)) {
     case 0:
@@ -121,15 +121,15 @@ function randomEnemy(mode) {
       break;
   }
   var maxHp = randomInt(20 , 50) * level;
-  enemy1.set("img", img);
-  enemy1.setSTR(randomInt(1, 5) * level);
-  enemy1.setDEF(randomInt(1, 5) * level);
-  enemy1.setLUK(randomInt(1, 5) * level);
-  enemy1.setMAXHP(maxHp);
-  enemy1.setHP(maxHp);
-  enemy1.addAbility(1);
-  enemy1.addAbility(3);
-  return enemy1;
+  enemy.set("img", img);
+  enemy.setSTR(randomInt(1, 5) * level);
+  enemy.setDEF(randomInt(1, 5) * level);
+  enemy.setLUK(randomInt(1, 5) * level);
+  enemy.setMAXHP(maxHp);
+  enemy.setHP(maxHp);
+  enemy.addAbility(1);
+  enemy.addAbility(3);
+  return enemy;
 }
 
 /**
@@ -198,7 +198,7 @@ function doAction(action, string) {
     case "ability":
       abilitiesList.forEach(function (ability) {
         if (ability.name === string) {
-          attack(yourMonster, enemy1, ability);
+          attack(yourMonster, enemy, ability);
         }
       });
       break;
@@ -265,7 +265,7 @@ function useItem(item) {
       break;
     case 'damage':
       var newHp = -(10 * item.power);
-      enemy1.setHP(newHp);
+      enemy.setHP(newHp);
       doAnimations("playerAttack");
       break;
   }
@@ -285,7 +285,7 @@ function createMenuList() {
   });
 }
 function nextMove(who) {
-  if (yourMonster.characteristics.hp == 0 || enemy1.characteristics.hp == 0) {
+  if (yourMonster.characteristics.hp == 0 || enemy.characteristics.hp == 0) {
     endBattle();
   } else if (player == "multi") {
     sendJSON();
@@ -308,7 +308,7 @@ function doAnimations(animation, animationId) {
   $(document).ready(function () {
     switch (animation) {
       case "enemyAttack":
-        enemy1.attackAnimation();
+        enemy.attackAnimation();
         $(canvasID).animateLayer("bar2", {width: 200 * percentageHp(yourMonster)}, 1000);
         drawImage("image/blood.png", 0, 0, 640, 480, "hurt", 20);
         $(canvasID).animateLayer("hurt", {opacity: 1}, 300, function (layer) {
@@ -348,7 +348,7 @@ function doAnimations(animation, animationId) {
             $(this).animateLayer(layer, {opacity: 0}, 200);
           });
         }
-        $(canvasID).animateLayer("bar1", {width: 300 * percentageHp(enemy1)}, 1000)
+        $(canvasID).animateLayer("bar1", {width: 300 * percentageHp(enemy)}, 1000)
         break;
       case "playerCure":
         $(canvasID).animateLayer("bar2", {width: 200 * percentageHp(yourMonster)}, 1000);
@@ -435,7 +435,7 @@ function sendJSON() {
 function receiveJSON() {
   //TODO receive JSON and make changes in local
   doAnimations();
-  if (yourMonster.characteristics.hp == 0 || enemy1.characteristics.hp == 0) {
+  if (yourMonster.characteristics.hp == 0 || enemy.characteristics.hp == 0) {
     endBattle();
   } else {
     showMenu();
@@ -443,10 +443,10 @@ function receiveJSON() {
 }
 
 function randomAction() {
-  var random = randomInt(0, enemy1.abilities.length - 1);
+  var random = randomInt(0, enemy.abilities.length - 1);
   abilitiesList.forEach(function (ability) {
-    if (ability.id == enemy1.abilities[random]) {
-      attack(enemy1, yourMonster, ability);
+    if (ability.id == enemy.abilities[random]) {
+      attack(enemy, yourMonster, ability);
     }
   });
   //TODO Add items in future
