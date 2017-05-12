@@ -14,12 +14,13 @@ function Monstruo() {
   this.layer;
   this.pos;
 
-  this.draw = function (opacity = 1, name ='monstruo', img = this.img, x = 0, y = 0, width = 300, height = 300,index = 9, canvas = '#battleCanvas') {
+  this.draw = function (opacity = 1, name ='monstruo', img = this.img, x = 0, y = 0, width = 300, height = 300,index = 9,groups = "battle", canvas = '#battleCanvas') {
     this.layer = name;
     $(document).ready(function () {
         $(canvas).drawImage({
           layer: true,
           name : name,
+          groups: groups,
           draggable: true,
           source: img,
           index: index,
@@ -34,10 +35,14 @@ function Monstruo() {
         });
       });
     };
-  this.move = function ( x = 0, y = 0, opacity = 1,layer = this.layer, canvas = '#battleCanvas') {
+  this.move = function ( x = 0, y = 0, opacity = 1,width = 0, height = 0,layer = this.layer, canvas = '#battleCanvas') {
     $(document).ready(function () {
       $(canvas).animateLayer(layer, {
-        x: '+=' + x, y: '+=' + y, opacity: opacity
+        x: '+=' + x,
+        y: '+=' + y,
+        opacity: opacity,
+        width: '+=' + width,
+        height: '+=' + height,
       }, 1500);
     });
   };

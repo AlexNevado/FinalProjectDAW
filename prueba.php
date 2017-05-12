@@ -28,7 +28,64 @@ $user->addItems(3,2);
 //$user->addMonstruo("5914b2e047864a7a1f8b4567" );
 $result = Entity::findOneBy("abilities", array());
 $list = $result['abilities'];
+//Add random Monster
+if(true) {
+  $maxHp = rand(10, 50);
+  $monstruo = new Monstruo();
+  $monstruo->set('_id', new MongoId());
+  $monstruo->set('userID', new MongoId($_SESSION["user"]["_id"]));
+  $monstruo->set('name', generateRandomString());
+  $monstruo->set('img', selectRandomImg());
+  $monstruo->set('characteristics', array('str' => rand(0, 6),
+      'def' => rand(0, 6),
+      'luk' => rand(0, 6),
+      'maxHp' => $maxHp,
+      'hp' => $maxHp));
+  $monstruo->push("monstruos",array('skills' => rand(0, 3)));
+  $monstruo->save();
 
+  $user = Entity::findOneBy("users", array("_id" => new MongoId($_SESSION['user']['_id'])));
+  if (!empty($user)) {
+    $user = User::fromArray($user);
+    $user->addMonstruo($monstruo->get('_id'));
+  }
+}
+
+function generateRandomString($length = 10) {
+  $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  $charactersLength = strlen($characters);
+  $randomString = '';
+  for ($i = 0; $i < $length; $i++) {
+    $randomString .= $characters[rand(0, $charactersLength - 1)];
+  }
+  return $randomString;
+}
+function selectRandomImg() {
+  switch (rand(0, 6)) {
+    case 0:
+      $img = "image/monstersAvatars/DivineGuardian.png";
+      break;
+    case 1:
+      $img = "image/monstersAvatars/Dragon.png";
+      break;
+    case 2:
+      $img = "image/monstersAvatars/Goblin.png";
+      break;
+    case 3:
+      $img = "image/monstersAvatars/Harpy.png";
+      break;
+    case 4:
+      $img = "image/monstersAvatars/Lichlord.png";
+      break;
+    case 5:
+      $img = "image/monstersAvatars/LordofViolence.png";
+      break;
+    case 6:
+      $img = "image/monstersAvatars/Naga.png";
+      break;
+  }
+  return $img;
+}
 ?>
 <!DOCTYPE html>
 <html>

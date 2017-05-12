@@ -282,10 +282,17 @@ function useItem(item) {
 function createMenuList() {
   $(document).ready(function () {
     $(canvasID).animateLayer("panel2", {opacity: 1}, 1200);
-    yourMonster.move(0, -300);
-    yourTeam.forEach(function(monster) {
-      //if () {}
+    yourMonster.move(50, -300, 1, -50, -50);
+    var count = 1;
+    user.monstruos.forEach(function(monster) {
+      if (monster.pos != 0) {
+        monster.draw(1, 'yourTeam' + count, monster.img, 60, 160 +(50 * count), 100, 100, 9, "yourTeam");
+        count++;
+      }
     });
+    //user.monstruos[2].draw(1, 'yourTeam'+ count, user.monstruos[2].img, 10, 200 * count, 150, 150, 9, "yourTeam");
+    a=$(canvasID).getLayers();
+    b=0;
   });
 }
 function nextMove(who) {
