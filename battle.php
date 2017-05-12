@@ -5,21 +5,15 @@ include 'functions.php';
 if (!isset($_SESSION["Authenticated"]) || $_SESSION["Authenticated"] == 0) {
   header("Location: index.php");
 }
-$monsters = Entity::findAllBy("monstruos", array("userID" => new MongoId($_SESSION['user']['_id'])));
 
-foreach ($monsters as $key => $monster) {
-  $monsters[$key] = Monstruo::fromArray($monster)->toJSON();
-}
-$monster = Monstruo::fromArray(Entity::findOneBy("monstruos", array("userID" => new MongoId($_SESSION['user']['_id']))));
-$monsterJson = $monster->toJSON();
 // Esto es de prueba hasta que añadamos el método via server
 $_SESSION['player'] = "single";
 $_POST['first'] = "1";
 
 if ($_SESSION['player'] == 'multi') {
-  $otherMonster = Monstruo::fromArray(Entity::findOneBy("monstruos", array("userID" => new MongoId($_POST['userID']))));
+  $otherMonstruos = Entity::findAllBy("monstruos", array("userID" => new MongoId($_POST['userID'])));
 } else {
-  $otherMonster = 'null';
+  $otherMonstruos = 'null';
 }
 /*
  db.miscellaneous.insert({skills:[{id:0,name:"Fireball",power:4},{id:1,name:"Punch",power:3},{id:2,name:"Drain",power:1},{id:3,name:"Thunder",power:4}],
@@ -30,17 +24,25 @@ $user = User::fromArray(Entity::findOneBy("users", array("_id" => new MongoId($_
 $skillsList = $list['skills'];
 $itemList = $list['items'];
 $userMonstruosList = $user->get("monstruos");
+$ordenedListById = array();
 foreach ($userMonstruosList as $key => $monstruo){
-  $userMonstruosList[$key]['_id'] = (string)$monstruo['_id'];
+  $ordenedListById[(string)$userMonstruosList[$key]['_id']] = $userMonstruosList[$key]['pos'];
 }
+
+$monstruos = Entity::findAllBy("monstruos", array("userID" => new MongoId($_SESSION['user']['_id'])));
+foreach ($monstruos as $key => $monster) {
+  $monster = Monstruo::fromArray($monster);
+  $monster->set("pos", $ordenedListById[(string)$monster->get('_id')]);
+  $monstruos[$key] = $monster->toJSON();
+}
+
 $userArray = array(
     "id" => (string)$user->get("_id"),
     "username" => $user->get("username"),
     "coins" => $user->get("coins"),
     "items" => $user->get("items"),
-    "monstruos" => $userMonstruosList,
+    "monstruos" => $monstruos,
 );
-$a=0;
 ?>
 <!DOCTYPE html>
 <html>
@@ -56,25 +58,18 @@ $a=0;
   <script src="js/battle.js"></script>
   <script type="application/javascript">
     var canvasID = '#battleCanvas';
-    var playerMonstruos =<?php print json_encode($monsters); ?>;
-    for(var i=0; i < playerMonstruos.length; i++) {
-      playerMonstruos[i] = JSON.parse(playerMonstruos[i]);
-    }
     var user = new User();
     var yourMonster = new Monstruo();
     user.buildWithJson(<?php print json_encode($userArray) ?>);
-    user.monstruos.forEach(function (monstruo) {
-      if(monstruo.pos == 0) {
-        playerMonstruos.forEach(function (playerMonstruo) {
-          if(playerMonstruo._id == monstruo._id) {
-            yourMonster.buildWithJson(playerMonstruo);
-          }
-        });
-      }
-    });
+    for(var i= 0; i < user.monstruos.length; i++) {
+      var monstruo = new Monstruo();
+      monstruo.buildWithJson(JSON.parse(user.monstruos[i]));
+      user.monstruos[i] = monstruo;
+      if(monstruo.pos == 0) yourMonster = monstruo;
+    }
+
     var first = <?php print json_encode($_POST['first']); ?>;
     var player = <?php print json_encode($_SESSION['player']); ?>;
-    //var strMonstruo = JSON.parse(playerMonstruos[0]);
     var skillsList = <?php print json_encode($skillsList) ?>;
     var itemsList = <?php print json_encode($itemList) ?>;
     var enemy;
@@ -85,7 +80,8 @@ $a=0;
       }
       enemy = enemyMonstruos[0];
     } else {
-      enemy = <?php print $otherMonster; ?>;
+      enemyMonstruos = <?php print $otherMonstruos; ?>;
+      enemy = enemyMonstruos[0];
     }
   </script>
 </head>

@@ -58,6 +58,10 @@ class Monstruo extends Entity {
         "characteristics" => $this->get('characteristics'),
         "skills" => $this->get('skills')
     );
+    // This is used in javascript functions
+    if ($this->get('pos') !== NULL) {
+      $monstruo["pos"] = $this->get('pos');
+    }
     return $monstruo;
   }
 

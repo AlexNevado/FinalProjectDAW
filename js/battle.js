@@ -18,7 +18,8 @@ function drawImage(imgSrc = 'image/panel1.png', x = 0, y = 300, width = 800, hei
 function startBattle() {
   $(document).ready(function () {
     enemy.draw(0);
-    enemy.draw(0, 'mDamage1', enemy.img.substr(0, enemy.img.length - 4) + "2.png", 300);
+    var enemy0 = new Monstruo();
+    enemy0.draw(0, 'mDamage1', enemy.img.substr(0, enemy.img.length - 4) + "2.png", 300, 0, 300, 300, 12);
     drawPanels(canvasID);
     enemy.move(300);
     yourMonster.draw(1, 'yourMonster', yourMonster.img, 10, 340, 150, 150, 15);
@@ -281,7 +282,10 @@ function useItem(item) {
 function createMenuList() {
   $(document).ready(function () {
     $(canvasID).animateLayer("panel2", {opacity: 1}, 1200);
-    enemy.move(0, -300);
+    yourMonster.move(0, -300);
+    yourTeam.forEach(function(monster) {
+      //if () {}
+    });
   });
 }
 function nextMove(who) {
