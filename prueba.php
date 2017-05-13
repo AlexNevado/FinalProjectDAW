@@ -21,15 +21,18 @@ if ($_SESSION['player'] == 'multi') {
 // db.miscellaneous.insert({abilities:[{id:0,name:"Fireball",power:4},{id:1,name:"Punch",power:3},{id:2,name:"Drain",power:1},{id:3,name:"Thunder",power:4}], items:[{id:0, name:"Poción", power:6},{id:1, name:"Antídoto"},{id:2, name:"Bomba", power:5},{id:3, name:"Revivir", power:2}]})
 
 $user = User::fromArray(Entity::findOneBy("users", array("_id" => new MongoId($_SESSION['user']['_id']))));
-$user->addItems(0,2);
-$user->addItems(1,2);
-$user->addItems(2,2);
-$user->addItems(3,2);
+$amount = 0;
+$condition = false;
+$user->addItems(0,$amount);
+$user->addItems(1,$amount);
+$user->addItems(2,$amount);
+$user->addItems(3,$amount);
 //$user->addMonstruo("5914b2e047864a7a1f8b4567" );
 $result = Entity::findOneBy("abilities", array());
 $list = $result['abilities'];
+
 //Add random Monster
-if(true) {
+if($condition) {
   $maxHp = rand(10, 50);
   $monstruo = new Monstruo();
   $monstruo->set('_id', new MongoId());
@@ -60,6 +63,7 @@ function generateRandomString($length = 10) {
   }
   return $randomString;
 }
+
 function selectRandomImg() {
   switch (rand(0, 6)) {
     case 0:
@@ -153,6 +157,10 @@ function selectRandomImg() {
           div += "<h3 id='btn-abi-" + i + "' >Habilidad</h3>";
         }
         $('#a').html(div);
+
+      });
+      $('#a').on("click","h3#btn-abi-0", function() {
+        alert("x");
       });
       $('h3[id^=btn-abi-]').mouseenter(function () {
         alert("x");
@@ -163,9 +171,51 @@ function selectRandomImg() {
       $('h3[id^=btn-abi-]').click(function () {
         alert("x");
       });
+
+
+      $('#z').click(function () {
+        function showText(string, x = 200, y = 100) {
+          var string = string;
+          var a = 0;
+
+          function createString(char, x, y, i) {
+            $(canvasID).drawText({
+              layer: true,
+              name: 'char' + i,
+              groups: ['info'],
+              fillStyle: 'gray',
+              strokeStyle: 'white',
+              strokeWidth: 1,
+              x: x, y: y,
+              fontSize: '16pt',
+              opacity: 1,
+              fontFamily: 'Verdana, sans-serif',
+              text: char,
+              scale: 2,
+            }).animateLayer('char' + i, {opacity: 1, scale: '-=1'}, 1000);
+          }
+
+          var interval = setInterval(function () {
+            createString(string.substr(a, 1), x + a * 20, y, a);
+            a++;
+            if (a == string.length) {
+              clearInterval(interval);
+            }
+          }, 500);
+        }
+      });
+
+
+
+
     });
 
   </script>
+  <style>
+    button {
+      color: black;
+    }
+  </style>
 </head>
 <!-- <body>  -->
 <body onload="startBattle()">
@@ -173,6 +223,10 @@ function selectRandomImg() {
 <div id="a"></div>
 <button id="x">X</button>
 <button id="y">Y</button>
+<button id="z">Z</button>
+<div id="demo">
+  <p>Texto aqui</p>
+</div>
 
 </body>
 </html>

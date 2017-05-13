@@ -19,7 +19,8 @@ div[role="footer"] {
 }
 
 div[role="main"] {
-  border: 1px solid black;
+ /* border: 1px solid black;
+*/
 }
 
 legend, legend a, legend a:hover {
@@ -213,7 +214,7 @@ input[type="number"] {
   cursor: pointer;
 }
 
-#menuBattle, #menuSkills, #menuItems {
+#menuBattle, #menuSkills, #menuItems, menuList {
   display: none;
   max-height: 200px;
 }
@@ -237,7 +238,7 @@ input[type="number"] {
   overflow-y: auto;
   max-height: 180px;
 }
-#skillsList h3[id^='btn-skill-'], #itemList h3[id^='btn-item-']{
+#skillsList h3[id^='btn-skill-'], #itemList h3[id^='btn-item-'], .monstruosList{
   display: none;
 }
 #itemList h3 {
@@ -245,6 +246,18 @@ input[type="number"] {
 }
 .item {
   height: 30px;
+}
+.monstruosList {
+  background: url('../image/futureui2.png');
+  background-size: 100% 100%;
+  height: 140px;
+  margin-top: 2%;
+}
+.monstruosList:hover {
+  -webkit-box-shadow: -6px 3px 75px 25px rgba(0,0,0,1);
+  -moz-box-shadow: -6px 3px 75px 25px rgba(0,0,0,1);
+  box-shadow: -6px 3px 75px 25px rgba(0,0,0,1);
+  cursor: pointer;
 }
 canvas {
   background: url('../image/forest2.jpg');

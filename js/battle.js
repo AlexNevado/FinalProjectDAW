@@ -22,7 +22,7 @@ function startBattle() {
     enemy0.draw(0, 'mDamage1', enemy.img.substr(0, enemy.img.length - 4) + "2.png", 300, 0, 300, 300, 12);
     drawPanels(canvasID);
     enemy.move(300);
-    yourMonster.draw(1, 'yourMonster', yourMonster.img, 10, 340, 150, 150, 15);
+    yourMonster.draw(1, 'yourMonster', yourMonster.img, 10, 340, 150, 150, 15, 'yourTeam');
     if (yourMonster.characteristics.luk > enemy.characteristics.luk) {
       showMenu();
     } else if (first) {
@@ -168,7 +168,7 @@ function messages(text = "Has perdido", x = 0, y = 0, width = 640, height = 480
 /**
  * Get an skill by their id
  */
-function getskill(id) {
+function getSkill(id) {
   var skill;
   skillsList.forEach(function (object) {
     if (object.id == id) {
@@ -282,19 +282,60 @@ function useItem(item) {
 function createMenuList() {
   $(document).ready(function () {
     $(canvasID).animateLayer("panel2", {opacity: 1}, 1200);
-    yourMonster.move(50, -300, 1, -50, -50);
-    var count = 1;
-    user.monstruos.forEach(function(monster) {
-      if (monster.pos != 0) {
-        monster.draw(1, 'yourTeam' + count, monster.img, 60, 160 +(50 * count), 100, 100, 9, "yourTeam");
-        count++;
+    yourMonster.move(50, -300 / (Math.pow(yourMonster.pos, 5) + 1), 1, -50, -50);
+    user.monstruos.forEach(function (monster) {
+      showText(monster.name + " " + monster.characteristics.hp + "/" + monster.characteristics.maxHp, 50 + monster.pos * 150);
+
+      if (monster.pos != yourMonster.pos) {
+        monster.draw(1, 'yourTeam' + monster.pos, monster.img, 60, 40 + (150 * monster.pos), 100, 100, 9, "yourTeam");
       }
     });
-    //user.monstruos[2].draw(1, 'yourTeam'+ count, user.monstruos[2].img, 10, 200 * count, 150, 150, 9, "yourTeam");
-    a=$(canvasID).getLayers();
-    b=0;
+    $(canvasID).getLayers().removeLayers().drawLayers();
   });
 }
+function showText(stringToShow, y = 100, x = 200) {
+  $(document).ready(function () {
+    var count = 0;
+    var string = stringToShow;
+    var index = 0;
+
+    function createString(char, x, y, i) {
+      $(canvasID).drawText({
+        layer: true,
+        name: string + i,
+        groups: ['info'],
+        fillStyle: 'gray',
+        strokeStyle: 'white',
+        strokeWidth: 1,
+        x: x, y: y,
+        fontSize: '26pt',
+        opacity: 1,
+        fontFamily: 'Verdana, sans-serif',
+        text: char,
+        scale: 2,
+      }).animateLayer(string + i, {opacity: 1, scale: '-=1.5'}, 200);
+    }
+
+    var intro = 0;
+    var index2 = index;
+    var intervals = [];
+    intervals[count] = setInterval(function () {
+      if (string.substr(index, 1) == " ") {
+        intro++;
+        index++;
+        index2 = 0;
+      }
+      createString(string.substr(index, 1), x + index2 * 20, y + intro * 40, index);
+      index++;
+      index2++;
+      if (index == string.length) {
+        clearInterval(intervals[count]);
+      }
+    }, 200);
+  });
+
+}
+
 function nextMove(who) {
   if (yourMonster.characteristics.hp == 0 || enemy.characteristics.hp == 0) {
     endBattle();
@@ -492,7 +533,7 @@ $(document).ready(function () {
     $('#menuBattle').hide();
     $('#menuSkills').fadeIn(300);
     for (var i = 0; i < yourMonster.skills.length; i++) {
-      var skill = getskill(yourMonster.skills[i]);
+      var skill = getSkill(yourMonster.skills[i]);
       $('#btn-skill-' + i).html(skill.name);
       $('#btn-skill-' + i).val(skill.id);
       $('#btn-skill-' + i).show();
@@ -503,7 +544,7 @@ $(document).ready(function () {
     $('#menuItems').fadeIn(300);
     if (user.items != null) {
       checkItems();
-      $('#btn-item-' + i).each(function() {
+      $('#btn-item-' + i).each(function () {
         $(this).hide();
       });
       for (var i = 0; i < user.items.length; i++) {
@@ -518,6 +559,7 @@ $(document).ready(function () {
   });
   $('#btn-change').click(function () {
     $('#menuBattle').hide();
+    $('.monstruosList').delay(3500).fadeIn(1000);
     doAction("change");
   });
   $('h3[id^=btn-skill-]').click(function () {
@@ -538,5 +580,18 @@ $(document).ready(function () {
     $('#menuSkills').hide();
     $('#menuItems').hide();
     $('#menuBattle').fadeIn(300);
+  });
+  $('.monstruosList').click(function () {
+    $('.monstruosList').delay(500).fadeOut(300);
+    $(canvasID).animateLayer('panel2', {opacity: 0}, 1000).removeLayerGroup('info').removeLayerGroup('yourTeam');
+    $('#menuBattle').delay(1000).fadeIn(300);
+     var pos = $(this).attr('id').substr(3,1);
+    user.monstruos.forEach(function (monstruo) {
+      if(monstruo.pos == pos) {
+        yourMonster = monstruo;
+        yourMonster.draw(1, 'yourMonster', yourMonster.img, 10, 340, 150, 150, 15, 'yourTeam');
+        $(canvasID).animateLayer("bar2", {width: 200 * percentageHp(yourMonster)}, 1000);
+      }
+    })
   });
 });

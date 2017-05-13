@@ -121,6 +121,11 @@ $userArray = array(
                 <div class="col-xs-1 backButton">
                 </div>
               </div>
+              <div class="col-xs-12" id="menuList">
+                <div class="col-xs-12 monstruosList" id="pos0"></div>
+                <div class="col-xs-12 monstruosList" id="pos1"></div>
+                <div class="col-xs-12 monstruosList" id="pos2"></div>
+              </div>
             </div>
             <canvas id="battleCanvas" width="640" height="480"></canvas>
           </form>

@@ -20,7 +20,7 @@ function Monstruo() {
         $(canvas).drawImage({
           layer: true,
           name : name,
-          groups: groups,
+          groups: [groups],
           draggable: true,
           source: img,
           index: index,
