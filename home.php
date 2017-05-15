@@ -2,10 +2,9 @@
 session_start();
 include 'functions.php';
 
-echo '<a href="validate.php?logout">EXIT</a>';
-if (!isset($_SESSION["Authenticated"]) || $_SESSION["Authenticated"] == 0) {
-  header("Location: index.php");
-}
+//echo '<a href="validate.php?logout">EXIT</a>';
+isLogged();
+
 ?>
 <!DOCTYPE html>
 <html>

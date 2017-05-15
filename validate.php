@@ -5,7 +5,7 @@ include 'functions.php';
 if (isset($_GET["logout"])) {
   session_destroy();
   $_SESSION[] = array();
-  setcookie("user", $_SESSION["user"]["username"], time() - 3600);
+  setcookie("user", $_SESSION["user"]["_id"], time() - 3600);
   unset($_COOKIE['PHPSESSID']);
   header("Location: index.php");
 } else if (isset ($_POST["username"]) && isset($_POST['password'])) {
@@ -17,7 +17,7 @@ if (isset($_GET["logout"])) {
         '_id' => (string)$result['_id'],
         'username' => $result['username'],
     );
-    setcookie("user", $_SESSION["user"]["username"], time() + 31556926);
+    setcookie("user", $_SESSION["user"]["_id"], time() + 31556926);
     header("Location: home.php");
   } else {
     $_SESSION["Authenticated"] = 0;

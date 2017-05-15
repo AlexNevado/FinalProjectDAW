@@ -1,7 +1,7 @@
 <?php
 session_start();
 include 'functions.php';
-
+isLogged();
 if (!isset($_SESSION["Authenticated"]) || $_SESSION["Authenticated"] == 0) {
   header("Location: index.php");
 }

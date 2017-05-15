@@ -1,13 +1,11 @@
 <?php
 session_start();
 include 'functions.php';
-if (isset($_COOKIE["user"])){
-  $_SESSION["user"]["name"] = $_COOKIE["user"];
-  $_SESSION["Authenticated"] = 1;
-}
+
 if (isset($_SESSION["Authenticated"]) && $_SESSION["Authenticated"] == 1) {
   header("Location: home.php");
 }
+
 ?>
 <!DOCTYPE html>
 <html>

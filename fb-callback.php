@@ -67,5 +67,6 @@ if (isset($accessToken)) {
         'username' => $result['username'],
     );
   }
+  setcookie("user", $_SESSION["user"]["_id"], time() + 31556926);
   header("Location: home.php");
 }

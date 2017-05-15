@@ -15,6 +15,22 @@ $helper = $fb->getRedirectLoginHelper();
 $permissions = ['email']; // optional
 $loginUrl = $helper->getLoginUrl('http://mba2.com/fb-callback.php', $permissions);
 $GLOBALS['loginUrl'] = $loginUrl;
+
+if (!isset($_SESSION["Authenticated"]) && isset($_COOKIE["user"])) {
+  $_SESSION["user"]["_id"] = $_COOKIE["user"];
+  $user = User::fromArray(Entity::findById("users", new MongoId($_SESSION["user"]["_id"])));
+  $_SESSION["user"]["username"] = $user->get("username");
+  $_SESSION["Authenticated"] = 1;
+}
+/**
+ * If user is not logged return to index
+ */
+function isLogged() {
+  if (!isset($_SESSION["Authenticated"]) || $_SESSION["Authenticated"] == 0) {
+    header("Location: index.php");
+  }
+}
+
 /**
  * Create register interface
  */

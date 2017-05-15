@@ -280,6 +280,9 @@ function useItem(item) {
       var newHp = -(10 * item.power);
       enemy.setHP(newHp);
       doAnimations("playerAttack");
+      if (item.id == 2) {
+        explosion.play();
+      }
       break;
   }
   user.items.forEach(function (userItem) {
