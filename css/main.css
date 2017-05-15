@@ -267,6 +267,10 @@ canvas {
 .item {
   height: 30px;
 }
+.itemPic {
+  max-height: 150px;
+  max-width: 100px;
+}
 .monstruosList {
   background: url('../image/futureui2.png');
   background-size: 100% 100%;
@@ -277,6 +281,19 @@ canvas {
   -webkit-box-shadow: -6px 3px 75px 25px rgba(0,0,0,1);
   -moz-box-shadow: -6px 3px 75px 25px rgba(0,0,0,1);
   box-shadow: -6px 3px 75px 25px rgba(0,0,0,1);
+  cursor: pointer;
+}
+.shopList {
+  padding: 2%;
+  border-width:5px;
+  border-style:dashed;
+  text-align: left;
+}
+.shopList input[type="text"][disabled] {
+  color : black;
+  width: 60px;
+}
+.shopList .glyphicon {
   cursor: pointer;
 }
 canvas {
