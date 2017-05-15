@@ -35,9 +35,9 @@ function Monstruo() {
         });
       });
     };
-  this.move = function ( x = 0, y = 0, opacity = 1,width = 0, height = 0,layer = this.layer, canvas = '#battleCanvas') {
+  this.move = function ( x = 0, y = 0, opacity = 1,width = 0, height = 0, delay = 0,layer = this.layer, canvas = '#battleCanvas') {
     $(document).ready(function () {
-      $(canvas).animateLayer(layer, {
+      $(canvas).delay(delay).animateLayer(layer, {
         x: '+=' + x,
         y: '+=' + y,
         opacity: opacity,

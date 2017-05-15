@@ -99,6 +99,7 @@ function selectRandomImg() {
   <script src="js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/main.css">
+  <script src="js/jquery.easyAudioEffects.min.js"></script>
   <script src="js/jcanvas.min.js"></script>
   <script src="js/monstruo.js"></script>
   <script type="text/javascript">
@@ -148,10 +149,30 @@ function selectRandomImg() {
           x: 150, y: 300,
           width: 100 * i / 4, height: 100 * i / 4,
         });
-      }
+      } /*
+      $('#y').click(function () {
+        setTimeout(function () {
+          new Audio('audio/hit.ogg').play();
+        }, 1000);
+      });
+/*
+      $('#y').delay(3000).easyAudioEffects({
+        ogg : "audio/hit.ogg",
+        mp3 : "audio/hit.mp3",
+        eventType :  "click"
+      });
+  */
 
       $('#y').click(function () {
+
         var div;
+        var arrayDesordenada = [{id:1, name:"e"}, {id:0, name:"w"}, {id:5 , name:"e"}, {id:3, name:"a"}, {id:4, name:"es"}, {id:2, name:"eqwe"}];
+        arrayDesordenada.sort(function(a, b){return a.id-b.id});
+        var array=new Array(arrayDesordenada.length);
+        for(var i =0; i < arrayDesordenada.length; i++) {
+          array[arrayDesordenada.id] = arrayDesordenada[i];
+        }
+
         for (var i = 0; i < 5; i++) {
           div += '<img id="sign'+i+'" class="img-sign" src="image/rightSign.png" width="20" height="20">';
           div += "<h3 id='btn-abi-" + i + "' >Habilidad</h3>";
@@ -215,11 +236,36 @@ function selectRandomImg() {
     button {
       color: black;
     }
+    .screen {
+      width:700px;
+      border: 45px solid transparent;
+      -webkit-border-image: url(image/frame.png) 20% round; /* Safari 3.1-5 */
+      -o-border-image: url(image/frame.png) 20% round; /* Opera 11-12.1 */
+      border-image: url(image/frame.png) 20% round;
+    }
   </style>
 </head>
 <!-- <body>  -->
 <body onload="startBattle()">
-<canvas id="battleCanvas" width="640" height="480"></canvas>
+<div class="container ">
+  <div class="row ">
+    <div class="col-xs-12" role="main">
+      <div class="row">
+        <div class="col-xs-12">
+          <form>
+            <div class="">
+              <div class="screen">
+              </div>
+              <canvas id="battleCanvas" width="640" height="480"></canvas>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <?php footer() ?>
+</div>
 <div id="a"></div>
 <button id="x">X</button>
 <button id="y">Y</button>

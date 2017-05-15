@@ -17,7 +17,7 @@ if ($_SESSION['player'] == 'multi') {
 }
 /*
  db.miscellaneous.insert({skills:[{id:0,name:"Fireball",power:4},{id:1,name:"Punch",power:3},{id:2,name:"Drain",power:1},{id:3,name:"Thunder",power:4}],
-items:[{id:0, name:"Poción", power:6, type:'cure'},{id:1, name:"Antídoto" , type:"cure"},{id:2, name:"Bomba", power:5, type:"damage"},{id:3, name:"Revivir", power:2, type:"cure"}]})
+items:[{id:0, name:"Poción", power:6, type:'cure'},{id:1, name:"SuperPoción", power:12 , type:"cure"},{id:2, name:"Bomba", power:5, type:"damage"},{id:3, name:"Revivir", power:2, type:"cure"}]})
 */
 $list = Entity::findOneBy("miscellaneous", array());
 $user = User::fromArray(Entity::findOneBy("users", array("_id" => new MongoId($_SESSION['user']['_id']))));
@@ -25,7 +25,7 @@ $skillsList = $list['skills'];
 $itemList = $list['items'];
 $userMonstruosList = $user->get("monstruos");
 $ordenedListById = array();
-foreach ($userMonstruosList as $key => $monstruo){
+foreach ($userMonstruosList as $key => $monstruo) {
   $ordenedListById[(string)$userMonstruosList[$key]['_id']] = $userMonstruosList[$key]['pos'];
 }
 
@@ -58,14 +58,17 @@ $userArray = array(
   <script src="js/battle.js"></script>
   <script type="application/javascript">
     var canvasID = '#battleCanvas';
+    var BreakException = {};
+    var volume = 1;
     var user = new User();
     var yourMonster = new Monstruo();
     user.buildWithJson(<?php print json_encode($userArray) ?>);
-    for(var i= 0; i < user.monstruos.length; i++) {
+    user.monstruos.sort(function(a, b){return a.id-b.id});
+    for (var i = 0; i < user.monstruos.length; i++) {
       var monstruo = new Monstruo();
       monstruo.buildWithJson(JSON.parse(user.monstruos[i]));
       user.monstruos[i] = monstruo;
-      if(monstruo.pos == 0) yourMonster = monstruo;
+      if (monstruo.pos == 0) yourMonster = monstruo;
     }
 
     var first = <?php print json_encode($_POST['first']); ?>;
@@ -74,9 +77,9 @@ $userArray = array(
     var itemsList = <?php print json_encode($itemList) ?>;
     var enemy;
     if (player == 'single') {
-      var enemyMonstruos=[];
-      for(var  i=0; i< 3; i++) {
-        enemyMonstruos.push(randomEnemy("easy"));
+      var enemyMonstruos = [];
+      for (var i = 0; i < 3; i++) {
+        enemyMonstruos.push(randomEnemy("hard"));
       }
       enemy = enemyMonstruos[0];
     } else {
@@ -112,7 +115,7 @@ $userArray = array(
                 <div class="col-xs-1 backButton">
                 </div>
               </div>
-              <div class="col-sm-8 col-sm-offset-4 col-xs-offset-1 menu-options" id="menuItems">
+              <div class="col-sm-8 col-sm-offset-4 col-xs-offset-2 menu-options" id="menuItems">
                 <div class="col-xs-10" id="itemList">
                   <?php
                   itemsButtons();
@@ -132,11 +135,16 @@ $userArray = array(
         </div>
       </div>
       <div class="row">
-        <audio controls loop>
+        <audio controls autoplay loop id="battleSong">
           <source src="audio/battleThemeA.ogg" type="audio/ogg">
           <source src="audio/battleThemeA.mp3" type="audio/mpeg">
           Your browser does not support the audio element.
         </audio>
+        <div class="col-xs-2 col-xs-offset-6 volume">
+          <span class="glyphicon glyphicon-volume-off"></span>
+          <span class="glyphicon glyphicon-volume-down"></span>
+          <span class="glyphicon glyphicon-volume-up"></span>
+        </div>
         <div class="col-xs-1 col-xs-offset-9">
           <a href="validate.php?logout" class="btn btn-login btn-sm">Logout</a>
         </div>

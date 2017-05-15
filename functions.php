@@ -139,7 +139,7 @@ function skillsButtons() {
 function itemsButtons() {
   for ($i = 0; $i < 17; $i++) {
     ?>
-    <div class="col-xs-4 item">
+    <div class="col-sm-4 col-xs-6 item">
       <h3 id="btn-item-<?php print $i; ?>">-<?php print $i; ?></h3>
     </div>
     <?php

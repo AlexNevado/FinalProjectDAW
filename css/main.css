@@ -27,6 +27,15 @@ legend, legend a, legend a:hover {
   color: #dedede;
 }
 
+audio {
+  display: none;
+}
+
+.volume span{
+  font-size: 1.8em;
+  cursor: pointer;
+}
+
 legend a:hover {
   cursor: pointer;
 }
@@ -104,6 +113,8 @@ input[type="number"] {
 .btn-login {
   color: black;
   background: lightgray;
+  border: 2px solid #474747;
+  border-radius: 0px 10px 10px 10px;
 }
 .btn-battle {
   color: black;
@@ -172,6 +183,16 @@ input[type="number"] {
   height: 480px;
   position: absolute;
   font-family: "Herculanum";
+  -webkit-box-shadow: inset -1px 1px 39px 27px rgba(0,0,0,0.75);
+  -moz-box-shadow: inset -1px 1px 39px 27px rgba(0,0,0,0.75);
+  box-shadow: inset -1px 1px 39px 27px rgba(0,0,0,0.75);
+  border-radius: 20px;
+}
+canvas {
+  border-radius: 20px;
+  -webkit-box-shadow: -1px 1px 164px 99px rgba(0,0,0,1);
+  -moz-box-shadow: -1px 1px 164px 99px rgba(0,0,0,1);
+  box-shadow: -1px 1px 164px 99px rgba(0,0,0,1);
 }
 
 .menu-options {
@@ -218,7 +239,6 @@ input[type="number"] {
   display: none;
   max-height: 200px;
 }
-
 
 .backButton {
   background: url("../image/rightSign.png");
@@ -290,5 +310,8 @@ canvas {
 @media (max-width: 360px) {
   .menu-options h3 {
     font-size: 1.3em;
+  }
+  #menuBattle {
+    margin-top: 320px;
   }
 }

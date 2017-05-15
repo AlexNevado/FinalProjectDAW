@@ -1,3 +1,13 @@
+// Sounds
+var cursor = new Audio('audio/cursor.ogg');
+var bottle = new Audio('audio/bottle.ogg');
+var hit = new Audio('audio/hit.ogg');
+var fire = new Audio('audio/fire.ogg');
+var explosion = new Audio('audio/explodemini.ogg');
+var miss = new Audio('audio/miss.ogg');
+var error = new Audio('audio/error.ogg');
+var arraySounds = [cursor, bottle, hit, fire, explosion, miss, error];
+
 function drawImage(imgSrc = 'image/panel1.png', x = 0, y = 300, width = 800, height = 180, name = "panel", index = 0, opacity = 1) {
   $(document).ready(function () {
     $(canvasID).drawImage({
@@ -19,7 +29,7 @@ function startBattle() {
   $(document).ready(function () {
     enemy.draw(0);
     var enemy0 = new Monstruo();
-    enemy0.draw(0, 'mDamage1', enemy.img.substr(0, enemy.img.length - 4) + "2.png", 300, 0, 300, 300, 12);
+    enemy0.draw(0, 'mDamage', enemy.img.substr(0, enemy.img.length - 4) + "2.png", 300, 0, 300, 300, 12);
     drawPanels(canvasID);
     enemy.move(300);
     yourMonster.draw(1, 'yourMonster', yourMonster.img, 10, 340, 150, 150, 15, 'yourTeam');
@@ -76,7 +86,7 @@ function drawPanels(canvasID) {
     drawImage("image/bar.png", 50, 50, 300 * percentageHp(enemy), 20, "bar1", 2);
     drawImage("image/empty-bar.png", 10, 320, 200, 20, "empty-bar2", 3);
     drawImage("image/bar.png", 10, 320, 200 * percentageHp(yourMonster), 20, "bar2", 4);
-    drawImage("image/blood.png", 0, 0, 640, 480, "hurt", 20, 0);
+    drawImage("image/blood.png", 0, 0, 640, 480, "hurt", 90, 0);
     drawImage('image/panel2.jpg', 0, 0, 640, 480, "panel2", 6, 0);
   });
 }
@@ -250,7 +260,9 @@ function attack(attacker, defender, skill) {
 
   }
   var who = attacker == yourMonster ? "cpu" : "player";
-  nextMove(who);
+  setTimeout(function () {
+    nextMove(who);
+  }, 1000);
 }
 
 /**
@@ -262,6 +274,7 @@ function useItem(item) {
       var newHp = (20 * item.power);
       yourMonster.setHP(newHp);
       doAnimations("playerCure");
+      bottle.play();
       break;
     case 'damage':
       var newHp = -(10 * item.power);
@@ -274,7 +287,9 @@ function useItem(item) {
       userItem.amount -= 1;
     }
   });
-  nextMove("cpu");
+  setTimeout(function () {
+    nextMove("cpu");
+  }, 1000);
 }
 /**
  * Create a menu with a list of your monstruos
@@ -337,18 +352,62 @@ function showText(stringToShow, y = 100, x = 200) {
 }
 
 function nextMove(who) {
-  if (yourMonster.characteristics.hp == 0 || enemy.characteristics.hp == 0) {
+  var end = false;
+  if (yourMonster.characteristics.hp == 0) {
+    end = true;
+    $(canvasID).removeLayerGroup('yourTeam');
+    try {
+      user.monstruos.forEach(function (monstruo) {
+        if (monstruo.characteristics.hp > 0) {
+          /*
+          yourMonster = monstruo;
+          yourMonster.draw(1, 'yourMonster', yourMonster.img, 10, 340, 150, 150, 15, 'yourTeam');
+          $(canvasID).delay(2000).animateLayer("bar2", {width: 200 * percentageHp(yourMonster)}, 1000);
+          */
+          throw BreakException;
+        }
+      });
+    } catch (e) {
+      end = false;
+      setTimeout(function () {
+        $( "#btn-change" ).trigger( "click" );
+      },2000);
+    }
+  } else if (enemy.characteristics.hp == 0) {
+    end = true;
+    $(canvasID).removeLayerGroup('battle');
+    try {
+      enemyMonstruos.forEach(function (monstruo) {
+        if (monstruo.characteristics.hp > 0) {
+          enemy = monstruo;
+          enemy.draw(0);
+          enemy0 = new Monstruo();
+          enemy0.draw(0, 'mDamage', enemy.img.substr(0, enemy.img.length - 4) + "2.png", 300, 0, 300, 300, 20);
+          enemy.move(300, 0, 0);
+          enemy.move(0, 0, 1, 0, 0, 1000);
+          $(canvasID).delay(2000).animateLayer("bar1", {width: 300 * percentageHp(enemy)}, 1000);
+          throw BreakException;
+        }
+      });
+    } catch (e) {
+      end = false;
+    }
+  }
+
+  if (end) {
     endBattle();
   } else if (player == "multi") {
     sendJSON();
   } else if (who == "cpu") {
     setTimeout(function () {
       randomAction();
-    }, 1000);
+    }, 2000);
   } else {
-    setTimeout(function () {
-      showMenu();
-    }, 1000);
+    if (yourMonster.characteristics.hp > 0 ) {
+      setTimeout(function () {
+        showMenu();
+      }, 2000);
+    }
   }
 
 }
@@ -366,6 +425,7 @@ function doAnimations(animation, animationId) {
         $(canvasID).animateLayer("hurt", {opacity: 1}, 300, function (layer) {
           $(this).animateLayer(layer, {opacity: 0}, 1000);
         });
+        hit.play();
         break;
       case "playerAttack":
         if (animationId == 0) {
@@ -385,6 +445,7 @@ function doAnimations(animation, animationId) {
           $(canvasID).drawRect({
             layer: true,
             name: 'flash',
+            groups: ['fireballs'],
             fillStyle: 'white',
             x: 320, y: 240,
             width: 640,
@@ -395,10 +456,15 @@ function doAnimations(animation, animationId) {
             $(this).removeLayerGroup('fireballs');
             $(this).animateLayer(layer, {opacity: 0}, 300);
           });
+          fire.play();
+          setTimeout(function () {
+            explosion.play()
+          }, 700);
         } else {
-          $(canvasID).animateLayer("mDamage1", {opacity: 0.8}, 200, function (layer) {
+          $(canvasID).animateLayer("mDamage", {opacity: 0.8}, 200, function (layer) {
             $(this).animateLayer(layer, {opacity: 0}, 200);
           });
+          hit.play();
         }
         $(canvasID).animateLayer("bar1", {width: 300 * percentageHp(enemy)}, 1000)
         break;
@@ -428,6 +494,7 @@ function doAnimations(animation, animationId) {
         setTimeout(function () {
           $(canvasID).removeLayerGroup('Miss');
         }, 1500);
+        miss.play();
         break;
       case "enemyMiss":
         $(canvasID).drawText({
@@ -453,6 +520,7 @@ function doAnimations(animation, animationId) {
           $(canvasID).removeLayerGroup('Miss');
         }, 1500);
         break;
+        miss.play();
     }
   });
 }
@@ -559,8 +627,15 @@ $(document).ready(function () {
   });
   $('#btn-change').click(function () {
     $('#menuBattle').hide();
-    $('.monstruosList').delay(3500).fadeIn(1000);
+    enemy.move(0,0,0);
     doAction("change");
+    var i = 0;
+    $('.monstruosList').each(function () {
+      if(i < user.monstruos.length) {
+        $(this).delay(3500).fadeIn(1000);
+      }
+      i++;
+    });
   });
   $('h3[id^=btn-skill-]').click(function () {
     $('#menuSkills').hide();
@@ -582,16 +657,52 @@ $(document).ready(function () {
     $('#menuBattle').fadeIn(300);
   });
   $('.monstruosList').click(function () {
-    $('.monstruosList').delay(500).fadeOut(300);
-    $(canvasID).animateLayer('panel2', {opacity: 0}, 1000).removeLayerGroup('info').removeLayerGroup('yourTeam');
-    $('#menuBattle').delay(1000).fadeIn(300);
-     var pos = $(this).attr('id').substr(3,1);
-    user.monstruos.forEach(function (monstruo) {
-      if(monstruo.pos == pos) {
-        yourMonster = monstruo;
-        yourMonster.draw(1, 'yourMonster', yourMonster.img, 10, 340, 150, 150, 15, 'yourTeam');
-        $(canvasID).animateLayer("bar2", {width: 200 * percentageHp(yourMonster)}, 1000);
-      }
-    })
+    if (user.monstruos[$(this).attr('id').substr(3, 1)].characteristics.hp > 0) {
+      $('.monstruosList').delay(500).fadeOut(300);
+      $(canvasID).animateLayer('panel2', {opacity: 0}, 1000).removeLayerGroup('info').removeLayerGroup('yourTeam');
+      $('#menuBattle').delay(1000).fadeIn(300);
+      var pos = $(this).attr('id').substr(3, 1);
+      user.monstruos.forEach(function (monstruo) {
+        if (monstruo.pos == pos) {
+          yourMonster = monstruo;
+          yourMonster.draw(1, 'yourMonster', yourMonster.img, 10, 340, 150, 150, 15, 'yourTeam');
+          $(canvasID).animateLayer("bar2", {width: 200 * percentageHp(yourMonster)}, 1000);
+        }
+      });
+      enemy.move(0,0,1);
+    } else {
+      error.play();
+    }
+  });
+  $('.glyphicon').mousedown(function () {
+    $(this).css({"font-size" : "1.5em"});
+  });
+  $('.glyphicon').mouseup(function () {
+    $(this).css({"font-size" : "2em"});
+  });
+  $('.glyphicon-volume-off').click(function () {
+    volume = 0;
+    $("#battleSong").prop({'volume': volume});
+    arraySounds.forEach(function (sound) {
+      sound.volume = volume;
+    });
+  });
+  $('.glyphicon-volume-down').click(function () {
+    volume -= 0.2;
+    $("#battleSong").prop({'volume': volume});
+    arraySounds.forEach(function (sound) {
+      sound.volume = volume;
+    });
+  });
+  $('.glyphicon-volume-up').click(function () {
+    volume += 0.2;
+    $("#battleSong").prop({'volume': volume});
+    arraySounds.forEach(function (sound) {
+      sound.volume = volume;
+    });
+  });
+  // Sounds
+  $('h3[id^=btn-], .backButton, .monstruosList').mouseenter(function () {
+    cursor.play();
   });
 });
