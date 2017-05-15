@@ -118,9 +118,9 @@ function hasMonstruos() {
 }
 
 /**
- * Create abilities buttons on battle
+ * Create skills buttons on battle
  */
-function abilitiesButtons() {
+function skillsButtons() {
   for ($i = 0; $i < 10; $i++) {
     ?>
     <div class="col-xs-3">
@@ -128,18 +128,18 @@ function abilitiesButtons() {
            height="20">
     </div>
     <div class="col-xs-9">
-      <h3 id="btn-abi-<?php print $i; ?>">Habilidad<?php print $i; ?></h3>
+      <h3 id="btn-skill-<?php print $i; ?>">Habilidad<?php print $i; ?></h3>
     </div>
     <?php
   }
 }
 /**
- * Create abilities buttons on battle
+ * Create skills buttons on battle
  */
 function itemsButtons() {
-  for ($i = 10; $i < 20; $i++) {
+  for ($i = 0; $i < 17; $i++) {
     ?>
-    <div class="col-xs-4 item">
+    <div class="col-sm-4 col-xs-6 item">
       <h3 id="btn-item-<?php print $i; ?>">-<?php print $i; ?></h3>
     </div>
     <?php

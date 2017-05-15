@@ -93,7 +93,12 @@ abstract class Entity {
 
     $connection = new MongoClient();
     $collection = $connection->$db->$collectionName;
-    return $collection->find($arraySearch, array('password' => 0));
+    $cursor= $collection->find($arraySearch, array('password' => 0));
+    foreach ($cursor as $doc) {
+      //var_dump($doc);
+      $array[]=$doc;
+    }
+    return $array;
   }
 
   /**

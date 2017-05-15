@@ -32,7 +32,9 @@ class User extends Entity {
     $user = new User();
     $user->set('_id', $array['_id']);
     $user->set('username', $array['username']);
-    $user->set('facebookID', $array['facebookID']);
+    if (isset($array['facebookID'])) {
+      $user->set('facebookID', $array['facebookID']);
+    }
     $user->set('monstruos', $array['monstruos']);
     $user->set('items', $array['items']);
     $user->set('coins', $array['coins']);
@@ -96,7 +98,7 @@ class User extends Entity {
   public function addMonstruo($monstruoID) {
     $user = Entity::findOneBy("users", array("_id" => new MongoId($_SESSION['user']['_id'])));
     if(!empty($user)) {
-      $user['monstruos'][] = new MongoId($monstruoID);
+      $user['monstruos'][] = array("_id" => new MongoId($monstruoID), "pos" => count($user['monstruos']));
       $user = User::fromArray($user);
       return $user->save();
     }
