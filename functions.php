@@ -172,3 +172,66 @@ function itemsButtons() {
     <?php
   }
 }
+
+/**
+ * Create items list for user panel
+ *
+ * @param $userItemList
+ */
+function itemList($userItemList) {
+  foreach ($userItemList as $item) {
+    ?>
+    <div class="row">
+      <img src="<?php print $item['img']; ?>" class="col-xs-2 img-responsive itemPic"/>
+      <div class="col-xs-4">
+        <h4><?php print $item['name']; ?></h4>
+      </div>
+      <div class="col-xs-4">
+        <p>Uds x<?php print $item['amount']; ?></p>
+      </div>
+    </div>
+    <?php
+  }
+}
+
+/**
+ * Create a list of all of users monstruos for user panel
+ *
+ * @param $monstruos
+ */
+function monstruoList($monstruos) {
+  foreach ($monstruos as $monstruo) {
+    $monstruo = Monstruo::fromArray($monstruo);
+    $charasteristics = $monstruo->get('characteristics');
+    ?>
+    <div class="row">
+      <img src="<?php print $monstruo->get('img'); ?>" class="col-sm-2 col-xs-4"/>
+      <div class="col-xs-8">
+        <div class="col-xs-12 monstruoName">
+          <h4>Nombre : <?php print $monstruo->get('name'); ?></h4>
+        </div>
+        <div class="col-sm-4 col-sm-offset-4 col-xs-offset-2">
+          <table>
+            <tr>
+              <td>HP :</td>
+              <td><?php print $charasteristics['hp'] . '/' . $charasteristics['maxHp']; ?></td>
+            </tr>
+            <tr>
+              <td>STR :</td>
+              <td><?php print $charasteristics['str']; ?></td>
+            </tr>
+            <tr>
+              <td>DEF :</td>
+              <td><?php print $charasteristics['def']; ?></td>
+            </tr>
+            <tr>
+              <td>LUK :</td>
+              <td><?php print $charasteristics['luk']; ?></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <?php
+  }
+}

@@ -9,10 +9,21 @@ $monstruos = Entity::findAllBy("monstruos", array("userID" => new MongoId($_SESS
 
 $messages = [0 => 'No tienes suficientes monedas',
     1 => 'Ha habido un error en la compra',
-    2 => 'La compra se ha realizado con éxito'];
+    2 => 'La compra se ha realizado con éxito',
+    3 => 'El nombre de usuario ha sido cambiado',
+    4 => 'El nombre de usuario está siendo usado'];
 $error = -1;
 $itemList = Entity::findOneBy("miscellaneous", array());
 $itemList = $itemList['items'];
+$userItemList = $user->get('items');
+
+foreach ($itemList as $key => $item) {
+  foreach ($userItemList as $userItem) {
+    if ($userItem['id'] == $item['id']) {
+      $userItemList[$key] = array_merge($userItem, $item);
+    }
+  }
+}
 
 if (isset($_POST["submit-btn"])) {
   if ($_POST['totalSale'] > $user->get("coins")) {
@@ -45,6 +56,17 @@ if (isset($_POST["submit-btn"])) {
     $error = 2;
   }
 }
+if (isset($_POST["submit-btn-user"])) {
+  $user1 = Entity::findOneBy("users", array("username" => $_POST['username']));
+  if (empty($user1)) {
+    $user->set('username', $_POST['username']);
+    $user->save();
+    $_SESSION['user']['username'] = $_POST['username'];
+    $error = 3;
+  } else {
+    $error = 4;
+  }
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -74,9 +96,18 @@ if (isset($_POST["submit-btn"])) {
   </script>
 </head>
 <body>
-<?php
-
-?>
+<div class="sales-message">
+  </br>
+  </br>
+  <p id="message-shop">
+    <?php
+    if ($error != -1) {
+      print $messages[$error];
+    }
+    ?></p>
+  </br>
+  <button class="btn btn-login" id="confirm">Aceptar</button>
+</div>
 <div class="container" id="mainMenu" style="display: <?php
 $display = isset($_POST["submit-btn"]) || isset($_POST["submit-btn-user"]) ? "none" : "block";
 print $display;
@@ -143,20 +174,6 @@ print $display;
     </div>
   </div>
   <div class="shopMenu">
-    <div class="sales-message">
-      </br>
-      </br>
-      <p id="message-shop">
-        <?php
-
-        if ($error != -1) {
-          print $messages[$error];
-        }
-
-        ?></p>
-      </br>
-      <button class="btn btn-login" id="confirm">Aceptar</button>
-    </div>
     <div class="shopList">
       <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
         <div class="row">
@@ -211,27 +228,30 @@ print $display;
 $display = isset($_POST["submit-btn-user"]) ? "block" : "none";
 print $display;
 ?>;">
-  <form>
+  <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
     <div class="row">
       <div class="col-sm-4 col-sm-offset-4">
         <img src="image/anonymous.png" width="100" height="100" class="userImg"></br>
-        <input type="text" size="6" value="<?php print $_SESSION['user']['username']; ?>"/>
+        <input type="text" value="<?php print $_SESSION['user']['username']; ?>" id="inputName" name="username"/>
       </div>
     </div>
     <div class="row">
+      <div class="col-xs-4 col-xs-offset-1 userTables">Monstruos</div>
+    </div>
+    <div>
       <?php
-        foreach ($monstruos as $monstruo) {
-          $monstruo = Monstruo::fromArray($monstruo);
-          ?>
-          <img src="<?php print $monstruo->get('img'); ?>" class="col-xs-2"/>
-
-          <?php
-        }
+      monstruoList($monstruos);
       ?>
     </div>
+    <div class="row">
+      <div class="col-xs-4 col-xs-offset-1 userTables">Objetos</div>
+    </div>
+    <?php
+    itemList($userItemList);
+    ?>
     <div class="row"></div>
-
-    <input type="submit" class="btn btn-login btn-sm backMenu" name="submit-btn-user" value="Guardar cambios en el perfil" />
+    <input type="submit" class="btn btn-login btn-sm backMenu" name="submit-btn-user"
+           value="Guardar cambios en el perfil"/>
   </form>
   <div class="row">
     <div class="col-sm-4 col-sm-offset-8 logout">
