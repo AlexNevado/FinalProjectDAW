@@ -2,26 +2,20 @@
 session_start();
 include 'functions.php';
 isLogged();
-if (!isset($_SESSION["Authenticated"]) || $_SESSION["Authenticated"] == 0) {
-  header("Location: index.php");
-}
 
 // Esto es de prueba hasta que añadamos el método via server
 $_SESSION['player'] = "single";
 $_POST['first'] = "1";
+
+if(!isset($_SESSION['user']['settings']['volume']))
+  $_SESSION['user']['settings']['volume'] = !isset($_SESSION['user']['settings']['volume']) ? 1 : $_SESSION['user']['settings']['volume'];
 
 if ($_SESSION['player'] == 'multi') {
   $otherMonstruos = Entity::findAllBy("monstruos", array("userID" => new MongoId($_POST['userID'])));
 } else {
   $otherMonstruos = 'null';
 }
-/*
- db.miscellaneous.insert({skills:[{id:0,name:"Fireball",power:4},{id:1,name:"Punch",power:3},{id:2,name:"Drain",power:1},{id:3,name:"Thunder",power:4}],
-items:[{id:0, name:"Poción", power:6, type:'cure', img:'image/items/potion_xs.png', price:10},
-{id:1, name:"SuperPoción", power:12 , type:"cure", img:'image/items/potion_s.png', price:50},
-{id:2, name:"Bomba", power:5, type:"damage", img:'image/items/bomb.png', price:100},
-{id:3, name:"Revivir", power:2, type:"cure", img:'image/items/feather.png', price:1000}]})
-*/
+
 $list = Entity::findOneBy("miscellaneous", array());
 $user = User::fromArray(Entity::findOneBy("users", array("_id" => new MongoId($_SESSION['user']['_id']))));
 $skillsList = $list['skills'];
@@ -62,7 +56,7 @@ $userArray = array(
   <script type="application/javascript">
     var canvasID = '#battleCanvas';
     var BreakException = {};
-    var volume = 1;
+    var volume = <?php print $_SESSION['user']['settings']['volume'] ?>;
     var user = new User();
     var yourMonster = new Monstruo();
     user.buildWithJson(<?php print json_encode($userArray) ?>);
@@ -82,7 +76,7 @@ $userArray = array(
     if (player == 'single') {
       var enemyMonstruos = [];
       for (var i = 0; i < 3; i++) {
-        enemyMonstruos.push(randomEnemy("hard"));
+        enemyMonstruos.push(randomEnemy("middle"));
       }
       enemy = enemyMonstruos[0];
     } else {
@@ -143,15 +137,18 @@ $userArray = array(
           <source src="audio/battleThemeA.mp3" type="audio/mpeg">
           Your browser does not support the audio element.
         </audio>
-        <div class="col-xs-2 col-xs-offset-6 volume">
+        <div class="col-sm-2 col-sm-offset-6 volume">
           <span class="glyphicon glyphicon-volume-off"></span>
           <span class="glyphicon glyphicon-volume-down"></span>
           <span class="glyphicon glyphicon-volume-up"></span>
         </div>
-        <div class="col-xs-1 col-xs-offset-9">
-          <a href="validate.php?logout" class="btn btn-login btn-sm">Logout</a>
-        </div>
       </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4 col-sm-offset-8 logout">
+      <a href="mainMenu.php" class="btn btn-login btn-sm">Volver al Menú</a>
+      <a href="validate.php?logout" class="btn btn-login btn-sm">Logout</a>
     </div>
   </div>
   <?php footer() ?>

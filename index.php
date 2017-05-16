@@ -5,7 +5,14 @@ include 'functions.php';
 if (isset($_SESSION["Authenticated"]) && $_SESSION["Authenticated"] == 1) {
   header("Location: home.php");
 }
-
+// Añadir a la base de datos
+/*
+ db.miscellaneous.insert({skills:[{id:0,name:"Fireball",power:4},{id:1,name:"Punch",power:3},{id:2,name:"Drain",power:1},{id:3,name:"Thunder",power:4}],
+items:[{id:0, name:"Poción", power:6, type:'cure', img:'image/items/potion_xs.png', price:10},
+{id:1, name:"SuperPoción", power:12 , type:"cure", img:'image/items/potion_s.png', price:50},
+{id:2, name:"Bomba", power:5, type:"damage", img:'image/items/bomb.png', price:100},
+{id:3, name:"Revivir", power:2, type:"cure", img:'image/items/feather.png', price:1000}]})
+*/
 ?>
 <!DOCTYPE html>
 <html>

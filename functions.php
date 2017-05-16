@@ -122,7 +122,11 @@ function footer() {
       <a href="#"><img id="tu" src="image/img_trans.gif"></a>
     </div>
     <div class="col-xs-12" role="footer">
-      <p>@2017 | Designed by GrupoSinNombre</p>
+      <p>@2017 | Designed by GrupoN3</p>
+    </div>
+    <div class="col-xs-12" id="thanks">
+      <p>Agradecimientos a la comunidad OpenGameArt.org</p>
+      <p> por todo el material audiovisual</p>
     </div>
   </div>
   <?php
