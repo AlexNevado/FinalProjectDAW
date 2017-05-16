@@ -31,8 +31,13 @@ $(document).ready(function () {
     $('#mainMenu').fadeOut(500);
     $('#shop').delay(600).fadeIn(300);
   });
-  $('#backMenu').click(function () {
+  $('.backMenu').click(function () {
+    $('#user').fadeOut(500);
     $('#shop').fadeOut(500);
     $('#mainMenu').delay(600).fadeIn(300);
+  });
+  $('#perfil').click(function () {
+    $('#mainMenu').fadeOut(500);
+    $('#user').delay(600).fadeIn(300);
   });
 });

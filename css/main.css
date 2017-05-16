@@ -333,7 +333,7 @@ canvas {
 #thanks {
   font-size: 0.5em;
 }
-#shop {
+#shop, #user {
   display: none;
 }
 canvas {

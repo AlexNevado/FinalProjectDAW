@@ -5,6 +5,7 @@ include 'functions.php';
 
 isLogged();
 $user = getUser();
+$monstruos = Entity::findAllBy("monstruos", array("userID" => new MongoId($_SESSION['user']['_id'])));
 
 $messages = [0 => 'No tienes suficientes monedas',
     1 => 'Ha habido un error en la compra',
@@ -77,7 +78,7 @@ if (isset($_POST["submit-btn"])) {
 
 ?>
 <div class="container" id="mainMenu" style="display: <?php
-$display = isset($_POST["submit-btn"])? "none" : "block";
+$display = isset($_POST["submit-btn"]) || isset($_POST["submit-btn-user"]) ? "none" : "block";
 print $display;
 ?>;">
   <div class="row">
@@ -130,12 +131,12 @@ print $display;
       <a href="validate.php?logout" class="btn btn-login btn-sm">Logout</a>
     </div>
   </div>
-  <?php footer() ?>
 </div>
 <div class="container" id="shop" style="display: <?php
-$display = isset($_POST["submit-btn"])? "block" : "none";
+$display = isset($_POST["submit-btn"]) ? "block" : "none";
 print $display;
-?>;">  <div class="row">
+?>;">
+  <div class="row">
     <div class="col-sm-4 col-sm-offset-4" id="shopHeader">
       <h1><img src="image/items/gem_1.png" width="30" height="30"/>&nbsp;&nbsp;&nbsp;&nbsp;Tienda&nbsp;&nbsp;&nbsp;&nbsp;
         <img src="image/items/gem_2.png" width="30" height="30"/></h1>
@@ -201,10 +202,45 @@ print $display;
   </div>
   <div class="row">
     <div class="col-sm-4 col-sm-offset-8 logout">
-      <button type="button" class="btn btn-login btn-sm" id="backMenu">Volver al Menú</button>
+      <button type="button" class="btn btn-login btn-sm backMenu">Volver al Menú</button>
       <a href="validate.php?logout" class="btn btn-login btn-sm">Logout</a>
     </div>
   </div>
+</div>
+<div class="container" id="user" style="display: <?php
+$display = isset($_POST["submit-btn-user"]) ? "block" : "none";
+print $display;
+?>;">
+  <form>
+    <div class="row">
+      <div class="col-sm-4 col-sm-offset-4">
+        <img src="image/anonymous.png" width="100" height="100" class="userImg"></br>
+        <input type="text" size="6" value="<?php print $_SESSION['user']['username']; ?>"/>
+      </div>
+    </div>
+    <div class="row">
+      <?php
+        foreach ($monstruos as $monstruo) {
+          $monstruo = Monstruo::fromArray($monstruo);
+          ?>
+          <img src="<?php print $monstruo->get('img'); ?>" class="col-xs-2"/>
+
+          <?php
+        }
+      ?>
+    </div>
+    <div class="row"></div>
+
+    <input type="submit" class="btn btn-login btn-sm backMenu" name="submit-btn-user" value="Guardar cambios en el perfil" />
+  </form>
+  <div class="row">
+    <div class="col-sm-4 col-sm-offset-8 logout">
+      <button type="button" class="btn btn-login btn-sm backMenu">Volver al Menú</button>
+      <a href="validate.php?logout" class="btn btn-login btn-sm">Logout</a>
+    </div>
+  </div>
+</div>
+<div class="container">
   <?php footer() ?>
 </div>
 <audio controls autoplay loop id="battleSong">
@@ -212,6 +248,5 @@ print $display;
   <source src="audio/mainMenuTheme.mp3" type="audio/mpeg">
   Your browser does not support the audio element.
 </audio>
-
 </body>
 </html>
