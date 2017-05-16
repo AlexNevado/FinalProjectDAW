@@ -18,10 +18,16 @@ $GLOBALS['loginUrl'] = $loginUrl;
 
 if (!isset($_SESSION["Authenticated"]) && isset($_COOKIE["user"])) {
   $_SESSION["user"]["_id"] = $_COOKIE["user"];
-  $user = User::fromArray(Entity::findById("users", new MongoId($_SESSION["user"]["_id"])));
+  $user = getUser();
   $_SESSION["user"]["username"] = $user->get("username");
   $_SESSION["Authenticated"] = 1;
 }
+
+function getUser() {
+  $user = User::fromArray(Entity::findById("users", new MongoId($_SESSION["user"]["_id"])));
+  return $user;
+}
+
 /**
  * If user is not logged return to index
  */
@@ -149,6 +155,7 @@ function skillsButtons() {
     <?php
   }
 }
+
 /**
  * Create skills buttons on battle
  */

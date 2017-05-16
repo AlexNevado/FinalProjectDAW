@@ -296,6 +296,20 @@ canvas {
 .shopList .glyphicon {
   cursor: pointer;
 }
+.sales-message {
+  opacity: 0;
+  color: lightgray;
+  height: 200px;
+  z-index: 1;
+  background: url("../image/background3.jpg");
+  background-size: 100% 100% ;
+  position: absolute;
+  border-radius: 20px;
+  -webkit-box-shadow: inset 0px 0px 23px 22px rgba(48,48,48,1);
+  -moz-box-shadow: inset 0px 0px 23px 22px rgba(48,48,48,1);
+  box-shadow: inset 0px 0px 23px 22px rgba(48,48,48,1);
+
+}
 canvas {
   background: url('../image/forest2.jpg');
   z-index: 0;

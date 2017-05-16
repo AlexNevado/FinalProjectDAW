@@ -30,7 +30,7 @@ function startBattle() {
     enemy.draw(0);
     var enemy0 = new Monstruo();
     enemy0.draw(0, 'mDamage', enemy.img.substr(0, enemy.img.length - 4) + "2.png", 300, 0, 300, 300, 12);
-    drawPanels(canvasID);
+    drawPanels();
     enemy.move(300);
     yourMonster.draw(1, 'yourMonster', yourMonster.img, 10, 340, 150, 150, 15, 'yourTeam');
     if (yourMonster.characteristics.luk > enemy.characteristics.luk) {
@@ -79,7 +79,7 @@ function hideMenu() {
 /**
  * Draw the panels
  */
-function drawPanels(canvasID) {
+function drawPanels() {
   $(document).ready(function () {
     drawImage();
     drawImage("image/empty-bar.png", 50, 50, 300, 20, "empty-bar1", 1);
