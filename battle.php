@@ -75,8 +75,8 @@ $userArray = array(
     var enemy;
     if (player == 'single') {
       var enemyMonstruos = [];
-      for (var i = 0; i < 3; i++) {
-        enemyMonstruos.push(randomEnemy("middle"));
+      for (var i = 0; i < 1; i++) {
+        enemyMonstruos.push(randomEnemy("easy"));
       }
       enemy = enemyMonstruos[0];
     } else {

@@ -1,4 +1,5 @@
 // Sounds
+var battleTheme = new Audio('audio/battleThemeA.ogg');
 var cursor = new Audio('audio/cursor.ogg');
 var bottle = new Audio('audio/bottle.ogg');
 var hit = new Audio('audio/hit.ogg');
@@ -6,7 +7,10 @@ var fire = new Audio('audio/fire.ogg');
 var explosion = new Audio('audio/explodemini.ogg');
 var miss = new Audio('audio/miss.ogg');
 var error = new Audio('audio/error.ogg');
-var arraySounds = [cursor, bottle, hit, fire, explosion, miss, error];
+var win = new Audio('audio/winTheme.ogg');
+var lose = new Audio('audio/loseTheme.ogg');
+
+var arraySounds = [cursor, bottle, hit, fire, explosion, miss, error, win, lose];
 
 function drawImage(imgSrc = 'image/panel1.png', x = 0, y = 300, width = 800, height = 180, name = "panel", index = 0, opacity = 1) {
   $(document).ready(function () {
@@ -48,11 +52,26 @@ function endBattle() {
     setTimeout(function () {
       drawImage("image/background12.jpg", 0, 0, 640, 480, "end", 20, 0.5);
       $('#end-screen').show();
+      $("#battleSong")[0].pause();
       if (yourMonster.characteristics.hp > enemy.characteristics.hp) {
-        $('#end-message').html("¡Has Vencido!");
+        coinsReceived = randomInt(1, 10) * enemyMonstruos.length;
+        $('#end-message').html("¡Has Vencido!</br><p id='battleMessage'>Has ganado " + coinsReceived
+            + "<img src='image/items/coin.png' width='30' height='30'/></p>");
+        win.play();
+        user.addCoins(coinsReceived);
       } else {
         $('#end-message').html("¡Has Perdido!");
+        lose.play();
       }
+      var userJSON = JSON.stringify(user);
+      $.post('process.php', {user: userJSON},
+          function(respuesta) {
+            console.log(respuesta);
+          }).error(
+          function(){
+            console.log('Error al ejecutar la petición');
+          }
+      );
     }, 1000);
   });
 }

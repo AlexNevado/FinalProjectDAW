@@ -351,6 +351,9 @@ canvas {
 .userTables:hover {
   border-color: gray;
 }
+#battleMessage {
+  font-size: 0.7em;
+}
 canvas {
   background: url('../image/forest2.jpg');
   z-index: 0;

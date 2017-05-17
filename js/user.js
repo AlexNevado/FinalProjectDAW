@@ -12,4 +12,7 @@ function User() {
     this.items = jsonObject.items;
     this.monstruos = jsonObject.monstruos;
   };
+  this.addCoins = function (coins) {
+    this.coins += coins;
+  }
 }
