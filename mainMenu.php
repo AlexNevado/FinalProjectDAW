@@ -115,7 +115,7 @@ print $display;
   <div class="row">
     <div class="col-xs-12">
       <!-- title -->
-      <img src="image/login_image1.png" class="col-xs-8 col-xs-offset-2 img-responsive loginImage"/>
+      <img src="image/login_image1.jpg" class="col-xs-8 col-xs-offset-2 img-responsive loginImage"/>
 
       <div class="col-xs-12">
         <h2> Monstruos' Bizarre Adventure <img src="image/number2.png" width="50" height="50" alt="image number 2"></h2>

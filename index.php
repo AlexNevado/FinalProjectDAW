@@ -28,7 +28,7 @@ items:[{id:0, name:"Poción", power:6, type:'cure', img:'image/items/potion_xs.p
   <div class="row">
     <div class="col-xs-12" role="main">
       <div class="row">
-        <img src="image/login_image1.png" class="col-xs-8 col-xs-offset-2 img-responsive loginImage"/>
+        <img src="image/login_image1.jpg" class="col-xs-8 col-xs-offset-2 img-responsive loginImage"/>
       </div>
       <div class="row">
         <h2> Monstruos' Bizarre Adventure <img src="image/number2.png" width="50" height="50" alt="image number 2"></h2><br/>
