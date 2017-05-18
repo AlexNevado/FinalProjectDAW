@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>PHP</ID>
+  <OriginalElement>/aa/FinalProjectDAW/classes</OriginalElement>
+  <nodes>
+    <node x="-146.85714285714278" y="39.00000000000006">\Monstruo</node>
+    <node x="-735.7142857142857" y="32.71428571428578">\User</node>
+    <node x="-430.46428571428567" y="-364.2857142857142">\Entity</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="\User" target="\Entity">
+      <point x="0.0" y="-291.0" />
+      <point x="-482.71428571428567" y="7.714285714285779" />
+      <point x="-335.21428571428567" y="7.714285714285779" />
+      <point x="-95.25" y="173.5" />
+    </edge>
+    <edge source="\Monstruo" target="\Entity">
+      <point x="0.0" y="-239.0" />
+      <point x="65.16666666666669" y="8.19047619047629" />
+      <point x="-144.71428571428567" y="7.714285714285779" />
+      <point x="95.25" y="173.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.6999999999999997" x="43.571428571428896" y="190.02075702075706" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constants</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
