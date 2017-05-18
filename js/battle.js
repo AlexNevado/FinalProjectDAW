@@ -1,4 +1,5 @@
 // Sounds
+var battleSong = $("#battleSong");
 var cursor = new Audio('audio/cursor.ogg');
 var bottle = new Audio('audio/bottle.ogg');
 var hit = new Audio('audio/hit.ogg');
@@ -9,7 +10,7 @@ var error = new Audio('audio/error.ogg');
 var win = new Audio('audio/winTheme.ogg');
 var lose = new Audio('audio/loseTheme.ogg');
 
-var arraySounds = [cursor, bottle, hit, fire, explosion, miss, error, win, lose];
+var arraySounds = [cursor, bottle, hit, fire, explosion, miss, error, win, lose, battleSong];
 /**
  * Draw Image with canvas
  */
@@ -34,6 +35,9 @@ function drawImage(imgSrc = 'image/panel1.png', x = 0, y = 300, width = 800, hei
  */
 function startBattle() {
   $(document).ready(function () {
+    arraySounds.forEach(function (sound) {
+      sound.volume = volume;
+    });
     enemy.draw(0);
     var enemy0 = new Monstruo();
     enemy0.draw(0, 'mDamage', enemy.img.substr(0, enemy.img.length - 4) + "2.png", 300, 0, 300, 300, 12);
@@ -725,6 +729,7 @@ $(document).ready(function () {
   });
   $('.glyphicon-volume-down').click(function () {
     volume -= 0.2;
+    volume = volume < 0 ? 0 : volume;
     $("#battleSong").prop({'volume': volume});
     arraySounds.forEach(function (sound) {
       sound.volume = volume;
@@ -732,6 +737,7 @@ $(document).ready(function () {
   });
   $('.glyphicon-volume-up').click(function () {
     volume += 0.2;
+    volume = volume > 1 ? 1 : volume;
     $("#battleSong").prop({'volume': volume});
     arraySounds.forEach(function (sound) {
       sound.volume = volume;

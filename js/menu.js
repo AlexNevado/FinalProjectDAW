@@ -6,13 +6,13 @@ $(document).ready(function () {
           opacity: 0
         }, 'slow');
   });
-  $('.glyphicon').mousedown(function () {
+  $('.shopList .glyphicon').mousedown(function () {
     $(this).css({"font-size": "1.4em"});
   });
-  $('.glyphicon').mouseup(function () {
+  $('.shopList .glyphicon').mouseup(function () {
     $(this).css({"font-size": "1.7em"});
   });
-  $('.glyphicon').click(function () {
+  $('.shopList .glyphicon').click(function () {
     var id = $(this).attr('id').substr(4, 1);
     var value = $(this).attr('id').substr(0, 4) == 'plus' ? 1 : -1;
     var newValue = parseInt($('#item' + id).val()) + value;
@@ -34,10 +34,31 @@ $(document).ready(function () {
   $('.backMenu').click(function () {
     $('#user').fadeOut(500);
     $('#shop').fadeOut(500);
+    $('#options').fadeOut(500);
     $('#mainMenu').delay(600).fadeIn(300);
   });
-  $('#perfil').click(function () {
+  $('#profileButton').click(function () {
     $('#mainMenu').fadeOut(500);
     $('#user').delay(600).fadeIn(300);
   });
+  $('#optionsButton').click(function () {
+    $('#mainMenu').fadeOut(500);
+    $('#options').delay(600).fadeIn(300);
+  });
+});
+$(function () {
+  var volume = readCookie('volumen');
+  $("#slider-range-max").slider({
+    range: "max",
+    min: 0,
+    max: 10,
+    value: volume !== 'undefined' ? volume * 10 : 10,
+    slide: function (event, ui) {
+      $("#amount").val(ui.value);
+      $("#menuSong").prop({'volume': (ui.value / 10).toPrecision(1)});
+      createCookie("volumen", (ui.value / 10).toPrecision(1), 500);
+    }
+  });
+  $("#menuSong").prop({'volume': volume});
+  $("#amount").val($("#slider-range-max").slider("value"));
 });

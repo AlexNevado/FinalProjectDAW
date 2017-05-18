@@ -320,13 +320,6 @@ canvas {
   -moz-box-shadow: inset 0px 0px 23px 22px rgba(48,48,48,1);
   box-shadow: inset 0px 0px 23px 22px rgba(48,48,48,1);
 }
-.btn-menu-principal {
-  /*Modificar*/
-  color: black;
-  background: lightgray;
-  border: 2px solid #474747;
-  border-radius: 0px 10px 10px 10px;
-}
 .logout {
   margin-top: 2%;
 }
@@ -342,7 +335,7 @@ canvas {
 #contact a {
   color: #dedede;
 }
-#shop, #user {
+#shop, #user, #options {
   display: none;
 }
 #inputName {
@@ -362,6 +355,25 @@ canvas {
 }
 #battleMessage {
   font-size: 0.7em;
+}
+#slider {
+  margin: 10px;
+}
+.ui-state-focus{
+  border: 1px solid #000 !important;
+}
+.ui-state-active{
+  color: #000 !important;
+}
+.btn-menu-principal {
+  color: black;
+  width: 170px;
+  background: lightgrey;
+}
+
+.btn-menu-principal:hover {
+  box-shadow: 1px 1px 10px 1px black;
+  opacity: 0.7;
 }
 canvas {
   background: url('../image/forest2.jpg');

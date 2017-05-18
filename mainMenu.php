@@ -80,8 +80,12 @@ if (isset($_POST["submit-btn-user"])) {
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <script src="js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="css/main.css">
-  <script src="js/shop.js"></script>
-  <script type="application/javascript">
+  <script src="js/cookies.js"></script>
+  <script src="js/menu.js"></script>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="http://resources/demos/style.css">
+  <script src="http://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>  <script type="application/javascript">
     $(document).ready(function () {
       var coins = <?php print $user->get('coins'); ?>;
       var message = <?php print $error; ?>;
@@ -140,7 +144,7 @@ print $display;
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <button type="button" class="btn btn-sm btn-menu-principal" id="perfil">Perfil</button>
+      <button type="button" class="btn btn-sm btn-menu-principal" id="profileButton">Perfil</button>
     </div>
   </div>
   <div class="row">
@@ -150,7 +154,7 @@ print $display;
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <button type="button" class="btn btn-sm btn-menu-principal" id="options">Opciones</button>
+      <button type="button" class="btn btn-sm btn-menu-principal" id="optionsButton">Opciones</button>
     </div>
   </div>
   <div class="row">
@@ -256,10 +260,39 @@ print $display;
     </div>
   </div>
 </div>
+<div class="container" id="options">
+  <div class="row">
+    <div class="col-xs-12">
+      <!-- title -->
+      <img src="image/login_image1.jpg" class="col-xs-8 col-xs-offset-2 img-responsive loginImage"/>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h2> Options</h2>
+    </div>
+  </div>
+  <!-- begins options menu -->
+  <div class="row">
+    <div class="col-xs-5">
+      <label for="amount">Volume:</label>
+      <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;width:7%">
+    </div>
+    <div class="col-xs-7" style="padding-right:10%;">
+      <div id="slider-range-max"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4 col-sm-offset-8 logout">
+      <button type="button" class="btn btn-login btn-sm backMenu">Volver al Menú</button>
+      <a href="validate.php?logout" class="btn btn-login btn-sm">Logout</a>
+    </div>
+  </div>
+</div>
 <div class="container">
   <?php footer() ?>
 </div>
-<audio controls autoplay loop id="battleSong">
+<audio controls autoplay loop id="menuSong">
   <source src="audio/mainMenuTheme.ogg" type="audio/ogg">
   <source src="audio/mainMenuTheme.mp3" type="audio/mpeg">
   Your browser does not support the audio element.

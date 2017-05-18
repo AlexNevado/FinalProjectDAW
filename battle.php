@@ -7,9 +7,8 @@ isLogged();
 $_SESSION['player'] = "single";
 $_POST['first'] = "1";
 // Set volume
-if(!isset($_SESSION['user']['settings']['volume']))
-  $_SESSION['user']['settings']['volume'] = !isset($_SESSION['user']['settings']['volume']) ? 1 : $_SESSION['user']['settings']['volume'];
-
+$volume = !isset($_COOKIE['volumen']) ? 1 : $_COOKIE['volumen'];
+//$volume = 1;
 // if mode is multiplayer get monstruos from enemies
 if ($_SESSION['player'] == 'multi') {
   $otherMonstruos = Entity::findAllBy("monstruos", array("userID" => new MongoId($_POST['userID'])));
@@ -55,12 +54,13 @@ $userArray = array(
   <script src="js/jcanvas.min.js"></script>
   <script src="js/monstruo.js"></script>
   <script src="js/user.js"></script>
+  <script src="js/cookies.js"></script>
   <script src="js/battle.js"></script>
   <script type="application/javascript">
     // Create all the background for the battle
     var canvasID = '#battleCanvas';
     var BreakException = {};
-    var volume = <?php print $_SESSION['user']['settings']['volume'] ?>;
+    var volume = parseFloat(<?php print $volume ?>);
     var user = new User();
     var yourMonster = new Monstruo();
     user.buildWithJson(<?php print json_encode($userArray) ?>);
