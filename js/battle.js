@@ -1,6 +1,5 @@
 // Sounds
 var battleSong = $("#battleSong");
-var cursor = new Audio('audio/cursor.ogg');
 var bottle = new Audio('audio/bottle.ogg');
 var hit = new Audio('audio/hit.ogg');
 var fire = new Audio('audio/fire.ogg');
@@ -9,8 +8,16 @@ var miss = new Audio('audio/miss.ogg');
 var error = new Audio('audio/error.ogg');
 var win = new Audio('audio/winTheme.ogg');
 var lose = new Audio('audio/loseTheme.ogg');
+function cursor() {
+  var cursor = new Audio('audio/cursor.ogg');
+  cursor.volume = volume;
+  cursor.addEventListener("ended", function () {
+    document.removeChild(this);
+  }, false);
+  cursor.play();
+}
 
-var arraySounds = [cursor, bottle, hit, fire, explosion, miss, error, win, lose, battleSong];
+var arraySounds = [bottle, hit, fire, explosion, miss, error, win, lose, battleSong];
 /**
  * Draw Image with canvas
  */
@@ -744,6 +751,6 @@ $(document).ready(function () {
     });
   });
   $('h3[id^=btn-], .backButton, .monstruosList').mouseenter(function () {
-    cursor.play();
+    cursor();
   });
 });
