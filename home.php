@@ -2,7 +2,6 @@
 session_start();
 include 'functions.php';
 
-//echo '<a href="validate.php?logout">EXIT</a>';
 isLogged();
 
 ?>

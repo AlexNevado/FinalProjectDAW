@@ -7,6 +7,7 @@ isLogged();
 $user = getUser();
 $monstruos = Entity::findAllBy("monstruos", array("userID" => new MongoId($_SESSION['user']['_id'])));
 
+// Error messages
 $messages = [0 => 'No tienes suficientes monedas',
     1 => 'Ha habido un error en la compra',
     2 => 'La compra se ha realizado con éxito',
@@ -16,25 +17,28 @@ $error = -1;
 $itemList = Entity::findOneBy("miscellaneous", array());
 $itemList = $itemList['items'];
 $userItemList = $user->get('items');
-
-foreach ($itemList as $key => $item) {
-  foreach ($userItemList as $userItem) {
+// Compare itemList with user item ID list
+foreach ($itemList as $item) {
+  foreach ($userItemList as $key => $userItem) {
     if ($userItem['id'] == $item['id']) {
       $userItemList[$key] = array_merge($userItem, $item);
     }
   }
 }
-
+// Buy item in the shop
 if (isset($_POST["submit-btn"])) {
+  // Check the user have enough coins
   if ($_POST['totalSale'] > $user->get("coins")) {
     $error = 0;
   } else {
+    // This make easier the task
     $input = $_POST;
     unset($input['submit-btn']);
     unset($input['totalSale']);
     foreach ($input as $key => $value) {
       $input[$key] = (int)$value;
     }
+    // Create a item list with the items to buy
     $itemToBuy = array();
     for ($i = 0; $i < (count($input) / 2); $i++) {
 
@@ -46,16 +50,16 @@ if (isset($_POST["submit-btn"])) {
         );
       }
     }
-
+    // Spend the money and save the items
+    $user->set("coins", $user->get("coins") - $_POST['totalSale']);
     foreach ($itemToBuy as $key => $item) {
       $user->addItems(substr($item["id"], -1), $item['amount']);
     }
-    $user->set("coins", $user->get("coins") - $_POST['totalSale']);
-    $user->save();
 
     $error = 2;
   }
 }
+// Change username
 if (isset($_POST["submit-btn-user"])) {
   $user1 = Entity::findOneBy("users", array("username" => $_POST['username']));
   if (empty($user1)) {
@@ -149,14 +153,6 @@ print $display;
       <button type="button" class="btn btn-sm btn-menu-principal" id="options">Opciones</button>
     </div>
   </div>
-  <!--
-  <div class="row">
-    <div class="col-xs-12">
-      <button type="button" class="btn btn-sm btn-menu-principal" id="exit">Salir</button>
-    </div>
-  </div>
-  -->
-  <!-- ends menu -->
   <div class="row">
     <div class="col-xs-12">
       <a href="validate.php?logout" class="btn btn-login btn-sm">Logout</a>

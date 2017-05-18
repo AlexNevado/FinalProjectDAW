@@ -101,11 +101,21 @@ class Monstruo extends Entity {
   public function set($field, $value) {
     return $this->$field = $value;
   }
+
+  /**
+   * Convert from Monstruo class to JSON
+   *
+   * @return string
+   */
   public function toJSON() {
     $array = $this->toArray();
     $array['_id'] = (string)$array['_id'];
     $array['userID'] = (string)$array['userID'];
     $array = array_filter($array, function($var){return !is_null($var);});
-    return json_encode($array, JSON_PRETTY_PRINT);  }
+    return json_encode($array, JSON_PRETTY_PRINT);
+  }
 
+  public function setStats($stat, $value) {
+    $this->characteristics[$stat] = $value;
+  }
 }

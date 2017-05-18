@@ -126,8 +126,8 @@ class User extends Entity {
 
     if (!$exist) {
       $user['items'][] = array(
-          "id" => $itemsID,
-          "amount" => $amount,
+          "id" => (int)$itemsID,
+          "amount" => (int)$amount,
       );
     }
     $user = User::fromArray($user);
@@ -175,6 +175,39 @@ class User extends Entity {
    */
   public function set($field, $value) {
     return $this->$field = $value;
+  }
+
+  /**
+   * Update user data after a battle
+   *
+   * @param $object
+   */
+  public function updateData($object) {
+    $this->set('coins', $object->coins);
+    $items = array();
+    foreach ($object->items as $item) {
+      if($item->amount > 0){
+        $items[]= array(
+            'id' => $item->id,
+            'amount' => $item->amount
+        );
+      }
+    }
+    $this->set('items', $items);
+    $this->save();
+
+    $monstruos = getMonstruos();
+    foreach ($monstruos as $key => $yourMonstruo){
+      $monstruos[$key] = Monstruo::fromArray($yourMonstruo);
+    }
+    foreach ($object->monstruos as $monstruo) {
+      foreach ($monstruos as $key => $yourMonstruo){
+        if ($monstruo->id  == (string)$yourMonstruo->get('_id')){
+          $monstruos[$key]->setStats('hp', $monstruo->characteristics->hp);
+          $monstruos[$key]->save();
+        }
+      }
+    }
   }
 
 }

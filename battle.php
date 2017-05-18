@@ -6,26 +6,28 @@ isLogged();
 // Esto es de prueba hasta que añadamos el método via server
 $_SESSION['player'] = "single";
 $_POST['first'] = "1";
-
+// Set volume
 if(!isset($_SESSION['user']['settings']['volume']))
   $_SESSION['user']['settings']['volume'] = !isset($_SESSION['user']['settings']['volume']) ? 1 : $_SESSION['user']['settings']['volume'];
 
+// if mode is multiplayer get monstruos from enemies
 if ($_SESSION['player'] == 'multi') {
   $otherMonstruos = Entity::findAllBy("monstruos", array("userID" => new MongoId($_POST['userID'])));
 } else {
   $otherMonstruos = 'null';
 }
-
+// Get items and skills list
 $list = Entity::findOneBy("miscellaneous", array());
-$user = User::fromArray(Entity::findOneBy("users", array("_id" => new MongoId($_SESSION['user']['_id']))));
 $skillsList = $list['skills'];
 $itemList = $list['items'];
+
+$user = getUser();
 $userMonstruosList = $user->get("monstruos");
 $ordenedListById = array();
 foreach ($userMonstruosList as $key => $monstruo) {
   $ordenedListById[(string)$userMonstruosList[$key]['_id']] = $userMonstruosList[$key]['pos'];
 }
-
+// Get all your team
 $monstruos = Entity::findAllBy("monstruos", array("userID" => new MongoId($_SESSION['user']['_id'])));
 foreach ($monstruos as $key => $monster) {
   $monster = Monstruo::fromArray($monster);
@@ -33,6 +35,7 @@ foreach ($monstruos as $key => $monster) {
   $monstruos[$key] = $monster->toJSON();
 }
 
+//Create array to client
 $userArray = array(
     "id" => (string)$user->get("_id"),
     "username" => $user->get("username"),
@@ -54,6 +57,7 @@ $userArray = array(
   <script src="js/user.js"></script>
   <script src="js/battle.js"></script>
   <script type="application/javascript">
+    // Create all the background for the battle
     var canvasID = '#battleCanvas';
     var BreakException = {};
     var volume = <?php print $_SESSION['user']['settings']['volume'] ?>;
@@ -73,6 +77,7 @@ $userArray = array(
     var skillsList = <?php print json_encode($skillsList) ?>;
     var itemsList = <?php print json_encode($itemList) ?>;
     var enemy;
+    // Create enemies team
     if (player == 'single') {
       var enemyMonstruos = [];
       for (var i = 0; i < 1; i++) {
@@ -92,11 +97,12 @@ $userArray = array(
     <div class="col-xs-12" role="main">
       <div class="row">
         <div class="col-xs-12">
-          <form>
             <div class="screen">
               <div class="col-sm-6 col-sm-offset-3 col-xs-offset-1" id="end-screen">
                 <h2 id="end-message"></h2>
-                <input type="submit" class="btn btn-lg btn-battle" value="Aceptar">
+                <p>¿Seguir luchando?</p>
+                <a href="battle.php" class="btn btn-lg btn-battle">Sí</a>
+                <a href="mainMenu.php" class="btn btn-lg btn-battle">No</a>
               </div>
               <div class="col-sm-4 col-sm-offset-8 col-xs-offset-6 menu-options" id="menuBattle">
                 <h3 id="btn-skill">Habilidades</h3>
@@ -128,7 +134,6 @@ $userArray = array(
               </div>
             </div>
             <canvas id="battleCanvas" width="640" height="480"></canvas>
-          </form>
         </div>
       </div>
       <div class="row">

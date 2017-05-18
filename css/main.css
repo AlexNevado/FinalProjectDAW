@@ -119,7 +119,10 @@ input[type="number"] {
 .btn-battle {
   color: black;
   background: lightblue;
-  border-radius: 20px 0px 20px;
+  border-radius: 20px 0 20px;
+  margin-left: 5%;
+  margin-right: 5%;
+
 }
 .btn-battle:hover {
   background: black;
@@ -331,7 +334,13 @@ canvas {
   text-decoration: underline overline wavy;
 }
 #thanks {
-  font-size: 0.5em;
+  font-size: 0.6em;
+}
+#contact {
+  font-size: 0.8em;
+}
+#contact a {
+  color: #dedede;
 }
 #shop, #user {
   display: none;

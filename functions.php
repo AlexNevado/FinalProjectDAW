@@ -22,10 +22,24 @@ if (!isset($_SESSION["Authenticated"]) && isset($_COOKIE["user"])) {
   $_SESSION["user"]["username"] = $user->get("username");
   $_SESSION["Authenticated"] = 1;
 }
-
+/**
+ * Get actual user
+ *
+ * @return User
+ */
 function getUser() {
   $user = User::fromArray(Entity::findById("users", new MongoId($_SESSION["user"]["_id"])));
   return $user;
+}
+
+/**
+ * Get actual user monstruos
+ *
+ * @return array|null
+ */
+function getMonstruos() {
+  $monstruos = Entity::findAllBy("monstruos", array("userID" => new MongoId($_SESSION['user']['_id'])));
+  return $monstruos;
 }
 
 /**
@@ -116,18 +130,22 @@ function footer() {
   ?>
   <div class="row">
     <div class="col-xs-12 rrss">
-      <a href="#"><img id="fb" src="image/img_trans.gif"></a>
-      <a href="#"><img id="tw" src="image/img_trans.gif"></a>
+      <a href="https://www.facebook.com/Monstruos-Bizarre-Adventure-2-1495483530516515/"><img id="fb" src="image/img_trans.gif"></a>
+      <a href="https://twitter.com/mba2com"><img id="tw" src="image/img_trans.gif"></a>
       <a href="#"><img id="in" src="image/img_trans.gif"></a>
       <a href="#"><img id="tu" src="image/img_trans.gif"></a>
     </div>
     <div class="col-xs-12" role="footer">
       <p>@2017 | Designed by GrupoN3</p>
     </div>
+    <div class="col-xs-12" id="contact">
+      <p><span class="glyphicon glyphicon-envelope"></span> Contacto : <a href="mailto:mba2soporte@gmail.com">mba2soporte@gmail.com</a></p>
+    </div>
     <div class="col-xs-12" id="thanks">
       <p>Agradecimientos a la comunidad OpenGameArt.org</p>
       <p> por todo el material audiovisual</p>
     </div>
+
   </div>
   <?php
 }

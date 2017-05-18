@@ -1,5 +1,4 @@
 // Sounds
-var battleTheme = new Audio('audio/battleThemeA.ogg');
 var cursor = new Audio('audio/cursor.ogg');
 var bottle = new Audio('audio/bottle.ogg');
 var hit = new Audio('audio/hit.ogg');
@@ -11,7 +10,9 @@ var win = new Audio('audio/winTheme.ogg');
 var lose = new Audio('audio/loseTheme.ogg');
 
 var arraySounds = [cursor, bottle, hit, fire, explosion, miss, error, win, lose];
-
+/**
+ * Draw Image with canvas
+ */
 function drawImage(imgSrc = 'image/panel1.png', x = 0, y = 300, width = 800, height = 180, name = "panel", index = 0, opacity = 1) {
   $(document).ready(function () {
     $(canvasID).drawImage({
@@ -28,7 +29,9 @@ function drawImage(imgSrc = 'image/panel1.png', x = 0, y = 300, width = 800, hei
     });
   });
 }
-
+/**
+ * Start the battle
+ */
 function startBattle() {
   $(document).ready(function () {
     enemy.draw(0);
@@ -46,7 +49,9 @@ function startBattle() {
     }
   });
 }
-
+/**
+ * Show options when battle end
+ */
 function endBattle() {
   $(document).ready(function () {
     setTimeout(function () {
@@ -65,10 +70,10 @@ function endBattle() {
       }
       var userJSON = JSON.stringify(user);
       $.post('process.php', {user: userJSON},
-          function(respuesta) {
+          function (respuesta) {
             console.log(respuesta);
           }).error(
-          function(){
+          function () {
             console.log('Error al ejecutar la petición');
           }
       );
@@ -172,10 +177,6 @@ function randomInt(min, max) {
 /**
  * Show messages
  */
-/*
- *     function messages(text="", x = 150, y = 150, width = 350, height = 200
- , name = "message", index = 10, opacity = 1,imgSrc = 'image/message.png', canvas = '#battleCanvas') {
- * */
 function messages(text = "Has perdido", x = 0, y = 0, width = 640, height = 480
     , name = "message", index = 10, opacity = 0.5, imgSrc = 'image/background12.jpg') {
   $(document).ready(function () {
@@ -330,6 +331,9 @@ function createMenuList() {
     $(canvasID).getLayers().removeLayers().drawLayers();
   });
 }
+/**
+ * Show text on change menu
+ */
 function showText(stringToShow, y = 100, x = 200) {
   $(document).ready(function () {
     var count = 0;
@@ -372,7 +376,10 @@ function showText(stringToShow, y = 100, x = 200) {
   });
 
 }
-
+/**
+ * Show what to do on next step
+ *
+ */
 function nextMove(who) {
   var end = false;
   if (yourMonster.characteristics.hp == 0) {
@@ -382,18 +389,18 @@ function nextMove(who) {
       user.monstruos.forEach(function (monstruo) {
         if (monstruo.characteristics.hp > 0) {
           /*
-          yourMonster = monstruo;
-          yourMonster.draw(1, 'yourMonster', yourMonster.img, 10, 340, 150, 150, 15, 'yourTeam');
-          $(canvasID).delay(2000).animateLayer("bar2", {width: 200 * percentageHp(yourMonster)}, 1000);
-          */
+           yourMonster = monstruo;
+           yourMonster.draw(1, 'yourMonster', yourMonster.img, 10, 340, 150, 150, 15, 'yourTeam');
+           $(canvasID).delay(2000).animateLayer("bar2", {width: 200 * percentageHp(yourMonster)}, 1000);
+           */
           throw BreakException;
         }
       });
     } catch (e) {
       end = false;
       setTimeout(function () {
-        $( "#btn-change" ).trigger( "click" );
-      },2000);
+        $("#btn-change").trigger("click");
+      }, 2000);
     }
   } else if (enemy.characteristics.hp == 0) {
     end = true;
@@ -425,7 +432,7 @@ function nextMove(who) {
       randomAction();
     }, 2000);
   } else {
-    if (yourMonster.characteristics.hp > 0 ) {
+    if (yourMonster.characteristics.hp > 0) {
       setTimeout(function () {
         showMenu();
       }, 2000);
@@ -584,6 +591,9 @@ function receiveJSON() {
   }
 }
 
+/**
+ * Do a random action from a cpu
+ */
 function randomAction() {
   var random = randomInt(0, enemy.skills.length - 1);
   skillsList.forEach(function (skill) {
@@ -594,6 +604,9 @@ function randomAction() {
   //TODO Add items in future
 }
 
+/**
+ * Check if the user consume an item
+ */
 function checkItems() {
   for (var i = 0; i < user.items.length; i++) {
     if (user.items[i].amount < 1) {
@@ -649,11 +662,11 @@ $(document).ready(function () {
   });
   $('#btn-change').click(function () {
     $('#menuBattle').hide();
-    enemy.move(0,0,0);
+    enemy.move(0, 0, 0);
     doAction("change");
     var i = 0;
     $('.monstruosList').each(function () {
-      if(i < user.monstruos.length) {
+      if (i < user.monstruos.length) {
         $(this).delay(3500).fadeIn(1000);
       }
       i++;
@@ -691,17 +704,18 @@ $(document).ready(function () {
           $(canvasID).animateLayer("bar2", {width: 200 * percentageHp(yourMonster)}, 1000);
         }
       });
-      enemy.move(0,0,1);
+      enemy.move(0, 0, 1);
     } else {
       error.play();
     }
   });
   $('.glyphicon').mousedown(function () {
-    $(this).css({"font-size" : "1.5em"});
+    $(this).css({"font-size": "1.5em"});
   });
   $('.glyphicon').mouseup(function () {
-    $(this).css({"font-size" : "2em"});
+    $(this).css({"font-size": "2em"});
   });
+  // Sounds
   $('.glyphicon-volume-off').click(function () {
     volume = 0;
     $("#battleSong").prop({'volume': volume});
@@ -723,7 +737,6 @@ $(document).ready(function () {
       sound.volume = volume;
     });
   });
-  // Sounds
   $('h3[id^=btn-], .backButton, .monstruosList').mouseenter(function () {
     cursor.play();
   });

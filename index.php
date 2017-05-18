@@ -1,4 +1,22 @@
 <?php
+/*
+Monstruos' Bizarre Adventure
+Copyright (C) 2017
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
+
 session_start();
 include 'functions.php';
 
@@ -31,7 +49,9 @@ items:[{id:0, name:"Poción", power:6, type:'cure', img:'image/items/potion_xs.p
         <img src="image/login_image1.jpg" class="col-xs-8 col-xs-offset-2 img-responsive loginImage"/>
       </div>
       <div class="row">
-        <h2> Monstruos' Bizarre Adventure <img src="image/number2.png" width="50" height="50" alt="image number 2"></h2><br/>
+        <div class="col-xs-12">
+          <h2> Monstruos' Bizarre Adventure <img src="image/number2.png" width="50" height="50" alt="image number 2"></h2>
+        </div>
         <fieldset class="form-group col-xs-4 col-sm-offset-4 col-xs-offset-1">
           <legend>
             <a href="index.php" <?php if (!isset($_GET["register"])) {
