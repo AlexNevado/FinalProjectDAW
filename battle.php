@@ -139,6 +139,7 @@ $userArray = array(
       </div>
       <div class="row">
         <div class="col-sm-2 col-sm-offset-6 volume">
+          <span class="glyphicon glyphicon-play"></span>
           <span class="glyphicon glyphicon-volume-off"></span>
           <span class="glyphicon glyphicon-volume-down"></span>
           <span class="glyphicon glyphicon-volume-up"></span>
@@ -154,6 +155,5 @@ $userArray = array(
   </div>
   <?php footer() ?>
 </div>
-<button id="btn-hidden" style="display:none"></button>
 </body>
 </html>

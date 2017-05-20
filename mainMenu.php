@@ -16,7 +16,15 @@ $messages = [0 => 'No tienes suficientes monedas',
 $error = -1;
 $itemList = Entity::findOneBy("miscellaneous", array());
 $itemList = $itemList['items'];
-
+$userItemList = $user->get('items');
+// Compare itemList with user item ID list
+foreach ($itemList as $item) {
+  foreach ($userItemList as $key => $userItem) {
+    if ($userItem['id'] == $item['id']) {
+      $userItemList[$key] = array_merge($userItem, $item);
+    }
+  }
+}
 // Buy item in the shop
 if (isset($_POST["submit-btn"])) {
   // Check the user have enough coins
@@ -53,15 +61,6 @@ if (isset($_POST["submit-btn"])) {
   }
 }
 
-$userItemList = $user->get('items');
-// Compare itemList with user item ID list
-foreach ($itemList as $item) {
-  foreach ($userItemList as $key => $userItem) {
-    if ($userItem['id'] == $item['id']) {
-      $userItemList[$key] = array_merge($userItem, $item);
-    }
-  }
-}
 
 // Change username
 if (isset($_POST["submit-btn-user"])) {
@@ -86,10 +85,12 @@ if (isset($_POST["submit-btn-user"])) {
   <script src="js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="css/main.css">
   <script src="js/cookies.js"></script>
+  <script src="js/menu.js"></script>
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="http://resources/demos/style.css">
   <script src="http://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>  <script type="application/javascript">
+  <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script type="application/javascript">
     $(document).ready(function () {
       var coins = <?php print $user->get('coins'); ?>;
       var message = <?php print $error; ?>;
@@ -107,8 +108,8 @@ if (isset($_POST["submit-btn-user"])) {
     });
     var mainMenuTheme = new Audio('audio/mainMenuTheme.ogg');
     mainMenuTheme.loop = true;
+    mainMenuTheme.play();
   </script>
-  <script src="js/menu.js"></script>
 </head>
 <body>
 <div class="sales-message">
@@ -296,9 +297,14 @@ print $display;
     </div>
   </div>
 </div>
+<div class="row">
+  <div class="col-xs-12 volume">
+    <span class="glyphicon glyphicon-play"></span>
+    <span class="glyphicon glyphicon-pause"></span>
+  </div>
+</div>
 <div class="container">
   <?php footer() ?>
 </div>
-<button id="btn-hidden" style="display:none"></button>
 </body>
 </html>

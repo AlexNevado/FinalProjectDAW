@@ -1,8 +1,4 @@
 $(document).ready(function () {
-  $("#btn-hidden").click(function () {
-    mainMenuTheme.play();
-  });
-  $("#btn-hidden").trigger("click");
   $('#confirm').click(function () {
     $(".sales-message")
         .animate({
@@ -48,6 +44,18 @@ $(document).ready(function () {
   $('#optionsButton').click(function () {
     $('#mainMenu').fadeOut(500);
     $('#options').delay(600).fadeIn(300);
+  });
+  $('.glyphicon-play').click(function () {
+    mainMenuTheme.play();
+  });
+  $('.glyphicon-pause').click(function () {
+    mainMenuTheme.pause();
+  });
+  $('.glyphicon').mousedown(function () {
+    $(this).css({"font-size": "1.5em"});
+  });
+  $('.glyphicon').mouseup(function () {
+    $(this).css({"font-size": "2em"});
   });
 });
 $(function () {
