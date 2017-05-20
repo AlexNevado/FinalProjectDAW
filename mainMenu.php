@@ -107,6 +107,7 @@ if (isset($_POST["submit-btn-user"])) {
     });
     var mainMenuTheme = new Audio('audio/mainMenuTheme.ogg');
     mainMenuTheme.loop = true;
+    mainMenuTheme.play();
   </script>
   <script src="js/menu.js"></script>
 </head>

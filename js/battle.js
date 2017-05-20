@@ -1,6 +1,7 @@
 // Sounds
 var battleSong = new Audio('audio/battleThemeA.ogg');
 battleSong.loop = true;
+battleSong.play();
 var bottle = new Audio('audio/bottle.ogg');
 var hit = new Audio('audio/hit.ogg');
 var fire = new Audio('audio/fire.ogg');
