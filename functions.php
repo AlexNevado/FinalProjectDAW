@@ -197,6 +197,13 @@ function itemsButtons() {
  * @param $userItemList
  */
 function itemList($userItemList) {
+  ?>
+  <div class="row">
+    <div class="col-xs-4 col-xs-offset-1 userTables">Objetos</div>
+  </div>
+  <div id="itemsData">
+
+  <?php
   foreach ($userItemList as $item) {
     ?>
     <div class="row">
@@ -210,6 +217,9 @@ function itemList($userItemList) {
     </div>
     <?php
   }
+  ?>
+  </div>
+  <?php
 }
 
 /**
@@ -218,6 +228,11 @@ function itemList($userItemList) {
  * @param $monstruos
  */
 function monstruoList($monstruos) {
+  ?>
+  <div class="row">
+    <div class="col-xs-4 col-xs-offset-1 userTables">Monstruos</div>
+  </div>
+  <?php
   foreach ($monstruos as $monstruo) {
     $monstruo = Monstruo::fromArray($monstruo);
     $charasteristics = $monstruo->get('characteristics');

@@ -40,6 +40,9 @@ $(document).ready(function () {
   $('#profileButton').click(function () {
     $('#mainMenu').fadeOut(500);
     $('#user').delay(600).fadeIn(300);
+    $.get( "profile.php", function( data ) {
+      $( "#itemsData" ).html( data );
+    });
   });
   $('#optionsButton').click(function () {
     $('#mainMenu').fadeOut(500);

@@ -243,18 +243,8 @@ print $display;
         <input type="text" value="<?php print $_SESSION['user']['username']; ?>" id="inputName" name="username"/>
       </div>
     </div>
-    <div class="row">
-      <div class="col-xs-4 col-xs-offset-1 userTables">Monstruos</div>
-    </div>
-    <div>
-      <?php
-      monstruoList($monstruos);
-      ?>
-    </div>
-    <div class="row">
-      <div class="col-xs-4 col-xs-offset-1 userTables">Objetos</div>
-    </div>
     <?php
+    monstruoList($monstruos);
     itemList($userItemList);
     ?>
     <div class="row"></div>
