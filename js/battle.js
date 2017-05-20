@@ -1,5 +1,6 @@
 // Sounds
-var battleSong = $("#battleSong");
+var battleSong = new Audio('audio/battleThemeA.ogg');
+battleSong.loop = true;
 var bottle = new Audio('audio/bottle.ogg');
 var hit = new Audio('audio/hit.ogg');
 var fire = new Audio('audio/fire.ogg');
@@ -729,7 +730,6 @@ $(document).ready(function () {
   // Sounds
   $('.glyphicon-volume-off').click(function () {
     volume = 0;
-    $("#battleSong").prop({'volume': volume});
     arraySounds.forEach(function (sound) {
       sound.volume = volume;
     });
@@ -737,7 +737,6 @@ $(document).ready(function () {
   $('.glyphicon-volume-down').click(function () {
     volume -= 0.2;
     volume = volume < 0 ? 0 : volume;
-    $("#battleSong").prop({'volume': volume});
     arraySounds.forEach(function (sound) {
       sound.volume = volume;
     });
@@ -745,7 +744,6 @@ $(document).ready(function () {
   $('.glyphicon-volume-up').click(function () {
     volume += 0.2;
     volume = volume > 1 ? 1 : volume;
-    $("#battleSong").prop({'volume': volume});
     arraySounds.forEach(function (sound) {
       sound.volume = volume;
     });

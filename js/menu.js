@@ -55,10 +55,10 @@ $(function () {
     value: volume !== 'undefined' ? volume * 10 : 10,
     slide: function (event, ui) {
       $("#amount").val(ui.value);
-      $("#menuSong").prop({'volume': (ui.value / 10).toPrecision(1)});
+      mainMenuTheme.volume = (ui.value / 10).toPrecision(1);
       createCookie("volumen", (ui.value / 10).toPrecision(1), 500);
     }
   });
-  $("#menuSong").prop({'volume': volume});
+  mainMenuTheme.volume = volume;
   $("#amount").val($("#slider-range-max").slider("value"));
 });

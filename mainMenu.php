@@ -79,13 +79,13 @@ if (isset($_POST["submit-btn-user"])) {
 <!DOCTYPE html>
 <html>
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Monstruos' Bizarre Adventure 2</title>
   <script src="js/jquery-3.2.1.min.js"></script>
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <script src="js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="css/main.css">
   <script src="js/cookies.js"></script>
-  <script src="js/menu.js"></script>
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="http://resources/demos/style.css">
   <script src="http://code.jquery.com/jquery-1.12.4.js"></script>
@@ -105,7 +105,10 @@ if (isset($_POST["submit-btn-user"])) {
             }, 'slow');
       }
     });
+    var mainMenuTheme = new Audio('audio/mainMenuTheme.ogg');
+    mainMenuTheme.loop = true;
   </script>
+  <script src="js/menu.js"></script>
 </head>
 <body>
 <div class="sales-message">
