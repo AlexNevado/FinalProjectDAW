@@ -16,15 +16,7 @@ $messages = [0 => 'No tienes suficientes monedas',
 $error = -1;
 $itemList = Entity::findOneBy("miscellaneous", array());
 $itemList = $itemList['items'];
-$userItemList = $user->get('items');
-// Compare itemList with user item ID list
-foreach ($itemList as $item) {
-  foreach ($userItemList as $key => $userItem) {
-    if ($userItem['id'] == $item['id']) {
-      $userItemList[$key] = array_merge($userItem, $item);
-    }
-  }
-}
+
 // Buy item in the shop
 if (isset($_POST["submit-btn"])) {
   // Check the user have enough coins
@@ -52,6 +44,7 @@ if (isset($_POST["submit-btn"])) {
     }
     // Spend the money and save the items
     $user->set("coins", $user->get("coins") - $_POST['totalSale']);
+    $user->save();
     foreach ($itemToBuy as $key => $item) {
       $user->addItems(substr($item["id"], -1), $item['amount']);
     }
@@ -59,6 +52,17 @@ if (isset($_POST["submit-btn"])) {
     $error = 2;
   }
 }
+
+$userItemList = $user->get('items');
+// Compare itemList with user item ID list
+foreach ($itemList as $item) {
+  foreach ($userItemList as $key => $userItem) {
+    if ($userItem['id'] == $item['id']) {
+      $userItemList[$key] = array_merge($userItem, $item);
+    }
+  }
+}
+
 // Change username
 if (isset($_POST["submit-btn-user"])) {
   $user1 = Entity::findOneBy("users", array("username" => $_POST['username']));

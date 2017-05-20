@@ -14,8 +14,6 @@ class User extends Entity {
   //User's coins;
   private $coins;
 
-  //Ddbb name
-  const DDBB_NAME = "mba";
   //Ddbb collection
   const USERS_COLLECTION = "users";
 
@@ -141,7 +139,7 @@ class User extends Entity {
    * @return array|null
    */
   public function findByField($field) {
-    $db = self::DDBB_NAME;
+    $db = Entity::DDBB_NAME;
     $collectionName = self::USERS_COLLECTION;
 
     $connection = new MongoClient();

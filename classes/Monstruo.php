@@ -15,8 +15,6 @@ class Monstruo extends Entity {
   // Monstruos's skills
   private $skills;
 
-  //Ddbb name
-  const DDBB_NAME = "mba";
   //Ddbb collection
   const MONSTRUOS_COLLECTION = 'monstruos';
 
@@ -80,7 +78,7 @@ class Monstruo extends Entity {
    * @return array|null
    */
   public function findById() {
-    return parent::findById(self::USERS_COLLECTION, $this->get('_id'));
+    return parent::findById(self::MONSTRUOS_COLLECTION, $this->get('_id'));
   }
 
   /**** Getters & Setters ****/
