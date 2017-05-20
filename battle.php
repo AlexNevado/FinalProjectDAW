@@ -138,11 +138,6 @@ $userArray = array(
         </div>
       </div>
       <div class="row">
-        <audio controls autoplay loop id="battleSong">
-          <source src="audio/battleThemeA.ogg" type="audio/ogg">
-          <source src="audio/battleThemeA.mp3" type="audio/mpeg">
-          Your browser does not support the audio element.
-        </audio>
         <div class="col-sm-2 col-sm-offset-6 volume">
           <span class="glyphicon glyphicon-volume-off"></span>
           <span class="glyphicon glyphicon-volume-down"></span>

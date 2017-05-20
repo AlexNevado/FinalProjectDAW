@@ -1,7 +1,6 @@
 // Sounds
 var battleSong = new Audio('audio/battleThemeA.ogg');
 battleSong.loop = true;
-battleSong.play();
 var bottle = new Audio('audio/bottle.ogg');
 var hit = new Audio('audio/hit.ogg');
 var fire = new Audio('audio/fire.ogg');
@@ -13,9 +12,6 @@ var lose = new Audio('audio/loseTheme.ogg');
 function cursor() {
   var cursor = new Audio('audio/cursor.ogg');
   cursor.volume = volume;
-  cursor.addEventListener("ended", function () {
-    document.removeChild(this);
-  }, false);
   cursor.play();
 }
 
@@ -47,6 +43,7 @@ function startBattle() {
     arraySounds.forEach(function (sound) {
       sound.volume = volume;
     });
+    battleSong.play();
     enemy.draw(0);
     var enemy0 = new Monstruo();
     enemy0.draw(0, 'mDamage', enemy.img.substr(0, enemy.img.length - 4) + "2.png", 300, 0, 300, 300, 12);
@@ -70,7 +67,8 @@ function endBattle() {
     setTimeout(function () {
       drawImage("image/background12.jpg", 0, 0, 640, 480, "end", 20, 0.5);
       $('#end-screen').show();
-      $("#battleSong")[0].pause();
+      //$("#battleSong")[0].pause();
+      battleSong.pause();
       if (yourMonster.characteristics.hp > enemy.characteristics.hp) {
         coinsReceived = randomInt(1, 10) * enemyMonstruos.length;
         $('#end-message').html("¡Has Vencido!</br><p id='battleMessage'>Has ganado " + coinsReceived

@@ -300,10 +300,5 @@ print $display;
 <div class="container">
   <?php footer() ?>
 </div>
-<audio controls autoplay loop id="menuSong">
-  <source src="audio/mainMenuTheme.ogg" type="audio/ogg">
-  <source src="audio/mainMenuTheme.mp3" type="audio/mpeg">
-  Your browser does not support the audio element.
-</audio>
 </body>
 </html>
