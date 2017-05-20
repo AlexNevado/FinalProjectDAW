@@ -13,7 +13,7 @@ $fb = new Facebook\Facebook([
 
 $helper = $fb->getRedirectLoginHelper();
 $permissions = ['email']; // optional
-$loginUrl = $helper->getLoginUrl('http://mba2.com/fb-callback.php', $permissions);
+$loginUrl = $helper->getLoginUrl('http://'. $_SERVER['HTTP_HOST'] .'/fb-callback.php', $permissions);
 $GLOBALS['loginUrl'] = $loginUrl;
 
 if (!isset($_SESSION["Authenticated"]) && isset($_COOKIE["user"])) {
@@ -73,7 +73,7 @@ function register() {
       </div>
       <button type="submit" class="btn btn-login btn-sm">Enviar</button>
       <?php
-      echo '<a href="' . $GLOBALS['loginUrl'] . '" class="btn btn-login fb-button"></a>';
+      echo '<a href="' . $GLOBALS['loginUrl'] . '" class="btn btn-login fb-button" target="_top"></a>';
       ?>
     </div>
   </form>
