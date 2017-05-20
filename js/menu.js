@@ -60,6 +60,7 @@ $(document).ready(function () {
   $('.glyphicon').mouseup(function () {
     $(this).css({"font-size": "2em"});
   });
+  $('[data-toggle="tooltip"]').tooltip();
 });
 $(function () {
   var volume = readCookie('volumen');

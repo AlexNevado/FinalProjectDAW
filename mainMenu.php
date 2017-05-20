@@ -147,7 +147,7 @@ print $display;
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <button type="button" class="btn btn-sm btn-menu-principal" id="searchBattle">Buscar batalla Multijugador</button>
+      <button type="button" class="btn btn-sm btn-menu-principal disabled" id="searchBattle" data-toggle="tooltip" title="¡Esta opción no ha sido implemetada aún!!">Buscar batalla Multijugador</button>
     </div>
   </div>
   <div class="row">

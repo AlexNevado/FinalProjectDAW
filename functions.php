@@ -130,10 +130,10 @@ function footer() {
   ?>
   <div class="row">
     <div class="col-xs-12 rrss">
-      <a href="https://www.facebook.com/Monstruos-Bizarre-Adventure-2-1495483530516515/"><img id="fb" src="image/img_trans.gif"></a>
-      <a href="https://twitter.com/mba2com"><img id="tw" src="image/img_trans.gif"></a>
-      <a href="#"><img id="in" src="image/img_trans.gif"></a>
-      <a href="#"><img id="tu" src="image/img_trans.gif"></a>
+      <a href="https://www.facebook.com/Monstruos-Bizarre-Adventure-2-1495483530516515/" target="_blank"><img id="fb" src="image/img_trans.gif"></a>
+      <a href="https://twitter.com/mba2com" target="_blank"><img id="tw" src="image/img_trans.gif"></a>
+      <a href="#" target="_blank"><img id="in" src="image/img_trans.gif"></a>
+      <a href="#" target="_blank"><img id="tu" src="image/img_trans.gif"></a>
     </div>
     <div class="col-xs-12" role="footer">
       <p>@2017 | Designed by GrupoN3</p>
