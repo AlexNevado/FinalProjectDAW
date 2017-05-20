@@ -1,4 +1,8 @@
 $(document).ready(function () {
+  $("#btn-hidden").click(function () {
+    mainMenuTheme.play();
+  });
+  $("#btn-hidden").trigger("click");
   $('#confirm').click(function () {
     $(".sales-message")
         .animate({

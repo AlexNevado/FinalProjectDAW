@@ -154,5 +154,6 @@ $userArray = array(
   </div>
   <?php footer() ?>
 </div>
+<button id="btn-hidden" style="display:none"></button>
 </body>
 </html>

@@ -43,7 +43,7 @@ function startBattle() {
     arraySounds.forEach(function (sound) {
       sound.volume = volume;
     });
-    battleSong.play();
+    //battleSong.play();
     enemy.draw(0);
     var enemy0 = new Monstruo();
     enemy0.draw(0, 'mDamage', enemy.img.substr(0, enemy.img.length - 4) + "2.png", 300, 0, 300, 300, 12);
@@ -627,6 +627,10 @@ function checkItems() {
 }
 //Mouse Functions
 $(document).ready(function () {
+  $("#btn-hidden").click(function () {
+    battleSong.play();
+  });
+  $("#btn-hidden").trigger("click");
   // Effects
   $('h3[id^=btn-skill-]').mouseenter(function () {
     var signNumber = $(this).attr('id').slice(-1);

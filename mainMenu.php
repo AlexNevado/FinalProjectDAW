@@ -107,7 +107,6 @@ if (isset($_POST["submit-btn-user"])) {
     });
     var mainMenuTheme = new Audio('audio/mainMenuTheme.ogg');
     mainMenuTheme.loop = true;
-    mainMenuTheme.play();
   </script>
   <script src="js/menu.js"></script>
 </head>
@@ -300,5 +299,6 @@ print $display;
 <div class="container">
   <?php footer() ?>
 </div>
+<button id="btn-hidden" style="display:none"></button>
 </body>
 </html>
