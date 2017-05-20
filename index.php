@@ -54,7 +54,7 @@ items:[{id:0, name:"Poción", power:6, type:'cure', img:'image/items/potion_xs.p
         <div class="col-xs-12">
           <h2> Monstruos' Bizarre Adventure <img src="image/number2.png" width="50" height="50" alt="image number 2"></h2>
         </div>
-        <fieldset class="form-group col-xs-4 col-sm-offset-4 col-xs-offset-3">
+        <fieldset class="form-group col-sm-4 col-sm-offset-4 col-xs-12 ">
           <legend>
             <a href="index.php" <?php if (!isset($_GET["register"])) {
               print 'class="activeSection"';
