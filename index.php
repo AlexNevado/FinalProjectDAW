@@ -35,6 +35,7 @@ items:[{id:0, name:"Poción", power:6, type:'cure', img:'image/items/potion_xs.p
 <!DOCTYPE html>
 <html>
 <head>
+  <script language="Javascript" src="js/getOffDotTK.js"></script>
   <title>Monstruos' Bizarre Adventure 2</title>
   <script src="js/jquery-3.2.1.min.js"></script>
   <link rel="stylesheet" href="css/bootstrap.min.css">
