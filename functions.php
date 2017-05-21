@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 require_once __DIR__ . '/vendor/autoload.php';
 
 foreach (glob("classes/*.php") as $filename) {
@@ -13,7 +15,7 @@ $fb = new Facebook\Facebook([
 
 $helper = $fb->getRedirectLoginHelper();
 $permissions = ['email']; // optional
-$loginUrl = $helper->getLoginUrl('http://'. $_SERVER['HTTP_HOST'] .'/fb-callback.php', $permissions);
+$loginUrl = $helper->getLoginUrl('http://www.mba2.es/fb-callback.php', $permissions);
 $GLOBALS['loginUrl'] = $loginUrl;
 
 if (!isset($_SESSION["Authenticated"]) && isset($_COOKIE["user"])) {
