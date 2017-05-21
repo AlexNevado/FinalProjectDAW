@@ -448,19 +448,20 @@ canvas {
 }
 .back-button {
   margin-left: 43%;
-  border-radius: 0px 10px 10px 10px;
-  padding: 2px;
+  border-radius: 0px 15px 15px 15px;
+  padding: 6px;
   font-size: 1.1em;
-  background: #FFB30D;
+  background: lightblue;
   cursor: pointer;
-  border: 2px solid orange;
-  color: #dedede;
+  border: 2px solid #000744;
+  color: gray;
   text-decoration:none;
   transition: all 0.5s;
 }
 .back-button:hover {
-  background: #B07C0D;
+  background: #3542B1;
   color: black;
+  text-decoration: none;
 }
 canvas {
   background: url('../image/forest2.jpg');
