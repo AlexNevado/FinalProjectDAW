@@ -375,6 +375,93 @@ canvas {
   box-shadow: 1px 1px 10px 1px black;
   opacity: 0.7;
 }
+/****************
+	Cookies Bar
+*****************/
+#barraaceptacion {
+
+  position:fixed;
+  left:0px;
+  right:0px;
+  bottom:0px;
+  padding-bottom:20px;
+  width:100%;
+  text-align:center;
+  min-height:40px;
+  background-color: rgba(0, 0, 0, 0.9);
+  color:#fff;
+  z-index:99999;
+}
+
+.inner {
+  width:100%;
+  position:relative;
+  padding-left:5px;
+  font-family:verdana;
+  font-size:16px;
+  top:30%;
+}
+
+.inner button.ok {
+  padding:4px;
+  color:#00ff2e;
+  text-decoration:none;
+  background: none;
+  border:none;font-size: 1em;
+  font-family:verdana;
+  cursor: pointer;
+  font-weight: bold;
+}
+.inner a.info {
+  padding-left:5px;
+  text-decoration:none;
+  color:#faff00;
+  background: none;
+  border:none;
+  font-size: 1em;
+  font-family:verdana;
+  cursor: pointer;
+}
+/****************
+	Cookies Page
+*****************/
+.cookies h1,.cookies h2,.cookies h3 {
+  color: #F2EEEE;
+  font-weight: 600;
+  line-height: 1.3em;
+}
+
+.cookies h2 {
+  margin-top: 1.3em;
+}
+.cookies {
+  margin: 3% auto;
+  max-width: 800px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5em;
+  color: white;
+  border-radius: 20px;
+  padding: 20px;
+  background: black;
+  opacity: 0.8;
+}
+.back-button {
+  margin-left: 43%;
+  border-radius: 0px 10px 10px 10px;
+  padding: 2px;
+  font-size: 1.1em;
+  background: #FFB30D;
+  cursor: pointer;
+  border: 2px solid orange;
+  color: #dedede;
+  text-decoration:none;
+  transition: all 0.5s;
+}
+.back-button:hover {
+  background: #B07C0D;
+  color: black;
+}
 canvas {
   background: url('../image/forest2.jpg');
   z-index: 0;

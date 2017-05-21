@@ -25,3 +25,10 @@ function readCookie(name) {
 function eraseCookie(name) {
   createCookie(name, "", -1);
 }
+if(readCookie('cookieagree')!="1"){
+  document.getElementById("barraaceptacion").style.display="block";
+}
+function PonerCookie(){
+  createCookie('cookieagree','1',365);
+  document.getElementById("barraaceptacion").style.display="none";
+}

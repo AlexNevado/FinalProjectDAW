@@ -78,6 +78,7 @@ if (isset($_POST["submit-btn-user"])) {
 <!DOCTYPE html>
 <html>
 <head>
+  <meta name="theme-color" content="#7C7C7C">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Monstruos' Bizarre Adventure 2</title>
   <script src="js/jquery-3.2.1.min.js"></script>
