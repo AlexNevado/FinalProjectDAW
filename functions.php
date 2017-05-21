@@ -15,7 +15,7 @@ $fb = new Facebook\Facebook([
 
 $helper = $fb->getRedirectLoginHelper();
 $permissions = ['email']; // optional
-$loginUrl = $helper->getLoginUrl('http://www.mba2.es/fb-callback.php', $permissions);
+$loginUrl = $helper->getLoginUrl('http://195.154.161.208/mba2/a/fb-callback.php', $permissions);
 $GLOBALS['loginUrl'] = $loginUrl;
 
 if (!isset($_SESSION["Authenticated"]) && isset($_COOKIE["user"])) {
