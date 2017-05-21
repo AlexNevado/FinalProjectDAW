@@ -68,7 +68,7 @@ $(function () {
     range: "max",
     min: 0,
     max: 10,
-    value: volume !== 'undefined' ? volume * 10 : 10,
+    value: volume !== 'undefined' ? volume * 10 : 1,
     slide: function (event, ui) {
       $("#amount").val(ui.value);
       mainMenuTheme.volume = (ui.value / 10).toPrecision(1);
